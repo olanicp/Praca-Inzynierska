@@ -1,61 +1,110 @@
 import React from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import GradientButton from "./GradientButton";
 
 export default function MainScreen() {
   const navigation = useNavigation();
   return (
-  
     <View style={styles.container}>
+      <LinearGradient
+        colors={["#F5ABD6", "#C4C1F2", "white"]}
+        locations={[0, 0.22, 1]}
+        style={styles.background}
+      />
       <View style={styles.header}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>E</Text>
+        <View style={styles.headerBubble}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>E</Text>
+          </View>
         </View>
         <View style={styles.dateAndStreak}>
-          <Text style={styles.dateText}>Sat, Dec 7</Text>
-          <View style={styles.streak}>
-            <Text style={styles.streakText}>🔥 6</Text>
+          <View style={styles.headerBubble}>
+            <Text style={styles.dateText}>Sat, Dec 7</Text>
+          </View>
+          <View style={styles.headerBubble}>
+            <FontAwesome6
+              name="fire-flame-curved"
+              size={24}
+              color="#474146"
+              style={{ paddingHorizontal: 5 }}
+            />
+            <Text
+              style={{
+                fontFamily: "Quicksand-Regular",
+                fontSize: 16,
+                color: "#474146",
+                paddingHorizontal: 5,
+              }}
+            >
+              6
+            </Text>
           </View>
         </View>
       </View>
-       <View style={styles.greeting}>
-        <Text style={styles.greetingText}>Hi, Emma!</Text>
-        <Text style={styles.questionText}>How are you feeling today?</Text>
-        <TouchableOpacity 
-        style={styles.actionButton}
-        onPress={() => navigation.navigate('FrequencyScreen')}
+      <View style={styles.body}>
+        <View style={styles.bodyBubble}>
+          <Text style={styles.greetingText}>Hi, Emma!</Text>
+          <Text style={styles.questionText}>How are you feeling today?</Text>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => navigation.navigate("FrequencyScreen")}
+          >
+            <GradientButton
+              text={"Let's find out together! →"}
+            ></GradientButton>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.inputSection}>
+          <Text style={styles.inputLabel}>Something on your mind?</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Write your thoughts here..."
+            placeholderTextColor="#A0A0A0"
+            multiline
+          />
+        </View>
+      </View>
+
+      <LinearGradient
+        colors={["#A9C7EF", "#C6DCF9", "#F5ABD6"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.navbar}
+      >
+        <TouchableOpacity style={styles.navItem}>
+          <AntDesign name="home" size={28} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <AntDesign name="calendar" size={28} color="white" />
+        </TouchableOpacity>
+        <LinearGradient
+          colors={["#A9C7EF", "#C6DCF9", "#F5ABD6"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.linearGradient}
         >
-          <Text style={styles.actionButtonText}>➔</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.inputSection}>
-        <Text style={styles.inputLabel}>Something on your mind?</Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Write your thoughts here..."
-          placeholderTextColor="#A0A0A0"
-          multiline
-        />
-      </View>
-
-      <View style={styles.navbar}>
+          <TouchableOpacity style={styles.addButton}>
+            <AntDesign name="plus" size={42} color="#868185" />
+          </TouchableOpacity>
+        </LinearGradient>
         <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navIcon}>🏠</Text>
+          <AntDesign name="barschart" size={28} color="white" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navIcon}>📊</Text>
+          <AntDesign name="user" size={28} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.addButton}>
-          <Text style={styles.addButtonText}>+</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navIcon}>📅</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navIcon}>👤</Text>
-        </TouchableOpacity>
-      </View>
+      </LinearGradient>
     </View>
   );
 }
@@ -63,8 +112,14 @@ export default function MainScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "linear-gradient(180deg, #E9C0FF, #FFFFFF)", // Gradient background
     padding: 20,
+  },
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "900",
   },
   header: {
     flexDirection: "row",
@@ -73,94 +128,109 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#EFEFEF",
+    width: 36,
+    height: 36,
+    borderRadius: 50,
+    backgroundColor: "#FFF6FB",
     justifyContent: "center",
     alignItems: "center",
   },
   avatarText: {
-    fontWeight: "bold",
+    fontFamily: "Quicksand-Regular",
     fontSize: 16,
-    color: "#666",
+    color: "#474146",
   },
   dateAndStreak: {
     flexDirection: "row",
-    alignItems: "center",
+    justifyContent: "space-around",
   },
   dateText: {
     fontSize: 16,
-    color: "#666",
-    marginRight: 10,
+    color: "#474146",
+    marginHorizontal: 5,
   },
-  streak: {
-    backgroundColor: "#FFE0E0",
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  streakText: {
-    color: "#FF5733",
-    fontWeight: "bold",
-  },
-  greeting: {
+  headerBubble: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
-    marginBottom: 40,
+    backgroundColor: "#FFF6FB",
+    opacity: 0.75,
+    borderRadius: 50,
+    padding: 10,
+    marginHorizontal: 5,
+  },
+  body: {
+    justifyContent: "space-between",
+    flex: 1,
+    marginBottom: 100,
+  },
+  bodyBubble: {
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    backgroundColor: "#FFF6FB",
+    opacity: 0.75,
+    borderRadius: 50,
+    paddingHorizontal: 15,
+    paddingVertical: 30,
+    marginVertical: 5,
   },
   greetingText: {
+    fontFamily: "Quicksand-Regular",
     fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
+    color: "black",
   },
   questionText: {
-    fontSize: 18,
-    color: "#666",
+    fontFamily: "PlayfairDisplay-Regular",
+    fontSize: 32,
+    color: "black",
+    letterSpacing: -1,
+    textAlign: "center",
     marginBottom: 20,
   },
   actionButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: "#FFD6FF",
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   actionButtonText: {
-    fontSize: 24,
-    color: "#555",
+    fontSize: 18,
+    color: "#4474146",
   },
   inputSection: {
-    marginBottom: 40,
+    marginTop: 20,
   },
   inputLabel: {
-    fontSize: 16,
+    fontFamily: "Quicksand-Regular",
+    fontSize: 18,
     color: "#666",
     marginBottom: 10,
   },
   textInput: {
+    fontFamily: "Quicksand-Regular",
     borderWidth: 1,
-    borderColor: "#DDD",
-    borderRadius: 10,
-    padding: 15,
+    borderColor: "#474146",
+    borderRadius: 33,
+    padding: 20,
     fontSize: 16,
-    color: "#333",
-    backgroundColor: "#F9F9F9",
+    opacity: 0.75,
+    color: "#474146",
+    backgroundColor: "#F6FFFE",
     textAlignVertical: "top",
-    minHeight: 100,
+    minHeight: 150,
   },
   navbar: {
+    alignSelf: "center",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    height: 60,
-    backgroundColor: "#FFFFFF",
-    borderTopWidth: 1,
-    borderTopColor: "#DDD",
+    height: 65,
+    borderRadius: 50,
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
+    padding: 10,
+    margin: 10,
   },
   navItem: {
     alignItems: "center",
@@ -170,16 +240,23 @@ const styles = StyleSheet.create({
     color: "#AAA",
   },
   addButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "#FFD6FF",
+    width: 75,
+    height: 75,
+    borderRadius: 50,
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
+  },
+  linearGradient: {
+    height: 80,
+    width: 80,
+    borderRadius: 50,
+    marginBottom: 40,
+    alignItems: "center",
+    justifyContent: "center",
   },
   addButtonText: {
     fontSize: 30,
-    color: "#FFFFFF",
+    color: "#474146",
   },
 });

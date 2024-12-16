@@ -5,27 +5,29 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import GradientButton from "./GradientButton";
 import axios from "axios";
 
-export default function LoginScreen() {
+export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState({ value: "", error: "" });
-  const [password, setPassword] = useState({ value: "", error: "" });
 
-  const onLoginPressed = async (event) => {
+  const onSubmitPressed = async (event) => {
     try {
-      const response = await axios.post("http://192.168.43.115:5000/login", {
-        email: email.value,
-        password: password.value,
-      });
+      const response = await axios.post(
+        "http://192.168.43.115:5000/reset-password",
+        {
+          email: email.value,
+        }
+      );
 
       if (response.status === 200) {
         alert("Dane przesłane");
-        navigation.navigate("Main");
+        navigation.navigate("VerificationCode");
       } else {
         throw new Error("error has occurred");
       }
@@ -33,10 +35,6 @@ export default function LoginScreen() {
       alert(error.response.data);
     }
   };
-
-  // useEffect(() => {
-  //   onLoginPressed()
-  // }, []);
 
   return (
     <View style={styles.container}>
@@ -46,11 +44,11 @@ export default function LoginScreen() {
       />
 
       <View style={styles.header}>
-        <Text style={styles.title}>Welcome back!</Text>
-        <Text style={styles.caption}>Sign in to your account to continue.</Text>
+        <Text style={styles.title}>Forgot password</Text>
+        <Text style={styles.caption}>Enter your email address below.</Text>
       </View>
 
-      <View>
+      <View style={{ paddingVertical: 50 }}>
         <Text style={styles.inputBoxName}>Email</Text>
         <TextInput
           label="email"
@@ -61,24 +59,8 @@ export default function LoginScreen() {
         />
       </View>
 
-      <View>
-        <Text style={styles.inputBoxName}>Password</Text>
-        <TextInput
-          label="password"
-          placeholder="password"
-          value={password.value}
-          style={styles.inputBox}
-          onChangeText={(text) => setPassword({ value: text, error: "" })}
-          secureTextEntry
-        />
-      </View>
-
-      <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-        <Text style={styles.forgot}>Forgot your password?</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity
-        onPress={onLoginPressed}
+        onPress={onSubmitPressed}
         style={{
           borderColor: "#474146",
           borderRadius: 50,
@@ -86,11 +68,11 @@ export default function LoginScreen() {
           margin: 15,
         }}
       >
-        <GradientButton text="log in"></GradientButton>
+        <GradientButton text="submit"></GradientButton>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-        <Text style={styles.forgot}>Or create a new account</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.forgot}>Or go back to login</Text>
       </TouchableOpacity>
     </View>
   );
@@ -110,7 +92,7 @@ const styles = StyleSheet.create({
     height: 900,
   },
   header: {
-    paddingBottom: 60,
+    alignItems: "center",
   },
   title: {
     fontFamily: "PlayfairDisplay-Regular",
