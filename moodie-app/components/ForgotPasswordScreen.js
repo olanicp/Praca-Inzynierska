@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Button,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import GradientButton from "./GradientButton";
+import { styles } from "./CredentialScreenStyles";
 import axios from "axios";
 
 export default function ForgotPasswordScreen() {
@@ -27,7 +21,7 @@ export default function ForgotPasswordScreen() {
 
       if (response.status === 200) {
         alert("Dane przesłane");
-        navigation.navigate("VerificationCode");
+        navigation.navigate("ConfirmationCode");
       } else {
         throw new Error("error has occurred");
       }
@@ -59,80 +53,23 @@ export default function ForgotPasswordScreen() {
         />
       </View>
 
-      <TouchableOpacity
-        onPress={onSubmitPressed}
-        style={{
-          borderColor: "#474146",
-          borderRadius: 50,
-          borderWidth: 1,
-          margin: 15,
-        }}
-      >
-        <GradientButton text="submit"></GradientButton>
-      </TouchableOpacity>
+      <View style={{ paddingBottom: 75 }}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ConfirmationCode")}
+          style={{
+            borderColor: "#474146",
+            borderRadius: 50,
+            borderWidth: 1,
+            margin: 15,
+          }}
+        >
+          <GradientButton text="submit"></GradientButton>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.forgot}>Or go back to login</Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.clickableText}>Or go back to login</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: 900,
-  },
-  header: {
-    alignItems: "center",
-  },
-  title: {
-    fontFamily: "PlayfairDisplay-Regular",
-    color: "#474146",
-    fontSize: 42,
-  },
-  caption: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    fontSize: 16,
-    padding: 15,
-  },
-  inputBox: {
-    fontFamily: "Quicksand-Regular",
-    marginTop: 10,
-    paddingLeft: 30,
-    width: 300,
-    height: 50,
-    borderRadius: 50,
-    borderColor: "#474146",
-    borderWidth: 1,
-    backgroundColor: "white",
-  },
-  inputBoxName: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    fontSize: 16,
-    paddingTop: 25,
-    paddingLeft: 15,
-  },
-  forgot: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    padding: 15,
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 50,
-    height: 65,
-    width: 300,
-  },
-});
