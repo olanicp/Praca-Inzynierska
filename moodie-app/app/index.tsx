@@ -10,8 +10,9 @@ import ConfirmationCodeScreen from "../components/ConfirmationCodeScreen";
 import ResetPasswordScreen from "../components/ResetPasswordScreen";
 import ResetPasswordSuccessScreen from "../components/ResetPasswordSuccessScreen";
 import CalendarScreen from "../components/CalendarScreen";
+import FrequencyScreen from "../components/FrequencyScreen";
 import { useFonts } from "expo-font";
-// import FrequencyScreen from "../components/FrequencyScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +44,7 @@ export default function HomeScreen() {
       />
       <Stack.Screen name="Main" component={MainScreen} />
       <Stack.Screen name="Calendar" component={CalendarScreen} />
-      {/* <Stack.Screen name="FrequencyScreen" component={FrequencyScreen} /> */}
+      <Stack.Screen name="FrequencyScreen" component={FrequencyScreen} />
     </Stack.Navigator>
   );
 }
