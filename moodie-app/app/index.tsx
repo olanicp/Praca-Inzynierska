@@ -4,12 +4,11 @@ import { View, Text } from "react-native";
 import LoginScreen from "../components/LoginScreen";
 import WelcomeScreen from "../components/WelcomeScreen";
 import SignupScreen from "../components/SignupScreen";
-import MainScreen from "../components/MainScreen";
 import ForgotPasswordScreen from "../components/ForgotPasswordScreen";
 import ConfirmationCodeScreen from "../components/ConfirmationCodeScreen";
 import ResetPasswordScreen from "../components/ResetPasswordScreen";
 import ResetPasswordSuccessScreen from "../components/ResetPasswordSuccessScreen";
-import CalendarScreen from "../components/CalendarScreen";
+import TabNavigator from "../components/TabNavigator";
 import { useFonts } from "expo-font";
 // import FrequencyScreen from "../components/FrequencyScreen";
 
@@ -41,8 +40,7 @@ export default function HomeScreen() {
         name="ResetPasswordSuccess"
         component={ResetPasswordSuccessScreen}
       />
-      <Stack.Screen name="Main" component={MainScreen} />
-      <Stack.Screen name="Calendar" component={CalendarScreen} />
+      <Stack.Screen name="Main" component={TabNavigator} />
       {/* <Stack.Screen name="FrequencyScreen" component={FrequencyScreen} /> */}
     </Stack.Navigator>
   );

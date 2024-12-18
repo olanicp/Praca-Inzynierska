@@ -8,69 +8,10 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { Calendar } from "react-native-calendars";
-import GradientButton from "./GradientButton";
 
-// // Assume moodData is fetched from your database or API
-// const getMoodData = async () => {
-//   // Fetch mood data from database (for the last month, for example)
-//   const response = await fetch('https://your-api.com/getMoodData');
-//   const data = await response.json();
-//   return data;
-// };
-
-export default function CalendarScreen() {
+export default function ProfileScreen() {
   const navigation = useNavigation();
-  // const [moodData, setMoodData] = useState([]);
-
-  // useEffect(() => {
-  //   getMoodData().then((data) => {
-  //     setMoodData(data);
-  //   });
-  // }, []);
-
-  // const formatMoodData = (data) => {
-  //   const moodDataObject = {};
-  //   data.forEach((entry) => {
-  //     const date = entry.date; // format: '2024-11-20'
-  //     const mood = entry.mood; // e.g., 'happy', 'sad', 'anxious'
-
-  //     // Assign a color for the mood
-  //     const color =
-  //       mood === "happy" ? "green" : mood === "sad" ? "red" : "blue";
-
-  //     moodDataObject[date] = {
-  //       customStyles: {
-  //         container: {
-  //           backgroundColor: color,
-  //           borderRadius: 10,
-  //         },
-  //       },
-  //     };
-  //   });
-  //   return moodDataObject;
-  // };
-
-  // const markedDates = formatMoodData(moodData);
-  const markedDates = {
-    "2024-12-08": {
-      customStyles: {
-        container: {
-          backgroundColor: "#F5ABD6",
-        },
-      },
-    },
-    "2024-12-16": {
-      customStyles: {
-        container: {
-          backgroundColor: "#83B2F1",
-          elevation: 2,
-        },
-      },
-    },
-  };
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -109,19 +50,11 @@ export default function CalendarScreen() {
         </View>
       </View>
       <View style={styles.body}>
-        <View style={styles.bodyBubble}>
-          <Calendar
-            // Initially marked dates (fetched data)
-            markedDates={markedDates}
-            markingType="custom" // Use custom styling for each date
-            // onDayPress={(day) => {
-            //   // Show detailed data when user clicks on a day
-            //   console.log("Selected day", day);
-            // }}
-            theme={styles.calendarTheme}
-            style={styles.calendar}
-          />
-        </View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
       </View>
     </View>
   );
@@ -186,9 +119,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: "#FFF6FB",
-    height: 400,
     opacity: 0.75,
-    borderRadius: 33,
+    borderRadius: 50,
     paddingHorizontal: 15,
     paddingVertical: 30,
     marginVertical: 5,
@@ -237,26 +169,4 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     minHeight: 150,
   },
-  calendar: {
-    backgroundColor: "transparent",
-    color: "transparent",
-    height: 350,
-    width: 320,
-  },
-  calendarTheme: {
-    backgroundColor: "transparent",
-    calendarBackground: "transparent",
-    selectedDayBackgroundColor: "#00adf5",
-    todayTextColor: "#00adf5",
-    arrowColor: "#474146",
-    monthTextColor: "#474146",
-    textDayFontFamily: "Quicksand-Regular",
-    textMonthFontFamily: "Quicksand-Regular",
-    textDayHeaderFontFamily: "Quicksand-Regular",
-    textDayFontSize: 16,
-    textMonthFontSize: 24,
-    textDayHeaderFontSize: 16,
-  },
 });
-
-// https://www.npmjs.com/package/react-native-calendars/v/1.1286.0

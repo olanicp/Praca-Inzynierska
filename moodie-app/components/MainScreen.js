@@ -75,42 +75,6 @@ export default function MainScreen() {
           />
         </View>
       </View>
-
-      <LinearGradient
-        colors={["#A9C7EF", "#C6DCF9", "#F5ABD6"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.navbar}
-      >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Main")}
-          style={styles.navItem}
-        >
-          <AntDesign name="home" size={28} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Calendar")}
-          style={styles.navItem}
-        >
-          <AntDesign name="calendar" size={28} color="white" />
-        </TouchableOpacity>
-        <LinearGradient
-          colors={["#A9C7EF", "#C6DCF9", "#F5ABD6"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.linearGradient}
-        >
-          <TouchableOpacity style={styles.addButton}>
-            <AntDesign name="plus" size={42} color="#868185" />
-          </TouchableOpacity>
-        </LinearGradient>
-        <TouchableOpacity style={styles.navItem}>
-          <AntDesign name="barschart" size={28} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <AntDesign name="user" size={28} color="white" />
-        </TouchableOpacity>
-      </LinearGradient>
     </View>
   );
 }
@@ -175,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFF6FB",
     opacity: 0.75,
-    borderRadius: 50,
+    borderRadius: 33,
     paddingHorizontal: 15,
     paddingVertical: 30,
     marginVertical: 5,
