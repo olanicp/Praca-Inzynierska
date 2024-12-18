@@ -18,6 +18,7 @@ export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     "PlayfairDisplay-Regular": require("../assets/fonts/PlayfairDisplay-Regular.ttf"),
     "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
+    "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
   });
   if (!fontsLoaded) {
     return <Text>Loading fonts...</Text>;
