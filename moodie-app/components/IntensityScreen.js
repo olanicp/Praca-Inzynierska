@@ -2,23 +2,23 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import GradientSlider from './GradientSlider'
 import GradientButton from './GradientButton';
-// gradientColors={["#FFF0FF", "#F5ABD6", "#D558A3"]}
 
 
 export default function FrequencyScreen({ navigation }) {
-  const [frequency, setFrequency] = useState(0); // Wartość suwaka od -1 (negatywne) do 1 (pozytywne)
+  const [intensity, setIntensity] = useState(0); // Wartość suwaka od -1 (negatywne) do 1 (pozytywne)
 
   const handleNext = () => {
-    navigation.navigate('IntensityScreen');
+    navigation.navigate('EmotionalSpectrumScreen');
   };
 
   return (
     <View style={styles.container}>
       <View >
-        <Text style={styles.title}>How would you describe the <Text style={{fontWeight:'bold'}}>frequency</Text> of your current emotions?</Text>
+        <Text style={styles.title}>How would you describe the <Text style={{fontWeight:'bold'}}>intensity</Text> of your current emotions?</Text>
       </View>
       <View>
-        <GradientSlider transformation={{transform:[{rotate: "-90deg"}]}} orientation='vertical' sliderHeight={180} thumbHeight={130} markHeight={30} borderRadius={30}/>
+        <GradientSlider transformation={{transform:[{rotate: "-90deg"}]}} orientation='vertical' sliderHeight={180} thumbHeight={130} markHeight={30} borderRadius={30} gradientColors={["#FFF0FF", "#F5ABD6", "#D558A3"]}
+        />
       </View>
   
       <View >

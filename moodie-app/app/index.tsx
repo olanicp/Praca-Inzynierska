@@ -11,6 +11,12 @@ import ResetPasswordScreen from "../components/ResetPasswordScreen";
 import ResetPasswordSuccessScreen from "../components/ResetPasswordSuccessScreen";
 import CalendarScreen from "../components/CalendarScreen";
 import FrequencyScreen from "../components/FrequencyScreen";
+import IntensityScreen from "../components/IntensityScreen";
+import EmotionalSpectrumScreen from "../components/EmotionalSpectrumScreen";
+import EmotionListScreen from "../components/EmotionListScreen";
+import FeelingsScreen from "../components/FeelingsScreen";
+import ExploreScreen from "../components/ExploreScreen";
+
 import { useFonts } from "expo-font";
 
 
@@ -45,6 +51,12 @@ export default function HomeScreen() {
       <Stack.Screen name="Main" component={MainScreen} />
       <Stack.Screen name="Calendar" component={CalendarScreen} />
       <Stack.Screen name="FrequencyScreen" component={FrequencyScreen} />
+      <Stack.Screen name="IntensityScreen" component={IntensityScreen} />
+      <Stack.Screen name="EmotionalSpectrumScreen" component={EmotionalSpectrumScreen} />
+      <Stack.Screen name="EmotionListScreen" component={EmotionListScreen} />
+      <Stack.Screen name="FeelingsScreen" component={FeelingsScreen} />
+      <Stack.Screen name="ExploreScreen" component={ExploreScreen} />
+
     </Stack.Navigator>
   );
 }

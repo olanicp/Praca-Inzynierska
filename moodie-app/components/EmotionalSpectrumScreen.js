@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import GradientSlider from './GradientSlider'
 import GradientButton from './GradientButton';
-// gradientColors={["#FFF0FF", "#F5ABD6", "#D558A3"]}
+import { LinearGradient } from "expo-linear-gradient";
 
 
-export default function FrequencyScreen({ navigation }) {
-  const [frequency, setFrequency] = useState(0); // Wartość suwaka od -1 (negatywne) do 1 (pozytywne)
-
+export default function EmotionalSpectrumScreen({ navigation }) {
   const handleNext = () => {
-    navigation.navigate('IntensityScreen');
+    navigation.navigate('EmotionListScreen');
   };
 
   return (
     <View style={styles.container}>
-      <View >
-        <Text style={styles.title}>How would you describe the <Text style={{fontWeight:'bold'}}>frequency</Text> of your current emotions?</Text>
-      </View>
-      <View>
-        <GradientSlider transformation={{transform:[{rotate: "-90deg"}]}} orientation='vertical' sliderHeight={180} thumbHeight={130} markHeight={30} borderRadius={30}/>
+    <LinearGradient
+                colors={["#c4ecf2", "#ffffff", "#b4cef1"]}
+                locations={[0, 0.4, 1]}
+                start={{ x: 0, y: 0 }} 
+                end={{ x: 1, y: 1 }}
+                style={styles.background}
+                />
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>Looks like today you are in the</Text>
+            <View><Text style={[styles.text, {fontWeight:'bold', fontSize: 40, marginTop: 30, marginBottom: 30}]}>low intensity negative</Text></View>
+        <Text style={styles.text}>emotional spectrum</Text>
       </View>
   
       <View >
@@ -33,7 +36,7 @@ export default function FrequencyScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff6fb',
+    backgroundColor: '#f1ffff',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 40,
@@ -41,11 +44,19 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20
   },
-  slider:{
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "900",
+  },
+  textContainer:{
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
+  text: {
     fontFamily: "Quicksand-Regular",
     color: "#474146",
     paddingHorizontal: 5,
