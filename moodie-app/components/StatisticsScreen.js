@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { styles } from "./MainAppStyles";
+import { View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import GradientButton from "./GradientButton";
+import { styles } from "./MainAppStyles";
 
-export default function MainScreen() {
+export default function StatisticsScreen() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -46,28 +45,11 @@ export default function MainScreen() {
         </View>
       </View>
       <View style={styles.body}>
-        <View style={styles.bodyBubble}>
-          <Text style={styles.greetingText}>Hi, Emma!</Text>
-          <Text style={styles.questionText}>How are you feeling today?</Text>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => navigation.navigate("FrequencyScreen")}
-          >
-            <GradientButton
-              text={"Let's find out together! →"}
-            ></GradientButton>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.inputSection}>
-          <Text style={styles.inputLabel}>Something on your mind?</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Write your thoughts here..."
-            placeholderTextColor="#A0A0A0"
-            multiline
-          />
-        </View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}></View>
       </View>
     </View>
   );
