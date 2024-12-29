@@ -43,7 +43,7 @@ export default function SignupScreen() {
     }
 
     try {
-      const response = await axios.post("http://192.168.43.115:5000/signup", {
+      const response = await axios.post("http://192.168.0.157:5000/register", { //for testing purposes change to the local ip address of the emulator
         name: name.value,
         email: email.value,
         password: password.value,
@@ -56,7 +56,7 @@ export default function SignupScreen() {
         throw new Error("error has occurred");
       }
     } catch (error) {
-      alert(error.response.data);
+      alert("ups");
     }
   };
 

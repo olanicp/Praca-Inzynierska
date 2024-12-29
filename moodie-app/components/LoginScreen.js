@@ -13,7 +13,7 @@ export default function LoginScreen() {
 
   const onLoginPressed = async (event) => {
     try {
-      const response = await axios.post("http://192.168.43.115:5000/login", {
+      const response = await axios.post("http://192.168.0.157:5000/login", { //for testing purposes change to the local ip address of the emulator
         email: email.value,
         password: password.value,
       });
@@ -46,6 +46,7 @@ export default function LoginScreen() {
       </View>
 
       <View>
+
         <View>
           <Text style={styles.inputBoxName}>Email</Text>
           <TextInput
