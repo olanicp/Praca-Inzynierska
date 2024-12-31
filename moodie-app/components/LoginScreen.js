@@ -13,7 +13,7 @@ export default function LoginScreen() {
 
   const onLoginPressed = async (event) => {
     try {
-      const response = await axios.post("http://192.168.43.115:5000/login", {
+      const response = await axios.post("http://192.168.0.157:5000/login", { //for testing purposes change to the local ip address of the emulator
         email: email.value,
         password: password.value,
       });
@@ -36,8 +36,10 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#C1EBF2", "white", "#FF8FD2"]}
+        colors={styles.backgroundGradient}
         style={styles.background}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
       />
 
       <View style={styles.header}>
@@ -46,6 +48,7 @@ export default function LoginScreen() {
       </View>
 
       <View>
+
         <View>
           <Text style={styles.inputBoxName}>Email</Text>
           <TextInput

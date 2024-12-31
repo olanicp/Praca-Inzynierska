@@ -4,7 +4,6 @@ import { View, Text } from "react-native";
 import LoginScreen from "../components/LoginScreen";
 import WelcomeScreen from "../components/WelcomeScreen";
 import SignupScreen from "../components/SignupScreen";
-import MainScreen from "../components/MainScreen";
 import ForgotPasswordScreen from "../components/ForgotPasswordScreen";
 import ConfirmationCodeScreen from "../components/ConfirmationCodeScreen";
 import ResetPasswordScreen from "../components/ResetPasswordScreen";
@@ -17,7 +16,7 @@ import EmotionListScreen from "../components/EmotionListScreen";
 import FeelingsScreen from "../components/FeelingsScreen";
 import ExploreScreen from "../components/ExploreScreen";
 import StreakScreen from "../components/StreakScreen";
-
+import TabNavigator from "../components/TabNavigator";
 import { useFonts } from "expo-font";
 
 
@@ -29,7 +28,8 @@ export default function HomeScreen() {
     "PlayfairDisplay-Bold": require("../assets/fonts/PlayfairDisplay-Bold.ttf"),
     "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),    
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
-
+    "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
+    "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
   });
   if (!fontsLoaded) {
     return <Text>Loading fonts...</Text>;
@@ -52,7 +52,7 @@ export default function HomeScreen() {
         name="ResetPasswordSuccess"
         component={ResetPasswordSuccessScreen}
       />
-      <Stack.Screen name="Main" component={MainScreen} />
+      <Stack.Screen name="Main" component={TabNavigator} />
       <Stack.Screen name="Calendar" component={CalendarScreen} />
       <Stack.Screen name="FrequencyScreen" component={FrequencyScreen} />
       <Stack.Screen name="IntensityScreen" component={IntensityScreen} />

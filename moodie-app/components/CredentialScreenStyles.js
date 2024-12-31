@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  backgroundGradient: ["#C1EBF2", "white", "#FF8FD2"],
   container: {
     flex: 1,
     justifyContent: "space-evenly",
