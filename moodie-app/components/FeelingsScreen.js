@@ -39,10 +39,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1ffff',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 40,
-    paddingBottom: 40,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingVertical: 40,
+    paddingHorizontal: 20,
   },
   background: {
     position: "absolute",
@@ -62,45 +60,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     fontSize: 30,
     textAlign: 'center',
-  },
-  sliderBackground: {
-    width: '80%',
-    height: 300,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  slider: {
-    width: '100%',
-    height: 40,
-    transform: [{ rotate: '-90deg' }], // Obrót suwaka do pionu
-  },
-  labels: {
-    width: '80%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  labelText: {
-    fontSize: 14,
-    color: '#555555',
-  },
-  nextButton: {
-    marginTop: 40,
-    backgroundColor: '#96C3EB',
-    borderRadius: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 40,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  nextButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
-  },
+  }
 });

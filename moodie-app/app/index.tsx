@@ -16,6 +16,7 @@ import EmotionalSpectrumScreen from "../components/EmotionalSpectrumScreen";
 import EmotionListScreen from "../components/EmotionListScreen";
 import FeelingsScreen from "../components/FeelingsScreen";
 import ExploreScreen from "../components/ExploreScreen";
+import StreakScreen from "../components/StreakScreen";
 
 import { useFonts } from "expo-font";
 
@@ -25,7 +26,10 @@ const Stack = createNativeStackNavigator();
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     "PlayfairDisplay-Regular": require("../assets/fonts/PlayfairDisplay-Regular.ttf"),
-    "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
+    "PlayfairDisplay-Bold": require("../assets/fonts/PlayfairDisplay-Bold.ttf"),
+    "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),    
+    "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
+
   });
   if (!fontsLoaded) {
     return <Text>Loading fonts...</Text>;
@@ -56,7 +60,7 @@ export default function HomeScreen() {
       <Stack.Screen name="EmotionListScreen" component={EmotionListScreen} />
       <Stack.Screen name="FeelingsScreen" component={FeelingsScreen} />
       <Stack.Screen name="ExploreScreen" component={ExploreScreen} />
-
+      <Stack.Screen name="StreakScreen" component={StreakScreen} />
     </Stack.Navigator>
   );
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import GradientButton from './GradientButton';
 import GradientSlider from './GradientSlider';
+import ExploreScreenBoxes from './ExploreScreenBoxes';
 const width = Dimensions.get('window').width
 
 
@@ -11,40 +12,38 @@ export default function FeelingsScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-        <View>
-            <Text style={styles.text}>How many hours did you sleep last night?</Text>
-            <View style={styles.sliderContainer}>
-                <GradientSlider sliderWidth={width * 0.7}/>
-            </View>
-        </View>
+    <ScrollView contentContainerStyle={styles.container}>
+    
+      <Text style={styles.text}>How many hours did you sleep last night?</Text>
+      <View style={styles.sliderContainer}>
+          <GradientSlider sliderWidth={width * 0.7}/>
+      </View>
 
-        <View>
-            <Text style={styles.text}>How much physical activity did you do today?</Text>
-            <View style={styles.sliderContainer}>
-                <GradientSlider sliderWidth={width * 0.7}/>
-            </View>
-        </View>
-  
-        <View >
-            <TouchableOpacity onPress={handleNext}>
-            <GradientButton text={"next"}/>
-            </TouchableOpacity>
-        </View>
-    </View>
+      <ExploreScreenBoxes/>
+
+      <Text style={styles.text}>How much physical activity did you do today?</Text>
+      <View style={styles.sliderContainer}>
+          <GradientSlider sliderWidth={width * 0.7} isNumbers={false} sliderText={["none", "light", "moderate", "intense"]}/>
+      </View>
+
+      <ExploreScreenBoxes />
+
+      <View>
+        <TouchableOpacity onPress={handleNext}>
+          <GradientButton text={"next"}/>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff6fb',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 40,
-    paddingBottom: 40,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingVertical: 40,
+    paddingHorizontal: 20
   },
   text: {
     fontFamily: "Quicksand-Regular",
@@ -55,5 +54,5 @@ const styles = StyleSheet.create({
   },
   sliderContainer: {
     marginVertical: 30
-  }
+  },
 });
