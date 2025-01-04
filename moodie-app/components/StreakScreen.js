@@ -1,12 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect  } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import GradientButton from './GradientButton';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const getStreakData = async () => {
+  try {
+    const streak = await AsyncStorage.getItem('streak');
+    const loginDays = await AsyncStorage.getItem('loginDays');
+    if (streak && loginDays) {
+      console.log('Streak from storage:', streak);
+      console.log('Login days from storage:', loginDays);
+
+      return {
+        streak: streak ? JSON.parse(streak) : 0,
+        loginDays: loginDays ? JSON.parse(loginDays) : []
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error('Error retrieving streak:', error);
+    return null;
+  }
+};
+
 
 export default function StreakScreen({ navigation }) {
-    const days = ['T', 'W', 'T', 'F', 'S', 'S', 'M'];
-    const checkedDays = [true, true, true, true, true, false, false]; // Status zaznaczenia dni
+    const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    const [streak, setStreak] = useState(0);
+    const [checkedDays, setCheckedDays] = useState([]);
+    
+    useEffect(() => {
+      const fetchStreakData = async () => {
+        const streakData = await getStreakData();
+        setStreak(streakData.streak);
+        setCheckedDays(streakData.loginDays);
+      };
+    
+      fetchStreakData();
+    }, []);
+
+    const getDaysInOrder = () => {
+      const firstDayIndex = checkedDays.length > 0 ? checkedDays[0] : 0; // Dzień początkowy streak
+      const orderedDays = [];
+      for (let i = 0; i < 7; i++) {
+        orderedDays.push(days[(firstDayIndex + i) % 7]);
+      }
+      return orderedDays;
+    };
   
     return (
         <View style={styles.container}>
@@ -19,21 +60,23 @@ export default function StreakScreen({ navigation }) {
         />
 
         <View style={styles.subContainer}>
-          <Text style={styles.streakNumber}>7</Text>
+          <Text style={styles.streakNumber}>{streak}</Text>
           <Text style={styles.streakText}>day streak!</Text>
           <Text style={styles.infoText}>Check in everyday to keep it going</Text>
       
           <View style={styles.daysContainer}>
-            {days.map((day, index) => (
+            {getDaysInOrder().map((day, index) => (
               <View key={index} style={styles.dayWrapper}>
                 <Text style={styles.dayText}>{day}</Text>
                 <View
                   style={[
                     styles.circle,
-                    checkedDays[index] ? styles.checkedCircle : styles.uncheckedCircle,
+                    checkedDays.includes((checkedDays[0] + index) % 7)
+                     ? styles.checkedCircle 
+                     : styles.uncheckedCircle,
                   ]}
                 >
-                  {checkedDays[index] && <AntDesign name="check" size={24} color="#474146" />}
+                  {checkedDays.includes((checkedDays[0] + index) % 7) && <AntDesign name="check" size={24} color="#474146" />}
                 </View>
               </View>
             ))}

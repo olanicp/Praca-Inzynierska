@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "./MainAppStyles";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import GradientButton from "./GradientButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+const getStreak = async () => {
+  try {
+    const streak = await AsyncStorage.getItem('streak');
+    if (streak) {
+      console.log('streak', streak)
+      return streak
+    }
+    return null;
+  } catch (error) {
+    console.error('Error retrieving streak:', error);
+    return null;
+  }
+};
 
 export default function MainScreen() {
+  const [streak, setStreak] = useState(0);
   const navigation = useNavigation();
+
+  useEffect(() => {
+        const fetchStreak = async () => {
+          const streakData = await getStreak();
+          setStreak(streakData);
+        };
+      
+        fetchStreak();
+      }, []);
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -40,7 +66,7 @@ export default function MainScreen() {
                 paddingHorizontal: 5,
               }}
             >
-              6
+              {streak}
             </Text>
           </View>
         </View>

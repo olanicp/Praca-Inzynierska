@@ -5,6 +5,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import GradientButton from "./GradientButton";
 import { styles } from "./CredentialScreenStyles";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -18,8 +20,20 @@ export default function LoginScreen() {
         password: password.value,
       });
 
+
       if (response.status === 200) {
+        const {userID, streak, login_days} = response.data.user;
         alert("Dane przesłane");
+
+        alert(`User ID: ${streak}`);
+
+        try {
+          await AsyncStorage.setItem("userId", userID);
+          await AsyncStorage.setItem("streak", JSON.stringify(streak));
+          await AsyncStorage.setItem("loginDays", JSON.stringify(login_days));
+        } catch (err) {
+          console.error("Error saving userId:", err);
+        }
         navigation.navigate("Main");
       } else {
         throw new Error("error has occurred");

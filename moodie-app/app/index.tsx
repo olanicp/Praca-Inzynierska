@@ -28,8 +28,6 @@ export default function HomeScreen() {
     "PlayfairDisplay-Bold": require("../assets/fonts/PlayfairDisplay-Bold.ttf"),
     "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),    
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
-    "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
-    "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
   });
   if (!fontsLoaded) {
     return <Text>Loading fonts...</Text>;
