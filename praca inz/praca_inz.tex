@@ -1,0 +1,74 @@
+% Opcje klasy 'iithesis' opisane sa w komentarzach w pliku klasy. Za ich pomoca
+% ustawia sie przede wszystkim jezyk oraz rodzaj (lic/inz/mgr) pracy.
+\documentclass[inz, shortabstract]{iithesis}
+
+\usepackage[utf8]{inputenc}
+
+%%%%% DANE DO STRONY TYTUŁOWEJ
+% Niezaleznie od jezyka pracy wybranego w opcjach klasy, tytul i streszczenie
+% pracy nalezy podac zarowno w jezyku polskim, jak i angielskim.
+% Pamietaj o madrym (zgodnym z logicznym rozbiorem zdania oraz estetyka) recznym
+% zlamaniu wierszy w temacie pracy, zwlaszcza tego w jezyku pracy. Uzyj do tego
+% polecenia \fmlinebreak.
+\polishtitle    {Aplikacja pomagająca użytkownikom \fmlinebreak zrozumieć swoje emocje oraz identyfikować \fmlinebreak wzorce nastroju}
+\englishtitle   {A mobile application helping users understand their emotions and \fmlinebreak identify mood patterns}
+\polishabstract {Celem pracy jest stworzenie aplikacji mobilnej, która umożliwi użytkownikom identyfikowanie własnych emocji oraz czynników wpływających na ich występowanie. 
+Aplikacja ma ułatwić rozpoznawanie źródeł stresu oraz wspierać podejmowanie decyzji promujących zdrowsze nawyki. Dzięki wykorzystaniu identyfikacji wpływu czynników tj. dieta, aktywność fizyczna i sen na nastrój użytkownik zostaje stopniowo uświadomiony o powiązaniu jego stylu życia ze zdrowiem psychicznym. Zadaniem aplikacji jest również proponowanie wskazówek na podstawie emocji odczuwanych przez użytkownika, jak i zapewnienie możliwości swobodnego opisywania codziennych przemyśleń czy doświadczeń.}
+\englishabstract{The goal of the thesis is to create a mobile application that allows users to identify their own emotions and the factors that influence them. 
+The app is intended to facilitate the identification of sources of stress and support decision-making that promotes healthier habits. By identifying the influence of factors such as diet, physical activity and sleep on mood, the user will gradually become aware of the link between their lifestyle and mental health. The app is also designed to provide guidance based on the user's emotions, as well as the ability to freely describe daily thoughts or experiences.}
+% w pracach wielu autorow nazwiska mozna oddzielic poleceniem \and
+\author         {Aleksandra Nicpoń \and Martyna Wybraniec}
+% w przypadku kilku promotorow, lub koniecznosci podania ich afiliacji, linie
+% w ponizszym poleceniu mozna zlamac poleceniem \fmlinebreak
+\advisor        {dr Marcin Młotkowski}
+%\date          {}                     % Data zlozenia pracy
+% Dane do oswiadczenia o autorskim wykonaniu
+%\transcriptnum {}                     % Numer indeksu
+%\advisorgen    {dr. Jana Kowalskiego} % Nazwisko promotora w dopelniaczu
+%%%%%
+
+%%%%% WLASNE DODATKOWE PAKIETY
+%
+%\usepackage{graphicx,listings,amsmath,amssymb,amsthm,amsfonts,tikz}
+%
+%%%%% WŁASNE DEFINICJE I POLECENIA
+%
+%\theoremstyle{definition} \newtheorem{definition}{Definition}[chapter]
+%\theoremstyle{remark} \newtheorem{remark}[definition]{Observation}
+%\theoremstyle{plain} \newtheorem{theorem}[definition]{Theorem}
+%\theoremstyle{plain} \newtheorem{lemma}[definition]{Lemma}
+%\renewcommand \qedsymbol {\ensuremath{\square}}
+% ...
+%%%%%
+
+\begin{document}
+
+%%%%% POCZĄTEK ZASADNICZEGO TEKSTU PRACY
+
+\chapter{Wprowadzenie}
+\section{aaa}
+\section{Opis i analiza zagadnienia}
+\chapter{Porównanie konkurencyjnych aplikacji}
+\section{Moodpress}
+\section{Daylio}
+\section{DailyBean}
+\section{How We Feel}
+\chapter{Wykaz narzędzi}
+\section{Projekt interfejsu}
+\section{Frontend}
+\section{Backend}
+\section{Baza danych}
+\chapter{Podręcznik użytkownika}
+\section{Instalacja}
+\section{Dostępne funkcjonalności}
+\chapter{Przypadki użycia}
+
+\ldots
+
+%%%%% BIBLIOGRAFIA
+
+%\begin{thebibliography}{1}
+%\bibitem{example} \ldots
+%\end{thebibliography}
+
+\end{document}
