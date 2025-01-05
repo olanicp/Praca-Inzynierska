@@ -1,28 +1,40 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import GradientSlider from './GradientSlider'
-import GradientButton from './GradientButton';
-
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import GradientSlider from "./GradientSlider";
+import GradientButton from "./GradientButton";
 
 export default function IntensityScreen({ navigation }) {
   const [intensity, setIntensity] = useState(0); // Wartość suwaka od -1 (negatywne) do 1 (pozytywne)
 
   const handleNext = () => {
-    navigation.navigate('EmotionalSpectrumScreen');
+    navigation.navigate("EmotionalSpectrumScreen");
   };
 
   return (
     <View style={styles.container}>
-      <View >
-        <Text style={styles.title}>How would you describe the <Text style={{fontWeight:'bold'}}>intensity</Text> of your current emotions?</Text>
+      <View>
+        <Text style={styles.title}>
+          How would you describe the{" "}
+          <Text style={{ fontWeight: "bold" }}>energy</Text> of your current
+          emotions?
+        </Text>
       </View>
       <View>
-        <GradientSlider transformation={{transform:[{rotate: "-90deg"}]}} orientation='vertical' sliderHeight={180} thumbHeight={130} markHeight={30} borderRadius={30} gradientColors={["#FFF0FF", "#F5ABD6", "#D558A3"]} sliderText={["high", "medium", "low"]}/>
+        <GradientSlider
+          transformation={{ transform: [{ rotate: "-90deg" }] }}
+          orientation="vertical"
+          sliderHeight={180}
+          thumbHeight={130}
+          markHeight={30}
+          borderRadius={30}
+          gradientColors={["#FFF0FF", "#F5ABD6", "#D558A3"]}
+          sliderText={["high", "medium", "low"]}
+        />
       </View>
-  
-      <View >
+
+      <View>
         <TouchableOpacity onPress={handleNext}>
-          <GradientButton text={"next"}/>
+          <GradientButton text={"next"} />
         </TouchableOpacity>
       </View>
     </View>
@@ -32,17 +44,17 @@ export default function IntensityScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff6fb',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    backgroundColor: "#fff6fb",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingVertical: 40,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   title: {
     fontFamily: "Quicksand-Regular",
     color: "#474146",
     paddingHorizontal: 5,
     fontSize: 30,
-    textAlign: 'center',
-  }
+    textAlign: "center",
+  },
 });
