@@ -54,6 +54,7 @@ export const styles = StyleSheet.create({
     marginBottom: 100,
   },
   bodyBubble: {
+    flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "white",
@@ -136,5 +137,10 @@ export const styles = StyleSheet.create({
     color: "#474146",
     marginVertical: 5,
     textAlign: "left",
+  },
+  barChart: {
+    alignSelf: "stretch",
+    padding: 10,
+    marginVertical: 20,
   },
 });
