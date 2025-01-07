@@ -7,7 +7,6 @@ import { styles } from "./CredentialScreenStyles";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -15,14 +14,14 @@ export default function LoginScreen() {
 
   const onLoginPressed = async (event) => {
     try {
-      const response = await axios.post("http://192.168.0.157:5000/login", { //for testing purposes change to the local ip address of the emulator
+      const response = await axios.post("http://192.168.0.157:5000/login", {
+        //for testing purposes change to the local ip address of the emulator
         email: email.value,
         password: password.value,
       });
 
-
       if (response.status === 200) {
-        const {userID, streak, login_days} = response.data.user;
+        const { userID, streak, login_days } = response.data.user;
         alert("Dane przesłane");
 
         alert(`User ID: ${streak}`);
@@ -62,7 +61,6 @@ export default function LoginScreen() {
       </View>
 
       <View>
-
         <View>
           <Text style={styles.inputBoxName}>Email</Text>
           <TextInput

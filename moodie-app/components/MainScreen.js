@@ -3,37 +3,12 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "./MainAppStyles";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import GradientButton from "./GradientButton";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-
-const getStreak = async () => {
-  try {
-    const streak = await AsyncStorage.getItem('streak');
-    if (streak) {
-      console.log('streak', streak)
-      return streak
-    }
-    return null;
-  } catch (error) {
-    console.error('Error retrieving streak:', error);
-    return null;
-  }
-};
+import Header from "./Header";
 
 export default function MainScreen() {
-  const [streak, setStreak] = useState(0);
   const navigation = useNavigation();
 
-  useEffect(() => {
-        const fetchStreak = async () => {
-          const streakData = await getStreak();
-          setStreak(streakData);
-        };
-      
-        fetchStreak();
-      }, []);
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -41,36 +16,7 @@ export default function MainScreen() {
         locations={[0, 0.22, 1]}
         style={styles.background}
       />
-      <View style={styles.header}>
-        <View style={styles.headerBubble}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>E</Text>
-          </View>
-        </View>
-        <View style={styles.dateAndStreak}>
-          <View style={styles.headerBubble}>
-            <Text style={styles.dateText}>Sat, Dec 7</Text>
-          </View>
-          <View style={styles.headerBubble}>
-            <FontAwesome6
-              name="fire-flame-curved"
-              size={24}
-              color="#474146"
-              style={{ paddingHorizontal: 5 }}
-            />
-            <Text
-              style={{
-                fontFamily: "Quicksand-Regular",
-                fontSize: 16,
-                color: "#474146",
-                paddingHorizontal: 5,
-              }}
-            >
-              {streak}
-            </Text>
-          </View>
-        </View>
-      </View>
+      <Header />
       <View style={styles.body}>
         <View style={styles.bodyBubble}>
           <Text style={styles.greetingText}>Hi, Emma!</Text>
