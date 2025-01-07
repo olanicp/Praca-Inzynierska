@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import GradientButton from './GradientButton';
 import { LinearGradient } from "expo-linear-gradient";
 
 
-export default function FeelingsScreen({ navigation }) {
-  const handleNext = () => {
-    navigation.navigate('ExploreScreen');
-  };
-
+export default function FeelingsScreen({ }) {
   return (
     <View style={styles.container}>
     <LinearGradient
@@ -25,9 +20,7 @@ export default function FeelingsScreen({ navigation }) {
       </View>
   
       <View >
-        <TouchableOpacity onPress={handleNext}>
-          <GradientButton text={"continue"}/>
-        </TouchableOpacity>
+       
       </View>
     </View>
   );

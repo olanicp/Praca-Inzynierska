@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import GradientButton from './GradientButton';
 
-export default function EmotionsScreen({ navigation }) {
-  const [selectedItems, setSelectedItems] = useState(['3']); // Domyślnie zaznaczona emocja "lost"
-  const [lastSelectedEmotion, setLastSelectedEmotion] = useState("the feeling of being unable to find your way"); // Domyślny opis dla "lost"
+export default function EmotionsScreen({ emotions }) {
+  const [selectedItems, setSelectedItems] = useState([]); 
+  const [lastSelectedEmotion, setLastSelectedEmotion] = useState(""); 
 
-  const emotions = [
-    { id: '1', label: 'trapped', desc: "description 1" },
-    { id: '2', label: 'disconnected', desc: "description 1" },
-    { id: '3', label: 'lost', desc: "the feeling of being unable to find your way" },
-    { id: '4', label: 'insecure', desc: "description 1" },
-    { id: '5', label: 'worried', desc: "description 1" },
-    {id: '6', label: 'trapped', desc: "description 1" },
-    { id: '7', label: 'disconnected', desc: "description 1" },
-    { id: '8', label: 'lost', desc: "the feeling of being unable to find your way" },
-    { id: '9', label: 'insecure', desc: "description 1" },
-    { id: '10', label: 'worried', desc: "description 1" }
-  ];
 
   const handleSelect = (id) => {
     const isSelected = selectedItems.includes(id);
@@ -27,14 +14,14 @@ export default function EmotionsScreen({ navigation }) {
 
     if (!isSelected) {
       const selectedEmotion = emotions.find((emotion) => emotion.id === id);
-      setLastSelectedEmotion(selectedEmotion.desc);
+      console.log(selectedEmotion.description)
+      setLastSelectedEmotion(selectedEmotion.description);
+    }else{
+      setLastSelectedEmotion("select all that resonate with you")
     }
   };
 
-  const handleNext = () => {
-    console.log('Selected emotions:', selectedItems);
-    navigation.navigate('FeelingsScreen');
-  };
+  
 
   const renderEmotion = ({ item }) => (
     <TouchableOpacity
@@ -44,7 +31,7 @@ export default function EmotionsScreen({ navigation }) {
       ]}
       onPress={() => handleSelect(item.id)}
     >
-      <Text style={styles.emotionText}>{item.label}</Text>
+      <Text style={styles.emotionText}>{item.emotion}</Text>
     </TouchableOpacity>
   );
 
@@ -69,11 +56,11 @@ export default function EmotionsScreen({ navigation }) {
         {lastSelectedEmotion || 'Select an emotion to see its description'}
       </Text>
 
-        <View>
+        {/* <View>
             <TouchableOpacity onPress={handleNext}>
             <GradientButton text={"next"}/>
             </TouchableOpacity>
-        </View>
+        </View> */}
     </View>
   );
 }
@@ -84,8 +71,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff6fb',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingTop: 60,
+    paddingBottom: 120,
     paddingHorizontal: 20,
-    paddingVertical: 40,
   },
   title: {
     fontFamily: "Quicksand-Regular",

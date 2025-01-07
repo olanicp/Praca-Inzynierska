@@ -29,9 +29,9 @@ export default function FeelingsScreen({ navigation }) {
       <ExploreScreenBoxes />
 
       <View>
-        <TouchableOpacity onPress={handleNext}>
+        {/* <TouchableOpacity onPress={handleNext}>
           <GradientButton text={"next"}/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </ScrollView>
   );
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#fff6fb',
     alignItems: 'center',
-    paddingVertical: 40,
+    paddingTop: 60,
+    paddingBottom: 120,
     paddingHorizontal: 20
   },
   text: {

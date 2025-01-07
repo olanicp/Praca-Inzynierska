@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import GradientButton from './GradientButton';
+import { View, Text, StyleSheet, } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 
 
-export default function EmotionalSpectrumScreen({ navigation }) {
-  const handleNext = () => {
-    navigation.navigate('EmotionListScreen');
-  };
+export default function EmotionalSpectrumScreen({ quadrant }) {
 
   return (
     <View style={styles.container}>
@@ -20,15 +16,10 @@ export default function EmotionalSpectrumScreen({ navigation }) {
                 />
       <View style={styles.textContainer}>
         <Text style={styles.text}>Looks like today you are in the</Text>
-            <View><Text style={[styles.text, {fontWeight:'bold', fontSize: 40, marginTop: 30, marginBottom: 30}]}>low intensity negative</Text></View>
+            <View><Text style={[styles.text, {fontWeight:'bold', fontSize: 40, marginTop: 30, marginBottom: 30}]}>{quadrant}</Text></View>
         <Text style={styles.text}>emotional spectrum</Text>
       </View>
   
-      <View >
-        <TouchableOpacity onPress={handleNext}>
-          <GradientButton text={"next"}/>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -39,10 +30,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1ffff',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 40,
     paddingBottom: 40,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingHorizontal: 20
   },
   background: {
     position: "absolute",

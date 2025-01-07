@@ -16,6 +16,7 @@ const GradientSlider = ({
   gradientColors = ["#A9C7EF", "#C6DCF9", "#F5ABD6"],
   sliderText = {},
   isNumbers = true,
+  onValueChange,
 }) => {
   const [value, setValue] = useState(0);
   const [textWidth, setTextWidth] = useState(0);
@@ -31,22 +32,20 @@ const GradientSlider = ({
       let newValue = Math.round(offset / stepWidth) + value;
       newValue = Math.max(0, Math.min(stepCount, newValue));
       setValue(newValue); 
-      console.log(value);
+      onValueChange(newValue);
+      // console.log(value);
     },
   });
 
   const getLabel = (index) => {
     if (!sliderText || sliderText.length === 0) return null;
 
-  const labelsCount = sliderText.length; // Liczba elementów w sliderText
+  const labelsCount = sliderText.length; 
 
-  if (labelsCount === 3) {
-    // Obsługa dla trzech słów
+  if (labelsCount === 2) {
     if (index === 0) return sliderText[0];
-    if (index === Math.floor(stepCount / 2)) return sliderText[1];
-    if (index === stepCount) return sliderText[2];
+    if (index === stepCount) return sliderText[1];
   } else if (labelsCount === 4) {
-    // Obsługa dla czterech słów
     if (index === 0) return sliderText[0];
     if (index === 3) return sliderText[1];
     if (index === 6) return sliderText[2];
@@ -86,10 +85,11 @@ const GradientSlider = ({
                     key={mark}
                     onLayout={(event) => setTextWidth(event.nativeEvent.layout.width)}
                     style={[
+                      styles.textMark,
                       { left: mark * stepWidth,  transform: [
-                        { translateX: -textWidth / 2 }, // Dostosuj przesunięcie w poziomie (jeśli potrzeba)
-                        { translateY: 0 }, // Przesunięcie w pionie (zmień wartość, by dopasować)
-                        { rotate: '90deg' }, // Obrót o 90 stopni
+                        { translateX: -textWidth / 2 },
+                        { translateY: 0 },
+                        { rotate: '90deg' }, 
                       ], 
                       position: 'absolute'
                     }
@@ -165,15 +165,13 @@ const styles = StyleSheet.create({
     top: 10
   },
   markLine: {
-    width: 1, // Increased width for visibility
+    width: 1,
     position: 'relative'
   },
   textMark: {
-    position: 'absolute',
     fontFamily: "Quicksand-Regular",
     color: "#474146",
     fontSize: 20,
-    transform: [{rotate: '90deg'}]
   },
   numbers: {
     fontFamily: 'Quicksand-Regular',

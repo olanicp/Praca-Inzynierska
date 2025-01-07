@@ -77,7 +77,7 @@ export default function MainScreen() {
           <Text style={styles.questionText}>How are you feeling today?</Text>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigation.navigate("FrequencyScreen")}
+            onPress={() => navigation.navigate("EmotionIdentificationCarousel")}
           >
             <GradientButton
               text={"Let's find out together! →"}

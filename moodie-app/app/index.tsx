@@ -17,6 +17,7 @@ import FeelingsScreen from "../components/FeelingsScreen";
 import ExploreScreen from "../components/ExploreScreen";
 import StreakScreen from "../components/StreakScreen";
 import TabNavigator from "../components/TabNavigator";
+import EmotionIdentificationCarousel from "../components/EmotionIdentificationCarousel"
 import { useFonts } from "expo-font";
 
 
@@ -59,6 +60,7 @@ export default function HomeScreen() {
       <Stack.Screen name="FeelingsScreen" component={FeelingsScreen} />
       <Stack.Screen name="ExploreScreen" component={ExploreScreen} />
       <Stack.Screen name="StreakScreen" component={StreakScreen} />
+      <Stack.Screen name="EmotionIdentificationCarousel" component={EmotionIdentificationCarousel} />
     </Stack.Navigator>
   );
 }

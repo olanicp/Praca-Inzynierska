@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import GradientSlider from "./GradientSlider";
-import GradientButton from "./GradientButton";
 
-export default function IntensityScreen({ navigation }) {
-  const [intensity, setIntensity] = useState(0); // Wartość suwaka od -1 (negatywne) do 1 (pozytywne)
+export default function IntensityScreen({ onValueChange }) {
+  const [intensity, setIntensity] = useState(0); 
 
-  const handleNext = () => {
-    navigation.navigate("EmotionalSpectrumScreen");
+  const handleIntensityChange = (newIntensity) => {
+    setIntensity(newIntensity);
+    onValueChange(newIntensity);
+    
   };
 
   return (
@@ -22,20 +23,20 @@ export default function IntensityScreen({ navigation }) {
       <View>
         <GradientSlider
           transformation={{ transform: [{ rotate: "-90deg" }] }}
+          stepCount={16}
           orientation="vertical"
           sliderHeight={180}
           thumbHeight={130}
           markHeight={30}
           borderRadius={30}
           gradientColors={["#FFF0FF", "#F5ABD6", "#D558A3"]}
-          sliderText={["high", "medium", "low"]}
+          sliderText={["low", "high"]}
+          onValueChange={handleIntensityChange}
         />
       </View>
 
       <View>
-        <TouchableOpacity onPress={handleNext}>
-          <GradientButton text={"next"} />
-        </TouchableOpacity>
+        
       </View>
     </View>
   );
@@ -47,7 +48,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff6fb",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 40,
+    paddingTop: 60,
+    paddingBottom: 120,
     paddingHorizontal: 20,
   },
   title: {

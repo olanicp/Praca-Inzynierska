@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import GradientSlider from "./GradientSlider";
-import GradientButton from "./GradientButton";
 
-export default function FrequencyScreen({ navigation }) {
-  const [frequency, setFrequency] = useState(0); // Wartość suwaka od -1 (negatywne) do 1 (pozytywne)
+export default function FrequencyScreen({ onValueChange }) {
+  const [frequency, setFrequency] = useState(0);
 
-  const handleNext = () => {
-    navigation.navigate("IntensityScreen");
+  const handleFrequencyChange = (newFrequency) => {
+    setFrequency(newFrequency);
+    onValueChange(newFrequency);
   };
 
   return (
@@ -22,19 +22,18 @@ export default function FrequencyScreen({ navigation }) {
       <View>
         <GradientSlider
           transformation={{ transform: [{ rotate: "-90deg" }] }}
+          stepCount={16}
           orientation="vertical"
           sliderHeight={180}
           thumbHeight={130}
           markHeight={30}
           borderRadius={30}
-          sliderText={["positive", "neutral", "negative"]}
+          sliderText={["negative", "positive"]}
+          onValueChange={handleFrequencyChange}
         />
       </View>
 
       <View>
-        <TouchableOpacity onPress={handleNext}>
-          <GradientButton text={"next"} />
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -46,7 +45,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff6fb",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 40,
+    paddingTop: 60,
+    paddingBottom: 120,
     paddingHorizontal: 20,
   },
   title: {

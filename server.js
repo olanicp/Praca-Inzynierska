@@ -38,24 +38,41 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// app.post('/getStreak', async (req, res) => {
-//     try{
-//         const { data: user, error } = await supabase
-//             .from('user_data')
-//             .select('last_signed_at, streak_count')
-//             .eq('id', userId)
-//             .single();
-
-//         if (error) {
-//             console.error('Error fetching user data:', error);
-//             return;
-//         }
-//     }catch(err){
-//         console.error('Unexpected error:', err);
-//         return res.status(500).json({ error: 'Internal server error' });
-//     }
+app.get('/emotions', async (req, res) => {
+    const { x, y } = req.query;
+    const newX = parseFloat((x - 8) / 8);
+    const newY = parseFloat((y - 8) / 8);
+  
+    if (newX === undefined || newY === undefined) {
+      return res.status(400).send({ error: 'Brak współrzędnych x i y' });
+    }
+  
+    try {
+      const { data: emotions, error } = await supabase
+        .from('emotions')
+        .select('*')
+        .gte('pleasantness', newX - 0.25) 
+        .lte('pleasantness', newX + 0.25) 
+        .gte('energy', newY - 0.25) 
+        .lte('energy', newY + 0.25); 
+  
+      if (error) {
+        throw error;
+      }
+      console.log(emotions);
     
-// })
+      let quadrant = '';
+      if (newX >= 0 && newY >= 0) quadrant = 'high energy pleasant';
+      else if (newX >= 0 && newY < 0) quadrant = 'low energy pleasant';
+      else if (newX < 0 && newY >= 0) quadrant = 'high energy unpleasant';
+      else quadrant = 'low energy unpleasant';
+  
+      res.send({ emotions, quadrant });
+    } catch (err) {
+      res.status(500).send({ error: err.message });
+    }
+});
+
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;

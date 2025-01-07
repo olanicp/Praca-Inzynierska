@@ -41,7 +41,7 @@ export default function StreakScreen({ navigation }) {
     }, []);
 
     const getDaysInOrder = () => {
-      const firstDayIndex = checkedDays.length > 0 ? checkedDays[0] : 0; // Dzień początkowy streak
+      const firstDayIndex = checkedDays.length > 0 ? checkedDays[0] : 0; 
       const orderedDays = [];
       for (let i = 0; i < 7; i++) {
         orderedDays.push(days[(firstDayIndex + i) % 7]);
@@ -83,9 +83,9 @@ export default function StreakScreen({ navigation }) {
           </View>
         </View>
       
-        <TouchableOpacity style={styles.button}>
+        {/* <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>close</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       
     );
@@ -96,13 +96,16 @@ export default function StreakScreen({ navigation }) {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'space-between', 
+      paddingTop: 60,
+    paddingBottom: 120,
+      paddingHorizontal: 20
     },
     background: {
-      position: 'absolute',
+      position: "absolute",
       left: 0,
       right: 0,
       top: 0,
-      bottom: 0,
+      height: "900",
     },
     subContainer: {
       flex: 1,
