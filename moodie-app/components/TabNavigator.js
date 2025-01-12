@@ -1,13 +1,37 @@
-import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import React, {useState} from "react";
+import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { LinearGradient } from "expo-linear-gradient";
-
 import MainScreen from "./MainScreen";
 import CalendarScreen from "./CalendarScreen";
 import StatisticsScreen from "./StatisticsScreen";
 import ProfileScreen from "./ProfileScreen";
+import AppIntroSlider from 'react-native-app-intro-slider';
+
+const slides = [
+  {
+    key: 'slide1',
+    text: 'First Slide',
+    title: 'First Slide Text',
+    image: require('../assets/images/favicon.png'),
+    backgroundColor: '#20d2bb'
+  },
+  {
+    key: 'slide2',
+    text: 'Second Slide',
+    title: 'Second Slide Text',
+    image: require('../assets/images/favicon.png'),
+    backgroundColor: '#20d2bb'
+  },
+  {
+    key: 'slide3',
+    text: 'Third Slide',
+    title: 'Third Slide Text',
+    image: require('../assets/images/favicon.png'),
+    backgroundColor: '#20d2bb'
+  },
+];
 
 const Tab = createBottomTabNavigator();
 
@@ -71,17 +95,56 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 };
 
 export default function TabNavigator() {
+  const [shouldShowApp, setShouldShowApp] = useState(false);
+
+  const onDone = () => {
+    setShouldShowApp(true);
+  }
+
+  const onSkip = () => {
+    setShouldShowApp(true);
+  }
+
+  const RenderItem = ({item}) => {
+    return(
+      <View style={{
+        flex: 1,
+        backgroundColor: item.backgroundColor,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        paddingBottom: 100
+      }}>
+        <Text style={styles.introTitle}>{item.title}</Text>
+        <Image style={styles.introImage} source={item.image}/>
+        <Text style={styles.introText}>{item.text}</Text>
+      </View>
+    )
+  }
+
   return (
-    <Tab.Navigator
-      initialRouteName="Main"
-      screenOptions={{ headerShown: false }}
-      tabBar={(props) => <CustomTabBar {...props} />}
-    >
-      <Tab.Screen name="Main" component={MainScreen} />
-      <Tab.Screen name="Calendar" component={CalendarScreen} />
-      <Tab.Screen name="Statistics" component={StatisticsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
+    <>
+      {shouldShowApp ? (
+        <Tab.Navigator
+          initialRouteName="Main"
+          screenOptions={{ headerShown: false }}
+          tabBar={(props) => <CustomTabBar {...props} />}
+        >
+          <Tab.Screen name="Main" component={MainScreen}/>
+          <Tab.Screen name="Calendar" component={CalendarScreen} />
+          <Tab.Screen name="Statistics" component={StatisticsScreen} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+        </Tab.Navigator>
+      ) : (
+        <AppIntroSlider 
+          data={slides}
+          renderItem={RenderItem}
+          onDone={onDone}
+          showSkipButton={true}
+          onSkip={onSkip}
+        />
+      )}
+    </>
+    
   );
 }
 

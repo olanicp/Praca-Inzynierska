@@ -50,7 +50,7 @@ export default function HomeScreen() {
         name="ResetPasswordSuccess"
         component={ResetPasswordSuccessScreen}
       />
-      <Stack.Screen name="Main" component={TabNavigator} />
+      <Stack.Screen name="MainScreen" component={TabNavigator} />
       <Stack.Screen name="Calendar" component={CalendarScreen} />
       <Stack.Screen name="FrequencyScreen" component={FrequencyScreen} />
       <Stack.Screen name="IntensityScreen" component={IntensityScreen} />

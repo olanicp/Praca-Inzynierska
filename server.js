@@ -40,6 +40,41 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post('/saveUserInterview', async (req, res)=> {
+  const {
+    emotionsIDs,
+    quadrant,
+    activities,
+    userID
+  } = req.body
+  console.log(emotionsIDs, activities.activities);
+  try {
+    const { data: interviewData, error } = await supabase
+      .from('user_interview')
+      .insert([
+        {
+          user_id: userID,
+          emotion_ids: emotionsIDs,
+          date: new Date(),
+          quadrant: quadrant,
+          sleepingHours: activities.sleepingHours,
+          exerciseHours: activities.exerciseHours,
+          meals: activities.meals,
+          activities: activities.activities
+        }
+      ]);
+
+    if (error) {
+      console.error('Błąd podczas wstawiania danych:', error);
+      return res.status(500).json({ message: 'Nie udało się zapisać danych', error });
+    }
+
+    res.status(200).json({ message: 'Dane zostały zapisane pomyślnie' });
+  } catch (err) {
+    console.error('Nieoczekiwany błąd:', err);
+    res.status(500).json({ message: 'Wewnętrzny błąd serwera' });
+  }
+})
 
 app.get('/emotions', async (req, res) => {
     const { x, y } = req.query;
@@ -76,6 +111,43 @@ app.get('/emotions', async (req, res) => {
     }
 });
 
+app.get('/emotionsByIds', async (req, res) => {
+  const {IDs} = req.query;
+  try{
+    const { data: emotionsByIds, error } = await supabase
+      .from('emotions')
+      .select('*')
+      .in('id', IDs);
+
+    if (error) {
+      throw error;
+    }
+    console.log(emotionsByIds);
+    res.send({ emotionsByIds});
+  }catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
+
+app.get("/stats", async (req, res) => {
+  const { userID } = req.query;
+  console.log(userID);
+  try {
+    const { data: stats, error } = await supabase
+      .from('user_interview')
+      .select('*')
+      .eq("user_id", userID);
+
+    if (error) {
+      throw error;
+    }
+    console.log(stats);
+  
+    res.send({ stats });
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+})
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;

@@ -141,6 +141,6 @@ export const styles = StyleSheet.create({
   barChart: {
     alignSelf: "stretch",
     padding: 10,
-    marginVertical: 20,
+    marginBottom: 20,
   },
 });

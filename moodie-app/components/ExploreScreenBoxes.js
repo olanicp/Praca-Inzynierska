@@ -1,38 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default function ExploreScreenBoxes() {
-  const [selectedMeals, setSelectedMeals] = useState([]);
-
-  const meals = ['breakfast', 'lunch', 'brunch', 'dinner', 'snacks', 'dessert', 'alcohol'];
+export default function ExploreScreenBoxes({props, onValueChange}) {
+  const [selectedProps, setselectedProps] = useState([]);
 
   const toggleMeal = (meal) => {
-    setSelectedMeals((prev) =>
+    setselectedProps((prev) =>
       prev.includes(meal) ? prev.filter((item) => item !== meal) : [...prev, meal]
     );
   };
+
+  useEffect(() => {
+    onValueChange(selectedProps);
+  }, [selectedProps]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>What meals did you have today?</Text>
       <View style={styles.mealContainer}>
-        {meals.map((meal) => (
+        {props.map((prop) => (
           <TouchableOpacity
-            key={meal}
+            key={prop}
             style={[
               styles.mealButton,
-              selectedMeals.includes(meal) && styles.selectedMealButton,
+              selectedProps.includes(prop) && styles.selectedMealButton,
             ]}
-            onPress={() => toggleMeal(meal)}
+            onPress={() => toggleMeal(prop)}
           >
             <Text
               style={[
                 styles.mealText,
-                selectedMeals.includes(meal) && styles.selectedMealText,
+                selectedProps.includes(prop) && styles.selectedMealText,
               ]}
             >
-              {meal}
+              {prop}
             </Text>
           </TouchableOpacity>
         ))}

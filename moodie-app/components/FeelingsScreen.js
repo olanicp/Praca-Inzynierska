@@ -3,7 +3,32 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 
 
-export default function FeelingsScreen({ }) {
+export default function FeelingsScreen({ userEmotions }) {
+  const formatEmotions = (userEmotions) => {
+    if (userEmotions.length === 1) {
+      return (
+        <Text style={[styles.text, {fontWeight:'bold', fontSize: 40, marginTop: 30, marginBottom: 30}]}>
+          {userEmotions[0]}
+        </Text>
+      );
+    }
+    if (userEmotions.length === 2) {
+      console.log(userEmotions)
+      return (
+        <Text style={[styles.text, {fontWeight:'bold', fontSize: 40, marginTop: 30, marginBottom: 30}]}>
+          {userEmotions[0]} <Text style={{ fontWeight: 'normal' }}>and</Text> {userEmotions[1]}
+        </Text>
+      );
+    }
+    return (
+      <Text style={[styles.text, {fontWeight:'bold', fontSize: 40, marginTop: 30, marginBottom: 30}]}>
+        {userEmotions[0]}, {userEmotions[1]} <Text style={{ fontWeight: 'normal' }}>and</Text> {userEmotions[2]}
+      </Text>
+    );
+  };
+
+  const emotionsText = formatEmotions(userEmotions);
+
   return (
     <View style={styles.container}>
     <LinearGradient
@@ -15,7 +40,9 @@ export default function FeelingsScreen({ }) {
                 />
       <View style={styles.textContainer}>
         <Text style={styles.text}>You are feeling</Text>
-            <View><Text style={[styles.text, {fontWeight:'bold', fontSize: 40, marginTop: 30, marginBottom: 30}]}>lost <Text style={{fontWeight:'normal'}}>and</Text> disconnected</Text></View>
+            <View>
+              {emotionsText}
+            </View>
         <Text style={styles.text}>let's now explore what made you feel this way...</Text>
       </View>
   
@@ -25,6 +52,8 @@ export default function FeelingsScreen({ }) {
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

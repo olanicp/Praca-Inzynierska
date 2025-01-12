@@ -19,7 +19,9 @@ export default function WelcomeScreen() {
   };
 
   const loginAsGuest = () => {
-    navigation.navigate("Main");
+    navigation.navigate('MainScreen', {
+      screen: 'Main'
+    }); 
   };
   return (
     <View style={styles.container}>

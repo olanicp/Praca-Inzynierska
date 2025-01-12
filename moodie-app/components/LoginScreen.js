@@ -33,7 +33,9 @@ export default function LoginScreen() {
         } catch (err) {
           console.error("Error saving userId:", err);
         }
-        navigation.navigate("Main");
+        navigation.navigate('MainScreen', {
+          screen: 'Main'
+        }); 
       } else {
         throw new Error("error has occurred");
       }
@@ -41,10 +43,6 @@ export default function LoginScreen() {
       alert(error.response.data);
     }
   };
-
-  // useEffect(() => {
-  //   onLoginPressed()
-  // }, []);
 
   return (
     <View style={styles.container}>

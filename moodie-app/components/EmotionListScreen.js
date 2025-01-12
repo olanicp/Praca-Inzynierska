@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
-export default function EmotionsScreen({ emotions }) {
+export default function EmotionsScreen({ emotions, onValueChange }) {
   const [selectedItems, setSelectedItems] = useState([]); 
   const [lastSelectedEmotion, setLastSelectedEmotion] = useState(""); 
 
 
-  const handleSelect = (id) => {
-    const isSelected = selectedItems.includes(id);
+  const handleSelect = (item) => {
+    const isSelected = selectedItems.includes(item.id);
     setSelectedItems((prev) =>
-      isSelected ? prev.filter((item) => item !== id) : [...prev, id]
+      isSelected ? prev.filter((elem) => elem.id !== item.id) : [...prev, item.emotion]
     );
-
+   
     if (!isSelected) {
-      const selectedEmotion = emotions.find((emotion) => emotion.id === id);
+      const selectedEmotion = emotions.find((emotion) => emotion.id === item.id);
       console.log(selectedEmotion.description)
       setLastSelectedEmotion(selectedEmotion.description);
     }else{
@@ -21,15 +21,19 @@ export default function EmotionsScreen({ emotions }) {
     }
   };
 
-  
+  useEffect(() => {
+    onValueChange(selectedItems);
+  }, [selectedItems])
 
   const renderEmotion = ({ item }) => (
     <TouchableOpacity
       style={[
         styles.emotionBlock,
-        selectedItems.includes(item.id) && styles.emotionBlockSelected,
+        selectedItems.includes(item.emotion) && styles.emotionBlockSelected,
       ]}
-      onPress={() => handleSelect(item.id)}
+      onPress={() => {
+        handleSelect(item); 
+      }}
     >
       <Text style={styles.emotionText}>{item.emotion}</Text>
     </TouchableOpacity>
