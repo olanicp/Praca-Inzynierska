@@ -1,29 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 
 export default function EmotionsScreen({ emotions, onValueChange }) {
-  const [selectedItems, setSelectedItems] = useState([]); 
-  const [lastSelectedEmotion, setLastSelectedEmotion] = useState(""); 
-
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [lastSelectedEmotion, setLastSelectedEmotion] = useState("");
 
   const handleSelect = (item) => {
     const isSelected = selectedItems.includes(item.id);
     setSelectedItems((prev) =>
-      isSelected ? prev.filter((elem) => elem.id !== item.id) : [...prev, item.emotion]
+      isSelected
+        ? prev.filter((elem) => elem.id !== item.id)
+        : [...prev, item.emotion]
     );
-   
+
     if (!isSelected) {
-      const selectedEmotion = emotions.find((emotion) => emotion.id === item.id);
-      console.log(selectedEmotion.description)
+      const selectedEmotion = emotions.find(
+        (emotion) => emotion.id === item.id
+      );
+      console.log(selectedEmotion.description);
       setLastSelectedEmotion(selectedEmotion.description);
-    }else{
-      setLastSelectedEmotion("select all that resonate with you")
+    } else {
+      setLastSelectedEmotion("select all that resonate with you");
     }
   };
 
   useEffect(() => {
     onValueChange(selectedItems);
-  }, [selectedItems])
+  }, [selectedItems]);
 
   const renderEmotion = ({ item }) => (
     <TouchableOpacity
@@ -32,7 +41,7 @@ export default function EmotionsScreen({ emotions, onValueChange }) {
         selectedItems.includes(item.emotion) && styles.emotionBlockSelected,
       ]}
       onPress={() => {
-        handleSelect(item); 
+        handleSelect(item);
       }}
     >
       <Text style={styles.emotionText}>{item.emotion}</Text>
@@ -57,10 +66,10 @@ export default function EmotionsScreen({ emotions, onValueChange }) {
       </View>
 
       <Text style={styles.description}>
-        {lastSelectedEmotion || 'Select an emotion to see its description'}
+        {lastSelectedEmotion || "Select an emotion to see its description"}
       </Text>
 
-        {/* <View>
+      {/* <View>
             <TouchableOpacity onPress={handleNext}>
             <GradientButton text={"next"}/>
             </TouchableOpacity>
@@ -72,9 +81,9 @@ export default function EmotionsScreen({ emotions, onValueChange }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff6fb',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    backgroundColor: "#fff6fb",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingTop: 60,
     paddingBottom: 120,
     paddingHorizontal: 20,
@@ -83,8 +92,8 @@ const styles = StyleSheet.create({
     fontFamily: "Quicksand-Regular",
     color: "#474146",
     fontSize: 30,
-    textAlign: 'center',
-    marginBottom: 30
+    textAlign: "center",
+    marginBottom: 30,
   },
   subtitle: {
     fontFamily: "Quicksand-Regular",
@@ -94,20 +103,20 @@ const styles = StyleSheet.create({
   },
   listWrapper: {
     flex: 1,
-    width: '70%',
-    position: 'relative',
+    width: "70%",
+    position: "relative",
   },
   emotionBlock: {
-    backgroundColor: '#e0f7fa',
+    backgroundColor: "#e0f7fa",
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 20,
     marginVertical: 10,
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   emotionBlockSelected: {
-    backgroundColor: '#b2ebf2',
+    backgroundColor: "#b2ebf2",
   },
   emotionText: {
     fontFamily: "Quicksand-Regular",
@@ -118,7 +127,7 @@ const styles = StyleSheet.create({
     fontFamily: "Quicksand-Regular",
     color: "#474146",
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     marginVertical: 30,
-  }
+  },
 });

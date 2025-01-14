@@ -29,9 +29,6 @@ export default function HomeScreen() {
     "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
   });
-  if (!fontsLoaded) {
-    return <Text>Loading fonts...</Text>;
-  }
   return (
     <Stack.Navigator
       initialRouteName="Welcome"

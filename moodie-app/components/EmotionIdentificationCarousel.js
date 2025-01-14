@@ -1,5 +1,11 @@
 import React, { useState, useRef } from "react";
-import { View, StyleSheet, Dimensions, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import FrequencyScreen from "./FrequencyScreen";
 import IntensityScreen from "./IntensityScreen";
 import EmotionalSpectrumScreen from "./EmotionalSpectrumScreen";
@@ -10,8 +16,7 @@ import StreakScreen from "./StreakScreen";
 import GradientButton from "./GradientButton";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from '@react-navigation/native';
-
+import { useNavigation } from "@react-navigation/native";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -27,12 +32,41 @@ export default function EmotionIdentificationCarousel() {
   const [activities, setActivities] = useState({});
 
   const views = [
-    { key: "frequency", component: <FrequencyScreen onValueChange={(value) => setFrequencyValue(value)} /> },
-    { key: "intensity", component: <IntensityScreen onValueChange={(value) => setIntensityValue(value)} /> },
-    { key: "emotionalspectrum", component: <EmotionalSpectrumScreen quadrant={quadrant} /> },
-    { key: "EmotionListScreen", component: <EmotionListScreen emotions={emotions} onValueChange={(value) => setUserEmotions(value)}/> },
-    { key: "FeelingsScreen", component: <FeelingsScreen userEmotions={userEmotions} /> },
-    { key: "ExploreScreen", component: <ExploreScreen onValueChange={(value) => setActivities(value)} /> },
+    {
+      key: "frequency",
+      component: (
+        <FrequencyScreen onValueChange={(value) => setFrequencyValue(value)} />
+      ),
+    },
+    {
+      key: "intensity",
+      component: (
+        <IntensityScreen onValueChange={(value) => setIntensityValue(value)} />
+      ),
+    },
+    {
+      key: "emotionalspectrum",
+      component: <EmotionalSpectrumScreen quadrant={quadrant} />,
+    },
+    {
+      key: "EmotionListScreen",
+      component: (
+        <EmotionListScreen
+          emotions={emotions}
+          onValueChange={(value) => setUserEmotions(value)}
+        />
+      ),
+    },
+    {
+      key: "FeelingsScreen",
+      component: <FeelingsScreen userEmotions={userEmotions} />,
+    },
+    {
+      key: "ExploreScreen",
+      component: (
+        <ExploreScreen onValueChange={(value) => setActivities(value)} />
+      ),
+    },
     { key: "StreakScreen", component: <StreakScreen /> },
   ];
 
@@ -49,21 +83,26 @@ export default function EmotionIdentificationCarousel() {
     let emotionsIDs = [];
     if (currentIndex === 1) {
       try {
-        const response = await axios.get("https://backend-qat1.onrender.com/emotions", {
-          params: {
-            x: frequencyValue,
-            y: intensityValue,
-          },
-        });
+        const response = await axios.get(
+          "https://backend-qat1.onrender.com/emotions",
+          {
+            params: {
+              x: frequencyValue,
+              y: intensityValue,
+            },
+          }
+        );
 
         if (response.status === 200) {
           setQuadrant(response.data.quadrant);
-          const emotionsWithDesc = response.data.emotions.map((emotionObj, index) => ({
-            emotionId: emotionObj.id,
-            id: index.toString(),
-            emotion: emotionObj.emotion,
-            description: emotionObj.definition,
-          }));
+          const emotionsWithDesc = response.data.emotions.map(
+            (emotionObj, index) => ({
+              emotionId: emotionObj.id,
+              id: index.toString(),
+              emotion: emotionObj.emotion,
+              description: emotionObj.definition,
+            })
+          );
           setEmotions(emotionsWithDesc);
         } else {
           throw new Error("Błąd podczas pobierania emocji");
@@ -80,24 +119,32 @@ export default function EmotionIdentificationCarousel() {
       flatListRef.current.scrollToIndex({ index: nextIndex });
     } else {
       emotionsIDs = emotions
-      .filter(emotion => userEmotions.some(userEmotion => userEmotion === emotion.emotion))
-      .map(emotion => emotion.emotionId);
-      
+        .filter((emotion) =>
+          userEmotions.some((userEmotion) => userEmotion === emotion.emotion)
+        )
+        .map((emotion) => emotion.emotionId);
+
       try {
-        const userID = await AsyncStorage.getItem("userId")
-        const saveResponse = await axios.post("https://backend-qat1.onrender.com/saveUserInterview", {
-          emotionsIDs,
-          quadrant,
-          activities,
-          userID
-        });
-        console.log(emotionsIDs)
+        const userID = await AsyncStorage.getItem("userId");
+        const saveResponse = await axios.post(
+          "https://backend-qat1.onrender.com/saveUserInterview",
+          {
+            emotionsIDs,
+            quadrant,
+            activities,
+            userID,
+          }
+        );
+        console.log(emotionsIDs);
         if (saveResponse.status === 200) {
           console.log("Dane zostały zapisane pomyślnie");
-          await AsyncStorage.setItem("userEmotions", JSON.stringify(userEmotions));
-          navigation.navigate('MainScreen', {
-            screen: 'Main'
-          }); 
+          await AsyncStorage.setItem(
+            "userEmotions",
+            JSON.stringify(userEmotions)
+          );
+          navigation.navigate("MainScreen", {
+            screen: "Main",
+          });
         } else {
           console.error("Wystąpił problem podczas zapisywania danych");
         }
@@ -112,7 +159,9 @@ export default function EmotionIdentificationCarousel() {
       <FlatList
         ref={flatListRef}
         data={views}
-        renderItem={({ item }) => <View style={styles.slide}>{item.component}</View>}
+        renderItem={({ item }) => (
+          <View style={styles.slide}>{item.component}</View>
+        )}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -133,7 +182,10 @@ export default function EmotionIdentificationCarousel() {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.nextButtonContainer} onPress={handleNextPress}>
+      <TouchableOpacity
+        style={styles.nextButtonContainer}
+        onPress={handleNextPress}
+      >
         <GradientButton text={"next"} />
       </TouchableOpacity>
     </View>

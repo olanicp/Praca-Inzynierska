@@ -22,7 +22,6 @@ export default function ResetPasswordScreen() {
           password: password.value,
         }
       );
-
       if (response.status === 200) {
         alert("Dane przesłane");
         navigation.navigate("ConfirmationCode");

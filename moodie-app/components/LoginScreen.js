@@ -14,11 +14,14 @@ export default function LoginScreen() {
 
   const onLoginPressed = async (event) => {
     try {
-      const response = await axios.post("https://backend-qat1.onrender.com/login", {
-        //for testing purposes change to the local ip address of the emulator
-        email: email.value,
-        password: password.value,
-      });
+      const response = await axios.post(
+        "https://backend-qat1.onrender.com/login",
+        {
+          //for testing purposes change to the local ip address of the emulator
+          email: email.value,
+          password: password.value,
+        }
+      );
 
       if (response.status === 200) {
         const { userID, streak, login_days } = response.data.user;
@@ -33,9 +36,9 @@ export default function LoginScreen() {
         } catch (err) {
           console.error("Error saving userId:", err);
         }
-        navigation.navigate('MainScreen', {
-          screen: 'Main'
-        }); 
+        navigation.navigate("MainScreen", {
+          screen: "Main",
+        });
       } else {
         throw new Error("error has occurred");
       }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import { styles } from "./MainAppStyles";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation} from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import GradientButton from "./GradientButton";
 import Header from "./Header";
