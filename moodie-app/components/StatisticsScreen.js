@@ -93,7 +93,7 @@ export default function StatisticsScreen() {
   const fetchStatsData = async () => {
     try {
       const userID = await AsyncStorage.getItem("userId");
-      const statsResponse = await axios.get("http://192.168.0.157:5000/stats", {
+      const statsResponse = await axios.get("https://backend-qat1.onrender.com/stats", {
         params: { userID },
       });
 

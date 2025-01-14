@@ -43,7 +43,7 @@ export default function SignupScreen() {
     }
 
     try {
-      const response = await axios.post("http://192.168.0.157:5000/register", { //for testing purposes change to the local ip address of the emulator
+      const response = await axios.post("https://backend-qat1.onrender.com/register", { //for testing purposes change to the local ip address of the emulator
         name: name.value,
         email: email.value,
         password: password.value,

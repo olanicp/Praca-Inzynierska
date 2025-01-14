@@ -24,7 +24,7 @@ export default function ConfirmationCodeScreen() {
   const onSubmitPressed = async (event) => {
     try {
       const response = await axios.post(
-        "http://192.168.43.115:5000/confirmation-code",
+        "https://backend-qat1.onrender.com/confirmation-code",
         {
           code: code.value,
         }

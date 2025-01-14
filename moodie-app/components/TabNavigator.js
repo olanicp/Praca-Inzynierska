@@ -65,7 +65,9 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 style={styles.linearGradient}
                 // onPress={() => navigation.navigate("Main")}
               >
-                <TouchableOpacity style={styles.addButton}>
+                <TouchableOpacity style={styles.addButton}
+                  onPress={() => navigation.navigate("EmotionIdentificationCarousel")}
+                >
                   <AntDesign name="plus" size={42} color="#868185" />
                 </TouchableOpacity>
               </LinearGradient>

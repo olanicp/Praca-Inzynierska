@@ -49,7 +49,7 @@ export default function EmotionIdentificationCarousel() {
     let emotionsIDs = [];
     if (currentIndex === 1) {
       try {
-        const response = await axios.get("http://192.168.0.157:5000/emotions", {
+        const response = await axios.get("https://backend-qat1.onrender.com/emotions", {
           params: {
             x: frequencyValue,
             y: intensityValue,
@@ -84,9 +84,8 @@ export default function EmotionIdentificationCarousel() {
       .map(emotion => emotion.emotionId);
       
       try {
-        const userID = await AsyncStorage.getItem("userId");
-        console.log(emotionsIDs)
-        const saveResponse = await axios.post("http://192.168.0.157:5000/saveUserInterview", {
+        const userID = await AsyncStorage.getItem("userId")
+        const saveResponse = await axios.post("https://backend-qat1.onrender.com/saveUserInterview", {
           emotionsIDs,
           quadrant,
           activities,

@@ -14,7 +14,7 @@ export default function LoginScreen() {
 
   const onLoginPressed = async (event) => {
     try {
-      const response = await axios.post("http://192.168.0.157:5000/login", {
+      const response = await axios.post("https://backend-qat1.onrender.com/login", {
         //for testing purposes change to the local ip address of the emulator
         email: email.value,
         password: password.value,

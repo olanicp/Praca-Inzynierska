@@ -17,7 +17,7 @@ export default function ResetPasswordScreen() {
   const onSubmitPressed = async (event) => {
     try {
       const response = await axios.post(
-        "http://192.168.43.115:5000/reset-password",
+        "https://backend-qat1.onrender.com/reset-password",
         {
           password: password.value,
         }
