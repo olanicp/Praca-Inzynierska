@@ -14,28 +14,41 @@ export default function LoginScreen() {
 
   const onLoginPressed = async (event) => {
     try {
-      const response = await axios.post(
-        "https://backend-qat1.onrender.com/login",
-        {
-          //for testing purposes change to the local ip address of the emulator
-          email: email.value,
-          password: password.value,
-        }
-      );
+      const response = await axios.post("http://192.168.0.157:5000/login", {
+        //for testing purposes change to the local ip address of the emulator
+        email: email.value,
+        password: password.value,
+      });
 
       if (response.status === 200) {
-        const { userID, streak, login_days } = response.data.user;
-        alert("Dane przesłane");
+        const { userID, email, name } = response.data.user;
+        await AsyncStorage.setItem("userId", userID);
+        await AsyncStorage.setItem("email", email);
+        await AsyncStorage.setItem("name", name);
 
-        alert(`User ID: ${streak}`);
+        const streakResponse = await axios.get(
+          "http://192.168.0.157:5000/getStreak",
+          {
+            params: {
+              userID: userID,
+            },
+          }
+        );
 
-        try {
-          await AsyncStorage.setItem("userId", userID);
+        if (streakResponse.status === 200) {
+          const streak = streakResponse.data.streakData.streak;
+          const lastInterviewedAt =
+            streakResponse.data.streakData.interviewedAt;
+          const loginDays = streakResponse.data.streakData.loginDays;
+          console.log(streak, lastInterviewedAt, loginDays);
           await AsyncStorage.setItem("streak", JSON.stringify(streak));
-          await AsyncStorage.setItem("loginDays", JSON.stringify(login_days));
-        } catch (err) {
-          console.error("Error saving userId:", err);
+          await AsyncStorage.setItem("loginDays", JSON.stringify(loginDays));
+          await AsyncStorage.setItem(
+            "lastInterviewedAt",
+            JSON.stringify(lastInterviewedAt)
+          );
         }
+
         navigation.navigate("MainScreen", {
           screen: "Main",
         });
@@ -43,7 +56,7 @@ export default function LoginScreen() {
         throw new Error("error has occurred");
       }
     } catch (error) {
-      alert(error.response.data);
+      alert("Błąd podczas logowania: ", error);
     }
   };
 

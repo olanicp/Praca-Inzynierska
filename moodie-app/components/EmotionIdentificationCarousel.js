@@ -30,6 +30,8 @@ export default function EmotionIdentificationCarousel() {
   const [userEmotions, setUserEmotions] = useState([]);
   const [quadrant, setQuadrant] = useState("");
   const [activities, setActivities] = useState({});
+  const [streak, setStreak] = useState(0);
+  const [loginDays, setLoginDays] = useState([]);
 
   const views = [
     {
@@ -69,7 +71,10 @@ export default function EmotionIdentificationCarousel() {
         <ExploreScreen onValueChange={(value) => setActivities(value)} />
       ),
     },
-    { key: "StreakScreen", component: <StreakScreen /> },
+    {
+      key: "StreakScreen",
+      component: <StreakScreen streak={streak} loginDays={loginDays} />,
+    },
   ];
 
   const flatListRef = useRef(null);
@@ -85,15 +90,12 @@ export default function EmotionIdentificationCarousel() {
     let emotionsIDs = [];
     if (currentIndex === 1) {
       try {
-        const response = await axios.get(
-          "https://backend-qat1.onrender.com/emotions",
-          {
-            params: {
-              x: frequencyValue,
-              y: intensityValue,
-            },
-          }
-        );
+        const response = await axios.get("http://192.168.0.157:5000/emotions", {
+          params: {
+            x: frequencyValue,
+            y: intensityValue,
+          },
+        });
 
         if (response.status === 200) {
           setQuadrant(response.data.quadrant);
@@ -117,11 +119,11 @@ export default function EmotionIdentificationCarousel() {
       }
     }
 
-    if (currentIndex < views.length - 1) {
+    if (currentIndex < views.length - 2) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
       flatListRef.current.scrollToIndex({ index: nextIndex });
-    } else {
+    } else if (currentIndex === views.length - 1) {
       emotionsIDs = emotions
         .filter((emotion) =>
           userEmotions.some((userEmotion) => userEmotion === emotion.emotion)
@@ -131,7 +133,7 @@ export default function EmotionIdentificationCarousel() {
       try {
         const userID = await AsyncStorage.getItem("userId");
         const saveResponse = await axios.post(
-          "https://backend-qat1.onrender.com/saveUserInterview",
+          "http://192.168.0.157:5000/saveUserInterview",
           {
             emotionsIDs,
             quadrant,
@@ -139,9 +141,7 @@ export default function EmotionIdentificationCarousel() {
             userID,
           }
         );
-        console.log(emotionsIDs);
         if (saveResponse.status === 200) {
-          console.log("Dane zostały zapisane pomyślnie");
           await AsyncStorage.setItem(
             "userEmotions",
             JSON.stringify(userEmotions)
@@ -154,6 +154,30 @@ export default function EmotionIdentificationCarousel() {
         }
       } catch (error) {
         console.error("Błąd zapisu danych:", error);
+      }
+    } else {
+      try {
+        const userID = await AsyncStorage.getItem("userId");
+        const streakResponse = await axios.post(
+          "http://192.168.0.157:5000/updateStreak",
+          {
+            userID,
+          }
+        );
+
+        if (streakResponse.status === 200) {
+          const streak = streakResponse.data.updatedData.streak;
+          const loginDays = streakResponse.data.updatedData.login_days;
+          setStreak(streak);
+          setLoginDays(loginDays);
+          await AsyncStorage.setItem("streak", JSON.stringify(streak));
+          await AsyncStorage.setItem("loginDays", JSON.stringify(loginDays));
+          const nextIndex = currentIndex + 1;
+          setCurrentIndex(nextIndex);
+          flatListRef.current.scrollToIndex({ index: nextIndex });
+        }
+      } catch (error) {
+        console.error("Błąd aktualizowania streak: ", error);
       }
     }
   };
