@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -7,29 +7,30 @@ import MainScreen from "./MainScreen";
 import CalendarScreen from "./CalendarScreen";
 import StatisticsScreen from "./StatisticsScreen";
 import ProfileScreen from "./ProfileScreen";
-import AppIntroSlider from 'react-native-app-intro-slider';
+import AppIntroSlider from "react-native-app-intro-slider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const slides = [
   {
-    key: 'slide1',
-    text: 'First Slide',
-    title: 'First Slide Text',
-    image: require('../assets/images/favicon.png'),
-    backgroundColor: '#20d2bb'
+    key: "slide1",
+    text: "First Slide",
+    title: "First Slide Text",
+    image: require("../assets/images/favicon.png"),
+    backgroundColor: "#20d2bb",
   },
   {
-    key: 'slide2',
-    text: 'Second Slide',
-    title: 'Second Slide Text',
-    image: require('../assets/images/favicon.png'),
-    backgroundColor: '#20d2bb'
+    key: "slide2",
+    text: "Second Slide",
+    title: "Second Slide Text",
+    image: require("../assets/images/favicon.png"),
+    backgroundColor: "#20d2bb",
   },
   {
-    key: 'slide3',
-    text: 'Third Slide',
-    title: 'Third Slide Text',
-    image: require('../assets/images/favicon.png'),
-    backgroundColor: '#20d2bb'
+    key: "slide3",
+    text: "Third Slide",
+    title: "Third Slide Text",
+    image: require("../assets/images/favicon.png"),
+    backgroundColor: "#20d2bb",
   },
 ];
 
@@ -65,8 +66,11 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 style={styles.linearGradient}
                 // onPress={() => navigation.navigate("Main")}
               >
-                <TouchableOpacity style={styles.addButton}
-                  onPress={() => navigation.navigate("EmotionIdentificationCarousel")}
+                <TouchableOpacity
+                  style={styles.addButton}
+                  onPress={() =>
+                    navigation.navigate("EmotionIdentificationCarousel")
+                  }
                 >
                   <AntDesign name="plus" size={42} color="#868185" />
                 </TouchableOpacity>
@@ -97,47 +101,77 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 };
 
 export default function TabNavigator() {
-  const [shouldShowApp, setShouldShowApp] = useState(false);
+  const [shouldShowIntro, setShouldShowIntro] = useState(false);
 
-  const onDone = () => {
-    setShouldShowApp(true);
-  }
+  useEffect(() => {
+    const fetchShowIntro = async () => {
+      try {
+        const storedIntroFlag = await AsyncStorage.getItem("hasSeenIntro");
+        if (storedIntroFlag === null || storedIntroFlag === "false") {
+          setShouldShowIntro(true);
+        } else {
+          setShouldShowIntro(false);
+        }
+      } catch (error) {
+        console.error("Błąd odczytu intro:", error);
+        setShouldShowIntro(false);
+      }
+    };
 
-  const onSkip = () => {
-    setShouldShowApp(true);
-  }
+    fetchShowIntro();
+  }, []);
 
-  const RenderItem = ({item}) => {
-    return(
-      <View style={{
-        flex: 1,
-        backgroundColor: item.backgroundColor,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingBottom: 100
-      }}>
+  const onDone = async () => {
+    try {
+      await AsyncStorage.setItem("hasSeenIntro", "true");
+    } catch (error) {
+      console.error("Błąd zapisu intro:", error);
+    }
+    setShouldShowIntro(false);
+  };
+
+  const onSkip = async () => {
+    try {
+      await AsyncStorage.setItem("hasSeenIntro", "true");
+    } catch (error) {
+      console.error("Błąd zapisu intro:", error);
+    }
+    setShouldShowIntro(false);
+  };
+
+  const RenderItem = ({ item }) => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: item.backgroundColor,
+          alignItems: "center",
+          justifyContent: "space-around",
+          paddingBottom: 100,
+        }}
+      >
         <Text style={styles.introTitle}>{item.title}</Text>
-        <Image style={styles.introImage} source={item.image}/>
+        <Image style={styles.introImage} source={item.image} />
         <Text style={styles.introText}>{item.text}</Text>
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <>
-      {shouldShowApp ? (
+      {!shouldShowIntro ? (
         <Tab.Navigator
           initialRouteName="Main"
           screenOptions={{ headerShown: false }}
           tabBar={(props) => <CustomTabBar {...props} />}
         >
-          <Tab.Screen name="Main" component={MainScreen}/>
+          <Tab.Screen name="Main" component={MainScreen} />
           <Tab.Screen name="Calendar" component={CalendarScreen} />
           <Tab.Screen name="Statistics" component={StatisticsScreen} />
           <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
       ) : (
-        <AppIntroSlider 
+        <AppIntroSlider
           data={slides}
           renderItem={RenderItem}
           onDone={onDone}
@@ -146,7 +180,6 @@ export default function TabNavigator() {
         />
       )}
     </>
-    
   );
 }
 

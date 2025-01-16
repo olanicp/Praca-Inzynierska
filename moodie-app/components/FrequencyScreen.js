@@ -33,8 +33,7 @@ export default function FrequencyScreen({ onValueChange }) {
         />
       </View>
 
-      <View>
-      </View>
+      <View></View>
     </View>
   );
 }

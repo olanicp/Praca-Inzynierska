@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import AntDesign from "@expo/vector-icons/AntDesign";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-export default function ExploreScreenBoxes({props, onValueChange}) {
+export default function ExploreScreenBoxes({ text, props, onValueChange }) {
   const [selectedProps, setselectedProps] = useState([]);
 
   const toggleMeal = (meal) => {
     setselectedProps((prev) =>
-      prev.includes(meal) ? prev.filter((item) => item !== meal) : [...prev, meal]
+      prev.includes(meal)
+        ? prev.filter((item) => item !== meal)
+        : [...prev, meal]
     );
   };
 
@@ -17,7 +18,7 @@ export default function ExploreScreenBoxes({props, onValueChange}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>What meals did you have today?</Text>
+      <Text style={styles.title}>{text}</Text>
       <View style={styles.mealContainer}>
         {props.map((prop) => (
           <TouchableOpacity
@@ -38,57 +39,54 @@ export default function ExploreScreenBoxes({props, onValueChange}) {
             </Text>
           </TouchableOpacity>
         ))}
-        <TouchableOpacity style={styles.addButton}>
-          <AntDesign name="plus" size={20} color="#474146"/>
-        </TouchableOpacity>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 40
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 40,
   },
   title: {
     fontFamily: "Quicksand-Regular",
     color: "#474146",
     fontSize: 25,
-    textAlign: 'center',
-    marginBottom: 20
+    textAlign: "center",
+    marginBottom: 20,
   },
   mealContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
     gap: 3,
   },
   mealButton: {
     borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    margin: 5
-  },
-  selectedMealButton: {
-    backgroundColor: '#c6dcf9',
-  },
-  mealText: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    fontSize: 18
-  },
-  addButton: {
-    borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     borderRadius: 20,
     paddingHorizontal: 16,
     paddingVertical: 8,
     margin: 5,
-    justifyContent:'center'
-  }
+  },
+  selectedMealButton: {
+    backgroundColor: "#c6dcf9",
+  },
+  mealText: {
+    fontFamily: "Quicksand-Regular",
+    color: "#474146",
+    fontSize: 18,
+  },
+  addButton: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    margin: 5,
+    justifyContent: "center",
+  },
 });

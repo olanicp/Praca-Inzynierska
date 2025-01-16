@@ -7,18 +7,17 @@ import {
   FlatList,
 } from "react-native";
 
-export default function EmotionsScreen({ emotions, onValueChange }) {
+export default function EmotionListScreen({ emotions, onValueChange }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [lastSelectedEmotion, setLastSelectedEmotion] = useState("");
 
   const handleSelect = (item) => {
-    const isSelected = selectedItems.includes(item.id);
+    const isSelected = selectedItems.includes(item.emotion);
     setSelectedItems((prev) =>
       isSelected
-        ? prev.filter((elem) => elem.id !== item.id)
+        ? prev.filter((elem) => elem !== item.emotion)
         : [...prev, item.emotion]
     );
-
     if (!isSelected) {
       const selectedEmotion = emotions.find(
         (emotion) => emotion.id === item.id
@@ -70,10 +69,10 @@ export default function EmotionsScreen({ emotions, onValueChange }) {
       </Text>
 
       {/* <View>
-            <TouchableOpacity onPress={handleNext}>
-            <GradientButton text={"next"}/>
-            </TouchableOpacity>
-        </View> */}
+        <TouchableOpacity onPress={handleNext}>
+          <GradientButton text={"next"} />
+        </TouchableOpacity>
+      </View> */}
     </View>
   );
 }
