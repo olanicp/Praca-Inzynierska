@@ -14,17 +14,17 @@ export default function LoginScreen() {
 
   const onLoginPressed = async (event) => {
     try {
-      const response = await axios.post("http://192.168.0.157:5000/login", {
-        //for testing purposes change to the local ip address of the emulator
-        email: email.value,
-        password: password.value,
-      });
+      const response = await axios.post(
+        "https://backend-qat1.onrender.com/login",
+        {
+          //for testing purposes change to the local ip address of the emulator
+          email: email.value,
+          password: password.value,
+        }
+      );
 
       if (response.status === 200) {
         const { userID, email, name } = response.data.user;
-        await AsyncStorage.setItem("userId", userID);
-        await AsyncStorage.setItem("email", email);
-        await AsyncStorage.setItem("name", name);
 
         const streakResponse = await axios.get(
           "http://192.168.0.157:5000/getStreak",
@@ -40,15 +40,16 @@ export default function LoginScreen() {
           const lastInterviewedAt =
             streakResponse.data.streakData.interviewedAt;
           const loginDays = streakResponse.data.streakData.loginDays;
-          console.log(streak, lastInterviewedAt, loginDays);
-          await AsyncStorage.setItem("streak", JSON.stringify(streak));
-          await AsyncStorage.setItem("loginDays", JSON.stringify(loginDays));
-          await AsyncStorage.setItem(
-            "lastInterviewedAt",
-            JSON.stringify(lastInterviewedAt)
-          );
+          const userData = {
+            userId: userID,
+            email: email,
+            name: name,
+            streak: JSON.stringify(streak),
+            lastInterviewedAt: JSON.stringify(lastInterviewedAt),
+            loginDays: JSON.stringify(loginDays),
+          };
+          await AsyncStorage.setItem("userData", JSON.stringify(userData));
         }
-
         navigation.navigate("MainScreen", {
           screen: "Main",
         });

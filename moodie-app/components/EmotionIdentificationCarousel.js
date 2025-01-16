@@ -131,7 +131,8 @@ export default function EmotionIdentificationCarousel() {
         .map((emotion) => emotion.emotionId);
 
       try {
-        const userID = await AsyncStorage.getItem("userId");
+        const userData = await AsyncStorage.getItem("userData");
+        const userID = JSON.parse(userData).userId;
         const saveResponse = await axios.post(
           "http://192.168.0.157:5000/saveUserInterview",
           {
@@ -142,10 +143,7 @@ export default function EmotionIdentificationCarousel() {
           }
         );
         if (saveResponse.status === 200) {
-          await AsyncStorage.setItem(
-            "userEmotions",
-            JSON.stringify(userEmotions)
-          );
+          console.log("Dane zostały zapisane pomyślnie");
           navigation.navigate("MainScreen", {
             screen: "Main",
           });
@@ -157,7 +155,10 @@ export default function EmotionIdentificationCarousel() {
       }
     } else {
       try {
-        const userID = await AsyncStorage.getItem("userId");
+        const userData = await AsyncStorage.getItem("userData");
+        const fetchedUserData = userData ? JSON.parse(userData) : {};
+
+        const userID = JSON.parse(userData).userId;
         const streakResponse = await axios.post(
           "http://192.168.0.157:5000/updateStreak",
           {
@@ -166,12 +167,19 @@ export default function EmotionIdentificationCarousel() {
         );
 
         if (streakResponse.status === 200) {
-          const streak = streakResponse.data.updatedData.streak;
-          const loginDays = streakResponse.data.updatedData.login_days;
-          setStreak(streak);
-          setLoginDays(loginDays);
-          await AsyncStorage.setItem("streak", JSON.stringify(streak));
-          await AsyncStorage.setItem("loginDays", JSON.stringify(loginDays));
+          const newStreak = streakResponse.data.updatedData.streak;
+          const newLoginDays = streakResponse.data.updatedData.login_days;
+          setStreak(newStreak);
+          setLoginDays(newLoginDays);
+          const updatedUserData = {
+            ...fetchedUserData,
+            streak: newStreak,
+            loginDays: newLoginDays,
+          };
+          await AsyncStorage.setItem(
+            "userData",
+            JSON.stringify(updatedUserData)
+          );
           const nextIndex = currentIndex + 1;
           setCurrentIndex(nextIndex);
           flatListRef.current.scrollToIndex({ index: nextIndex });

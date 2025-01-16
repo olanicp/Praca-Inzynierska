@@ -10,7 +10,6 @@ const getStreak = async () => {
     const userData = await AsyncStorage.getItem("userData");
     const streak = JSON.parse(userData).streak;
     if (streak) {
-      console.log("streak", streak);
       return streak;
     }
     return null;

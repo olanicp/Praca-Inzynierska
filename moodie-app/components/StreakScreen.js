@@ -52,8 +52,8 @@ export default function StreakScreen({ streak, loginDays }) {
       </View>
 
       {/* <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>close</Text>
-      </TouchableOpacity> */}
+          <Text style={styles.buttonText}>close</Text>
+        </TouchableOpacity> */}
     </View>
   );
 }
