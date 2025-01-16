@@ -7,14 +7,6 @@ import { Calendar } from "react-native-calendars";
 import { styles } from "./MainAppStyles";
 import Header from "./Header";
 
-// // Assume moodData is fetched from your database or API
-// const getMoodData = async () => {
-//   // Fetch mood data from database (for the last month, for example)
-//   const response = await fetch('https://your-api.com/getMoodData');
-//   const data = await response.json();
-//   return data;
-// };
-
 export default function CalendarScreen() {
   const navigation = useNavigation();
   const [selectedDate, setSelectedDate] = useState(null);
@@ -33,7 +25,6 @@ export default function CalendarScreen() {
   //     const date = entry.date; // format: '2024-11-20'
   //     const mood = entry.mood; // e.g., 'happy', 'sad', 'anxious'
 
-  //     // Assign a color for the mood
   //     const color =
   //       mood === "happy" ? "green" : mood === "sad" ? "red" : "blue";
 
@@ -104,14 +95,7 @@ export default function CalendarScreen() {
         </View>
         {selectedDate && dayDetails[selectedDate] && (
           <View style={styles.bodyBubble}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                width: "100%",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.seeMoreButton}>
               <View style={{ paddingHorizontal: 20 }}>
                 <Text style={styles.titleText}>Emotions:</Text>
                 <Text style={styles.detailText}>

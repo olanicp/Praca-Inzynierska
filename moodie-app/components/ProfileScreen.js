@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import GradientButton from "./GradientButton";
 import { styles } from "./MainAppStyles";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import Header from "./Header";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -47,7 +48,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <LinearGradient
         colors={["#F5ABD6", "#C4C1F2", "white"]}
         locations={[0, 0.22, 1]}
@@ -56,13 +57,74 @@ export default function ProfileScreen() {
       <Header />
       <View style={styles.body}>
         <View style={styles.bodyBubble}>
-          <Text style={styles.titleText}>Account details</Text>
-          <Text style={styles.detailText}>Name: {getName()}</Text>
-          <Text style={styles.detailText}>Adress email: {getUserEmail()}</Text>
+          <Text style={styles.questionText}>Account details</Text>
         </View>
-        <View style={styles.bodyBubble}></View>
-        <View style={styles.bodyBubble}></View>
-        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}>
+          <View style={styles.seeMoreButton}>
+            <View style={{ paddingHorizontal: 15 }}>
+              <Text style={styles.titleText}>Name</Text>
+              <Text style={styles.detailText}>{getName()}</Text>
+            </View>
+            <TouchableOpacity
+              // onPress={() =>
+              //   navigation.navigate("ChangeEmail", {
+              //   })
+              // }
+              style={{ paddingHorizontal: 20 }}
+            >
+              <AntDesign name="rightcircle" size={48} color="#F5ABD6" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.bodyBubble}>
+          <View style={styles.seeMoreButton}>
+            <View style={{ paddingHorizontal: 15 }}>
+              <Text style={styles.titleText}>Email Address</Text>
+              <Text style={styles.detailText}>{getUserEmail()}</Text>
+            </View>
+            <TouchableOpacity
+              // onPress={() =>
+              //   navigation.navigate("ChangeEmail", {
+              //   })
+              // }
+              style={{ paddingHorizontal: 20 }}
+            >
+              <AntDesign name="rightcircle" size={48} color="#F5ABD6" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.bodyBubble}>
+          <View style={styles.seeMoreButton}>
+            <View style={{ paddingHorizontal: 15 }}>
+              <Text style={styles.titleText}>Change password</Text>
+            </View>
+            <TouchableOpacity
+              // onPress={() =>
+              //   navigation.navigate("ChangeEmail", {
+              //   })
+              // }
+              style={{ paddingHorizontal: 20 }}
+            >
+              <AntDesign name="rightcircle" size={48} color="#F5ABD6" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.bodyBubble}>
+          <View style={styles.seeMoreButton}>
+            <View style={{ paddingHorizontal: 15 }}>
+              <Text style={styles.titleText}>Delete account</Text>
+            </View>
+            <TouchableOpacity
+              // onPress={() =>
+              //   navigation.navigate("ChangeEmail", {
+              //   })
+              // }
+              style={{ paddingHorizontal: 20 }}
+            >
+              <AntDesign name="rightcircle" size={48} color="#F5ABD6" />
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.bodyBubble}></View>
         <TouchableOpacity
           onPress={handleLogOut}
@@ -78,6 +140,6 @@ export default function ProfileScreen() {
           <GradientButton text={"log out"} />
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }

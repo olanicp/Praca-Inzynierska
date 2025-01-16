@@ -129,7 +129,7 @@ export const styles = StyleSheet.create({
   },
   titleText: {
     fontFamily: "Quicksand-Bold",
-    fontSize: 24,
+    fontSize: 20,
     color: "#474146",
   },
   detailText: {
@@ -157,5 +157,11 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 10,
     alignSelf: "flex-start",
+  },
+  seeMoreButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "center",
   },
 });

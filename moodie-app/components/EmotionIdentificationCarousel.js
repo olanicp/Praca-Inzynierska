@@ -147,9 +147,7 @@ export default function EmotionIdentificationCarousel() {
         );
         if (saveResponse.status === 200) {
           console.log("Dane zostały zapisane pomyślnie");
-          navigation.navigate("MainScreen", {
-            screen: "Main",
-          });
+          navigation.goBack();
         } else {
           console.error("Wystąpił problem podczas zapisywania danych");
         }
