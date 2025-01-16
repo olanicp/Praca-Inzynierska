@@ -27,7 +27,7 @@ export default function LoginScreen() {
         const { userID, email, name } = response.data.user;
 
         const streakResponse = await axios.get(
-          "http://192.168.0.157:5000/getStreak",
+          "https://backend-qat1.onrender.com/getStreak",
           {
             params: {
               userID: userID,

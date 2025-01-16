@@ -90,12 +90,15 @@ export default function EmotionIdentificationCarousel() {
     let emotionsIDs = [];
     if (currentIndex === 1) {
       try {
-        const response = await axios.get("http://192.168.0.157:5000/emotions", {
-          params: {
-            x: frequencyValue,
-            y: intensityValue,
-          },
-        });
+        const response = await axios.get(
+          "https://backend-qat1.onrender.com/emotions",
+          {
+            params: {
+              x: frequencyValue,
+              y: intensityValue,
+            },
+          }
+        );
 
         if (response.status === 200) {
           setQuadrant(response.data.quadrant);
@@ -134,7 +137,7 @@ export default function EmotionIdentificationCarousel() {
         const userData = await AsyncStorage.getItem("userData");
         const userID = JSON.parse(userData).userId;
         const saveResponse = await axios.post(
-          "http://192.168.0.157:5000/saveUserInterview",
+          "https://backend-qat1.onrender.com/saveUserInterview",
           {
             emotionsIDs,
             quadrant,
@@ -160,7 +163,7 @@ export default function EmotionIdentificationCarousel() {
 
         const userID = JSON.parse(userData).userId;
         const streakResponse = await axios.post(
-          "http://192.168.0.157:5000/updateStreak",
+          "https://backend-qat1.onrender.com/updateStreak",
           {
             userID,
           }

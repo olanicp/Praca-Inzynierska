@@ -32,7 +32,7 @@ export default function MainScreen() {
           }
         );
         if (response.status === 200) {
-          setEntry(response.data.entry.entry);
+          setEntry(response.data.entry);
         }
       } catch (error) {
         console.error("Błąd pobierania wpisu:", error);
