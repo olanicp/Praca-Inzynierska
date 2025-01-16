@@ -25,20 +25,33 @@ function passwordValidator(password) {
   return "";
 }
 
+function repeatPasswordValidator(repeatPassword, password) {
+  if (!repeatPassword) return "Password can't be empty.";
+  if (!(repeatPassword === password)) return "Passwords are different.";
+  return "Password must be at least 5 characters long.";
+  return "";
+}
+
 export default function SignupScreen() {
   const navigation = useNavigation();
   const [name, setName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const [repeatPassword, setRepeatPassword] = useState({
+    value: "",
+    error: "",
+  });
 
   const onSignUpPressed = async (event) => {
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError || nameError) {
+    const repeatPasswordError = repeatPasswordValidator(repeatPassword.value);
+    if (emailError || passwordError || nameError || repeatPasswordError) {
       setName({ ...name, error: nameError });
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
+      setRepeatPassword({ ...repeatPassword, error: repeatPasswordError });
       return;
     }
 
@@ -60,7 +73,7 @@ export default function SignupScreen() {
         throw new Error("error has occurred");
       }
     } catch (error) {
-      alert("ups");
+      alert("Błąd podczas zakładania konta: ", error);
     }
   };
 
@@ -127,15 +140,17 @@ export default function SignupScreen() {
           <Text style={styles.inputBoxName}>Repeat password</Text>
 
           <TextInput
-            label="password"
-            placeholder="password"
-            value={password.value}
+            label="repeatPassword"
+            placeholder="repeat password"
+            value={repeatPassword.value}
             style={styles.inputBox}
-            onChangeText={(text) => setPassword({ value: text, error: "" })}
+            onChangeText={(text) =>
+              setRepeatPassword({ value: text, error: "" })
+            }
             secureTextEntry
           />
-          {Boolean(password.error) && (
-            <Text style={{ color: "red" }}>{password.error}</Text>
+          {Boolean(repeatPassword.error) && (
+            <Text style={{ color: "red" }}>{repeatPassword.error}</Text>
           )}
         </View>
       </View>
