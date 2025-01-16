@@ -22,9 +22,9 @@ export default function MainScreen() {
 
   useEffect(() => {
     const fetchEntry = async () => {
-      console.log("Fetching journal entry...");
       try {
-        const userID = await AsyncStorage.getItem("userId");
+        const userData = await AsyncStorage.getItem("userData");
+        const userID = JSON.parse(userData).userId;
         const response = await axios.get(
           "https://backend-qat1.onrender.com/journal-entry",
           {
@@ -42,7 +42,8 @@ export default function MainScreen() {
 
     const fetchName = async () => {
       try {
-        const name = await AsyncStorage.getItem("name");
+        const userData = await AsyncStorage.getItem("userData");
+        const name = JSON.parse(userData).name;
         setName(name);
       } catch (error) {
         console.error("Błąd pobierania imienia:", error);
@@ -121,16 +122,6 @@ export default function MainScreen() {
             </TouchableOpacity>
           </View>
         )}
-        {/* <View style={styles.inputSection}>
-          
-          <Text style={styles.inputLabel}>Something on your mind?</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Write your thoughts here..."
-            placeholderTextColor="#A0A0A0"
-            multiline
-          />
-        </View> */}
       </View>
     </ScrollView>
   );

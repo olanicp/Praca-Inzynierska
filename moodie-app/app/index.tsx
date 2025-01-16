@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import LoginScreen from "../components/LoginScreen";
 import WelcomeScreen from "../components/WelcomeScreen";
 import SignupScreen from "../components/SignupScreen";
@@ -20,19 +20,76 @@ import JournalScreen from "../components/JournalScreen";
 import TabNavigator from "../components/TabNavigator";
 import EmotionIdentificationCarousel from "../components/EmotionIdentificationCarousel";
 import { useFonts } from "expo-font";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 
 const Stack = createNativeStackNavigator();
 
 export default function HomeScreen() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const [fontsLoaded] = useFonts({
     "PlayfairDisplay-Regular": require("../assets/fonts/PlayfairDisplay-Regular.ttf"),
     "PlayfairDisplay-Bold": require("../assets/fonts/PlayfairDisplay-Bold.ttf"),
     "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
   });
+
+  useEffect(() => {
+    if (!isInitialized) {
+      const initializeAppSettings = async () => {
+        try {
+          const defaultSettings = {
+            hasSeenIntro: false,
+            theme: "light",
+            language: "en",
+            // notificationsEnabled: true,
+          };
+          await AsyncStorage.setItem(
+            "appSettings",
+            JSON.stringify(defaultSettings)
+          );
+        } catch (error) {
+          console.error("Error initializing app settings:", error);
+        } finally {
+          setIsInitialized(true);
+        }
+      };
+      initializeAppSettings();
+    }
+  }, []);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const userData = await AsyncStorage.getItem("userData");
+        if (userData) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error checking login status:", error);
+      }
+      setIsLoading(false);
+    };
+
+    checkLoginStatus();
+  }, []);
+
+  if (isLoading || !fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
   return (
     <Stack.Navigator
-      initialRouteName="Welcome"
+      initialRouteName={isLoggedIn ? "MainScreen" : "Welcome"}
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
