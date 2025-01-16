@@ -16,8 +16,9 @@ import EmotionListScreen from "../components/EmotionListScreen";
 import FeelingsScreen from "../components/FeelingsScreen";
 import ExploreScreen from "../components/ExploreScreen";
 import StreakScreen from "../components/StreakScreen";
+import JournalScreen from "../components/JournalScreen";
 import TabNavigator from "../components/TabNavigator";
-import EmotionIdentificationCarousel from "../components/EmotionIdentificationCarousel"
+import EmotionIdentificationCarousel from "../components/EmotionIdentificationCarousel";
 import { useFonts } from "expo-font";
 
 const Stack = createNativeStackNavigator();
@@ -59,7 +60,11 @@ export default function HomeScreen() {
       <Stack.Screen name="FeelingsScreen" component={FeelingsScreen} />
       <Stack.Screen name="ExploreScreen" component={ExploreScreen} />
       <Stack.Screen name="StreakScreen" component={StreakScreen} />
-      <Stack.Screen name="EmotionIdentificationCarousel" component={EmotionIdentificationCarousel} />
+      <Stack.Screen
+        name="EmotionIdentificationCarousel"
+        component={EmotionIdentificationCarousel}
+      />
+      <Stack.Screen name="JournalScreen" component={JournalScreen} />
     </Stack.Navigator>
   );
 }
