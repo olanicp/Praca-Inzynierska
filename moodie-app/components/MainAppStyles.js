@@ -3,20 +3,21 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    backgroundColor: "white",
   },
   background: {
     position: "absolute",
     left: 0,
     right: 0,
     top: 0,
-    height: "900",
+    height: "100%",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
+    padding: 10,
   },
   avatar: {
     width: 36,
@@ -52,9 +53,9 @@ export const styles = StyleSheet.create({
   body: {
     flex: 1,
     marginBottom: 100,
+    padding: 10,
   },
   bodyBubble: {
-    flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "white",
@@ -70,7 +71,7 @@ export const styles = StyleSheet.create({
   },
   questionText: {
     fontFamily: "PlayfairDisplay-Regular",
-    fontSize: 32,
+    fontSize: 36,
     color: "#474146",
     letterSpacing: -1,
     textAlign: "center",
@@ -135,12 +136,25 @@ export const styles = StyleSheet.create({
     fontFamily: "Quicksand-Regular",
     fontSize: 16,
     color: "#474146",
-    marginVertical: 5,
+    margin: 5,
+    textAlign: "left",
+  },
+  smallDetailText: {
+    fontFamily: "Quicksand-Regular",
+    fontSize: 14,
+    color: "#474146",
+    marginLeft: 15,
     textAlign: "left",
   },
   barChart: {
-    alignSelf: "stretch",
+    alignSelf: "center",
     padding: 10,
     marginBottom: 20,
+  },
+  goBackIcon: {
+    backgroundColor: "#C1EBF2",
+    borderRadius: 50,
+    padding: 10,
+    alignSelf: "flex-start",
   },
 });

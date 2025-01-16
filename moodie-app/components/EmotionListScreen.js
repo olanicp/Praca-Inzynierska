@@ -10,6 +10,17 @@ import {
 export default function EmotionListScreen({ emotions, onValueChange }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [lastSelectedEmotion, setLastSelectedEmotion] = useState("");
+  const emotionColor = (f, i) => {
+    if (f < 0 && i < 0) {
+      return `hsl(${202 - 16 * f}, ${72 - 16 * i}%, ${88 + 24 * f}%)`;
+    } else if (f < 0 && i > 0) {
+      return `hsl(${8 + 24 * f}, ${84 + 16 * i}%, ${84 - 16 * i}%)`;
+    } else if (f > 0 && i < 0) {
+      return `hsl(${160 - 24 * f}, 62%, ${88 + 32 * i}%)`;
+    } else {
+      return `hsl(${24 + 32 * f}, ${84 + 16 * i}%, 72%)`;
+    }
+  };
 
   const handleSelect = (item) => {
     const isSelected = selectedItems.includes(item.emotion);
@@ -22,7 +33,6 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
       const selectedEmotion = emotions.find(
         (emotion) => emotion.id === item.id
       );
-      console.log(selectedEmotion.description);
       setLastSelectedEmotion(selectedEmotion.description);
     } else {
       setLastSelectedEmotion("select all that resonate with you");
@@ -38,6 +48,7 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
       style={[
         styles.emotionBlock,
         selectedItems.includes(item.emotion) && styles.emotionBlockSelected,
+        { backgroundColor: emotionColor(item.pleasantness, item.energy) },
       ]}
       onPress={() => {
         handleSelect(item);
@@ -106,7 +117,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   emotionBlock: {
-    backgroundColor: "#e0f7fa",
+    borderWidth: 0,
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 20,
@@ -115,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emotionBlockSelected: {
-    backgroundColor: "#b2ebf2",
+    borderWidth: 1,
   },
   emotionText: {
     fontFamily: "Quicksand-Regular",

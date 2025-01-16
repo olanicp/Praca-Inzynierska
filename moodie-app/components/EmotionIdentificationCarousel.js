@@ -59,7 +59,9 @@ export default function EmotionIdentificationCarousel() {
     },
     {
       key: "FeelingsScreen",
-      component: <FeelingsScreen userEmotions={userEmotions} />,
+      component: (
+        <FeelingsScreen userEmotions={userEmotions} quadrant={quadrant} />
+      ),
     },
     {
       key: "ExploreScreen",
@@ -99,6 +101,8 @@ export default function EmotionIdentificationCarousel() {
             (emotionObj, index) => ({
               emotionId: emotionObj.id,
               id: index.toString(),
+              pleasantness: emotionObj.pleasantness,
+              energy: emotionObj.energy,
               emotion: emotionObj.emotion,
               description: emotionObj.definition,
             })
