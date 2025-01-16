@@ -129,7 +129,8 @@ export default function EmotionIdentificationCarousel() {
         .map((emotion) => emotion.emotionId);
 
       try {
-        const userID = await AsyncStorage.getItem("userId");
+        const userData = await AsyncStorage.getItem("userData");
+        const userID = JSON.parse(userData).userId;
         const saveResponse = await axios.post(
           "https://backend-qat1.onrender.com/saveUserInterview",
           {
@@ -142,10 +143,10 @@ export default function EmotionIdentificationCarousel() {
         console.log(emotionsIDs);
         if (saveResponse.status === 200) {
           console.log("Dane zostały zapisane pomyślnie");
-          await AsyncStorage.setItem(
-            "userEmotions",
-            JSON.stringify(userEmotions)
-          );
+          // await AsyncStorage.setItem(
+          //   "userEmotions",
+          //   JSON.stringify(userEmotions)
+          // );
           navigation.navigate("MainScreen", {
             screen: "Main",
           });

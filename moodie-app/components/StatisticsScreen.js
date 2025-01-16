@@ -9,32 +9,31 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const quadrantColors = {
-  'high energy pleasant': "#83B2F1",
-  'low energy pleasant': "#F5ABD0",
-  'high energy unpleasant': "#A9DCC7",
-  'low energy unpleasant': "#bfafe9"
+  "high energy pleasant": "#83B2F1",
+  "low energy pleasant": "#F5ABD0",
+  "high energy unpleasant": "#A9DCC7",
+  "low energy unpleasant": "#bfafe9",
 };
 
 const exerciseCategories = {
   intense: { range: [9, 10], color: "#83B2F1" },
   moderate: { range: [5, 8], color: "#F5ABD0" },
   low: { range: [1, 4], color: "#A9DCC7" },
-  none: { range: [0, 0], color: "#bfafe9" }
+  none: { range: [0, 0], color: "#bfafe9" },
 };
-
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function getQuadrantChartData(quadrants) {
   const total = quadrants.length;
   const counts = {
-    'high energy pleasant': 0,
-    'low energy pleasant': 0,
-    'high energy unpleasant': 0,
-    'low energy unpleasant': 0
+    "high energy pleasant": 0,
+    "low energy pleasant": 0,
+    "high energy unpleasant": 0,
+    "low energy unpleasant": 0,
   };
 
-  quadrants.forEach(q => {
+  quadrants.forEach((q) => {
     if (counts.hasOwnProperty(q)) {
       counts[q] += 1;
     }
@@ -55,31 +54,44 @@ function getExerciseDataForDay(dayStats) {
     intense: 0,
     moderate: 0,
     low: 0,
-    none: 0
+    none: 0,
   };
 
-  dayStats.forEach(stat => {
+  dayStats.forEach((stat) => {
     const hrs = stat.exerciseHours;
-    if (hrs >= exerciseCategories.intense.range[0] && hrs <= exerciseCategories.intense.range[1]) {
+    if (
+      hrs >= exerciseCategories.intense.range[0] &&
+      hrs <= exerciseCategories.intense.range[1]
+    ) {
       counts.intense += 1;
-    } else if (hrs >= exerciseCategories.moderate.range[0] && hrs <= exerciseCategories.moderate.range[1]) {
+    } else if (
+      hrs >= exerciseCategories.moderate.range[0] &&
+      hrs <= exerciseCategories.moderate.range[1]
+    ) {
       counts.moderate += 1;
-    } else if (hrs >= exerciseCategories.low.range[0] && hrs <= exerciseCategories.low.range[1]) {
+    } else if (
+      hrs >= exerciseCategories.low.range[0] &&
+      hrs <= exerciseCategories.low.range[1]
+    ) {
       counts.low += 1;
-    } else if (hrs === exerciseCategories.none.range[0] && hrs === exerciseCategories.none.range[1]) {
+    } else if (
+      hrs === exerciseCategories.none.range[0] &&
+      hrs === exerciseCategories.none.range[1]
+    ) {
       counts.none += 1;
     }
   });
 
-  const data = Object.entries(exerciseCategories).map(([category, { color }]) => {
-    const count = counts[category] || 0;
-    const value = total > 0 ? (count / total) * 100 : 0;
-    return { value, color };
-  });
+  const data = Object.entries(exerciseCategories).map(
+    ([category, { color }]) => {
+      const count = counts[category] || 0;
+      const value = total > 0 ? (count / total) * 100 : 0;
+      return { value, color };
+    }
+  );
 
   return data;
 }
-
 
 export default function StatisticsScreen() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -92,10 +104,14 @@ export default function StatisticsScreen() {
 
   const fetchStatsData = async () => {
     try {
-      const userID = await AsyncStorage.getItem("userId");
-      const statsResponse = await axios.get("https://backend-qat1.onrender.com/stats", {
-        params: { userID },
-      });
+      const userData = await AsyncStorage.getItem("userData");
+      const userID = JSON.parse(userData).userId;
+      const statsResponse = await axios.get(
+        "https://backend-qat1.onrender.com/stats",
+        {
+          params: { userID },
+        }
+      );
 
       if (statsResponse.status === 200) {
         setStats(statsResponse.data.stats);
@@ -137,20 +153,22 @@ export default function StatisticsScreen() {
   };
 
   const { start: startOfDay, end: endOfDay } = getStartAndEndOfDay(currentDate);
-  const { start: startOfWeek, end: endOfWeek } = getStartAndEndOfWeek(currentDate);
-  const { start: startOfYear, end: endOfYear } = getStartAndEndOfYear(currentDate);
+  const { start: startOfWeek, end: endOfWeek } =
+    getStartAndEndOfWeek(currentDate);
+  const { start: startOfYear, end: endOfYear } =
+    getStartAndEndOfYear(currentDate);
 
-  const todayStats = stats.filter(stat => {
+  const todayStats = stats.filter((stat) => {
     const statDate = new Date(stat.date);
     return statDate >= startOfDay && statDate <= endOfDay;
   });
 
-  const weekStats = stats.filter(stat => {
+  const weekStats = stats.filter((stat) => {
     const statDate = new Date(stat.date);
     return statDate >= startOfWeek && statDate <= endOfWeek;
   });
 
-  const yearStats = stats.filter(stat => {
+  const yearStats = stats.filter((stat) => {
     const statDate = new Date(stat.date);
     return statDate >= startOfYear && statDate <= endOfYear;
   });
@@ -158,13 +176,13 @@ export default function StatisticsScreen() {
   const getDailyQuadrantData = (dayStats) => {
     const total = dayStats.length;
     const counts = {
-      'high energy pleasant': 0,
-      'low energy pleasant': 0,
-      'high energy unpleasant': 0,
-      'low energy unpleasant': 0
+      "high energy pleasant": 0,
+      "low energy pleasant": 0,
+      "high energy unpleasant": 0,
+      "low energy unpleasant": 0,
     };
 
-    dayStats.forEach(stat => {
+    dayStats.forEach((stat) => {
       const q = stat.quadrant;
       if (counts.hasOwnProperty(q)) {
         counts[q] += 1;
@@ -178,10 +196,9 @@ export default function StatisticsScreen() {
     });
   };
 
-
   const weekStackData = daysOfWeek.map((dayLabel, index) => {
-    const adjustedDayIndex = index === 6 ? 0 : index + 1; 
-    const dayStats = weekStats.filter(stat => {
+    const adjustedDayIndex = index === 6 ? 0 : index + 1;
+    const dayStats = weekStats.filter((stat) => {
       const statDate = new Date(stat.date);
       return statDate.getDay() === adjustedDayIndex;
     });
@@ -190,25 +207,25 @@ export default function StatisticsScreen() {
 
     return {
       label: dayLabel,
-      stacks
+      stacks,
     };
   });
 
-  const todayQuadrants = todayStats.map(stat => stat.quadrant);
+  const todayQuadrants = todayStats.map((stat) => stat.quadrant);
   const todayChartData = getQuadrantChartData(todayQuadrants);
 
   const weekExerciseStackData = daysOfWeek.map((dayLabel, index) => {
-    const adjustedDayIndex = index === 6 ? 0 : index + 1; 
-    const dayStats = weekStats.filter(stat => {
+    const adjustedDayIndex = index === 6 ? 0 : index + 1;
+    const dayStats = weekStats.filter((stat) => {
       const statDate = new Date(stat.date);
       return statDate.getDay() === adjustedDayIndex;
     });
-  
+
     const stacks = getExerciseDataForDay(dayStats);
-  
+
     return {
       label: dayLabel,
-      stacks
+      stacks,
     };
   });
 

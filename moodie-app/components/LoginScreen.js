@@ -25,14 +25,13 @@ export default function LoginScreen() {
 
       if (response.status === 200) {
         const { userID, streak, login_days } = response.data.user;
-        alert("Dane przesłane");
-
-        alert(`User ID: ${streak}`);
-
         try {
-          await AsyncStorage.setItem("userId", userID);
-          await AsyncStorage.setItem("streak", JSON.stringify(streak));
-          await AsyncStorage.setItem("loginDays", JSON.stringify(login_days));
+          const userData = {
+            userId: userID,
+            streak: JSON.stringify(streak),
+            loginDays: JSON.stringify(login_days),
+          };
+          await AsyncStorage.setItem("userData", JSON.stringify(userData));
         } catch (err) {
           console.error("Error saving userId:", err);
         }

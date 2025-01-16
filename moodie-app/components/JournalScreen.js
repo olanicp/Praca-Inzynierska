@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import { styles } from "./MainAppStyles";
 import axios from "axios";
@@ -18,7 +19,8 @@ export default function JournalScreen({ route, navigation }) {
 
   const saveEntry = async () => {
     try {
-      const userID = await AsyncStorage.getItem("userId");
+      const userData = await AsyncStorage.getItem("userData");
+      const userID = JSON.parse(userData).userId;
       const response = await axios.post(
         "https://backend-qat1.onrender.com/journal-entry",
         {
@@ -38,7 +40,7 @@ export default function JournalScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -92,6 +94,6 @@ export default function JournalScreen({ route, navigation }) {
           <GradientButton text={"save"} />
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }

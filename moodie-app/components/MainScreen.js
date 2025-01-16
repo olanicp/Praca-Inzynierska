@@ -20,68 +20,69 @@ export default function MainScreen() {
   const [entry, setEntry] = useState(null);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const loadEmotions = async () => {
-      try {
-        let result = await AsyncStorage.getItem("userEmotions");
-        const storedEmotions = JSON.parse(result);
-        if (storedEmotions) {
-          if (storedEmotions.length === 1) {
-            return setUserEmotions(
-              <Text
-                style={[
-                  {
-                    fontWeight: "bold",
-                    fontSize: 40,
-                    marginTop: 30,
-                    marginBottom: 30,
-                  },
-                ]}
-              >
-                {storedEmotions[0]}
-              </Text>
-            );
-          }
-          if (storedEmotions.length === 2) {
-            return setUserEmotions(
-              <>
-                {storedEmotions[0]}{" "}
-                <Text style={{ fontWeight: "normal" }}>and</Text>{" "}
-                {storedEmotions[1]}
-              </>
-            );
-          }
-          return setUserEmotions(
-            <Text
-              style={[
-                {
-                  fontWeight: "bold",
-                  fontSize: 40,
-                  marginTop: 30,
-                  marginBottom: 30,
-                },
-              ]}
-            >
-              {storedEmotions[0]}, {storedEmotions[1]}{" "}
-              <Text style={{ fontWeight: "normal" }}>and</Text>{" "}
-              {storedEmotions[2]}
-            </Text>
-          );
-        }
-      } catch (error) {
-        console.error("Błąd odczytu danych:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const loadEmotions = async () => {
+  //     try {
+  //       let result = await AsyncStorage.getItem("userEmotions");
+  //       const storedEmotions = JSON.parse(result);
+  //       if (storedEmotions) {
+  //         // setUserEmotions(JSON.parse(storedEmotions));
+  //         if (storedEmotions.length === 1) {
+  //           return setUserEmotions(
+  //             <Text
+  //               style={[
+  //                 {
+  //                   fontWeight: "bold",
+  //                   fontSize: 40,
+  //                   marginTop: 30,
+  //                   marginBottom: 30,
+  //                 },
+  //               ]}
+  //             >
+  //               {storedEmotions[0]}
+  //             </Text>
+  //           );
+  //         }
+  //         if (storedEmotions.length === 2) {
+  //           return setUserEmotions(
+  //             <>
+  //               {storedEmotions[0]}{" "}
+  //               <Text style={{ fontWeight: "normal" }}>and</Text>{" "}
+  //               {storedEmotions[1]}
+  //             </>
+  //           );
+  //         }
+  //         return setUserEmotions(
+  //           <Text
+  //             style={[
+  //               {
+  //                 fontWeight: "bold",
+  //                 fontSize: 40,
+  //                 marginTop: 30,
+  //                 marginBottom: 30,
+  //               },
+  //             ]}
+  //           >
+  //             {storedEmotions[0]}, {storedEmotions[1]}{" "}
+  //             <Text style={{ fontWeight: "normal" }}>and</Text>{" "}
+  //             {storedEmotions[2]}
+  //           </Text>
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("Błąd odczytu danych:", error);
+  //     }
+  //   };
 
-    console.log(userEmotions);
-    loadEmotions();
-  }, []);
+  //   console.log(userEmotions);
+  //   loadEmotions();
+  // }, []);
 
   useEffect(() => {
     const fetchEntry = async () => {
-      console.log("Fetching journal entry...");
       try {
-        let userID = await AsyncStorage.getItem("userId");
+        const userData = await AsyncStorage.getItem("userData");
+        const userID = JSON.parse(userData).userId;
         const response = await axios.get(
           "https://backend-qat1.onrender.com/journal-entry",
           {
@@ -167,16 +168,6 @@ export default function MainScreen() {
             </TouchableOpacity>
           </View>
         )}
-        {/* <View style={styles.inputSection}>
-          
-          <Text style={styles.inputLabel}>Something on your mind?</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Write your thoughts here..."
-            placeholderTextColor="#A0A0A0"
-            multiline
-          />
-        </View> */}
       </View>
     </ScrollView>
   );

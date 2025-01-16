@@ -6,7 +6,8 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const getStreak = async () => {
   try {
-    const streak = await AsyncStorage.getItem("streak");
+    const userData = await AsyncStorage.getItem("userData");
+    const streak = JSON.parse(userData).streak;
     if (streak) {
       console.log("streak", streak);
       return streak;
