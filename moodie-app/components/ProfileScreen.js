@@ -28,6 +28,15 @@ export default function ProfileScreen() {
     }
   };
 
+  const getUserEmail = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("userData");
+      return JSON.parse(userData).email;
+    } catch (error) {
+      console.error("Error fetching email:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -37,7 +46,11 @@ export default function ProfileScreen() {
       />
       <Header />
       <View style={styles.body}>
-        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}>
+          <Text style={styles.titleText}>Account details</Text>
+          <Text style={styles.detailText}>Name: </Text>
+          <Text style={styles.detailText}>Adress email: {getUserEmail()}</Text>
+        </View>
         <View style={styles.bodyBubble}></View>
         <View style={styles.bodyBubble}></View>
         <View style={styles.bodyBubble}></View>

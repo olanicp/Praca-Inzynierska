@@ -137,6 +137,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: "#474146",
     margin: 5,
+    alignSelf: "flex-start",
     textAlign: "left",
   },
   smallDetailText: {

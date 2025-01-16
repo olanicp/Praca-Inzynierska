@@ -24,10 +24,11 @@ export default function LoginScreen() {
       );
 
       if (response.status === 200) {
-        const { userID, streak, login_days } = response.data.user;
+        const { userID, email, streak, login_days } = response.data.user;
         try {
           const userData = {
             userId: userID,
+            email: email,
             streak: JSON.stringify(streak),
             loginDays: JSON.stringify(login_days),
           };

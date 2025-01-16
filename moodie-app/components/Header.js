@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { styles } from "./MainAppStyles";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { useNavigation } from "@react-navigation/native";
 
 const getStreak = async () => {
   try {
@@ -21,6 +22,7 @@ const getStreak = async () => {
 
 export default function Header() {
   const [streak, setStreak] = useState(0);
+  const navigation = useNavigation();
 
   const formatDate = (date) => {
     const userLocale = Intl.DateTimeFormat().resolvedOptions().locale;
@@ -44,11 +46,14 @@ export default function Header() {
 
   return (
     <View style={styles.header}>
-      <View style={styles.headerBubble}>
+      <TouchableOpacity
+        style={styles.headerBubble}
+        onPress={() => navigation.navigate("Profile")}
+      >
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>E</Text>
         </View>
-      </View>
+      </TouchableOpacity>
       <View style={styles.dateAndStreak}>
         <View style={styles.headerBubble}>
           <Text style={styles.dateText}>{formatDate(currentDate)}</Text>
