@@ -33,7 +33,6 @@ const initializeQuadrantCounts = () => ({
 
 const getExerciseCategory = (hours) => {
   const numericHours = parseFloat(hours);
-  console.log(hours);
   if (
     numericHours >= exerciseCategories.intense.range[0] &&
     numericHours <= exerciseCategories.intense.range[1]
@@ -290,12 +289,14 @@ export default function StatisticsScreen({ navigation }) {
       const userData = await AsyncStorage.getItem("userData");
       const userID = JSON.parse(userData).userId;
 
-      const statsResponse = await axios.get("http://192.168.0.157:5000/stats", {
-        params: { userID },
-      });
+      const statsResponse = await axios.get(
+        "https://backend-qat1.onrender.com/stats",
+        {
+          params: { userID },
+        }
+      );
 
       if (statsResponse.status === 200) {
-        console.log(statsResponse);
         setStats(statsResponse.data.stats);
         setTopFiveEmotions(statsResponse.data.emotionQuadrants);
       }
@@ -363,11 +364,9 @@ export default function StatisticsScreen({ navigation }) {
   const exerciseChartData = getStackedExerciseChartData(exerciseCategoryData);
 
   const groupedSleepData = getGroupedSleepDataWithQuadrants(stats);
-  console.log(groupedSleepData);
   const sleepChartData = getStackedSleepChartData(groupedSleepData);
 
   const mealQuadrantStats = getMealQuadrantStats(stats);
-  console.log(mealQuadrantStats);
   const mealChartData = getMealChartData(mealQuadrantStats);
   const activityQuadrantStats = getActivityQuadrantStats(stats);
   const activityChartData = getActivityChartData(activityQuadrantStats);
