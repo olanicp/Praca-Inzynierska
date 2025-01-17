@@ -89,6 +89,7 @@ export default function CalendarScreen() {
           />
         </View>
         {selectedDate &&
+          dayDetails &&
           dayDetails.map((item, index) => (
             <View style={styles.bodyBubble} key={index}>
               <Text style={styles.heading}>Interview {index + 1}</Text>
