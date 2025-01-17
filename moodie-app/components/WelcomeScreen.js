@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import GradientButton from "./GradientButton";
 import AppIntroSlider from "react-native-app-intro-slider";
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const slides = [
@@ -123,11 +124,51 @@ export default function WelcomeScreen() {
     navigation.navigate("Signup");
   };
 
-  const loginAsGuest = () => {
-    navigation.navigate("MainScreen", {
-      screen: "Main",
-    });
+  const loginAsGuest = async () => {
+    try {
+      const response = await axios.post(
+        "https://backend-qat1.onrender.com/enter-as-guest"
+      );
+
+      if (response.status === 200) {
+        const { userID, email, name } = response.data.user;
+
+        const streakResponse = await axios.get(
+          "https://backend-qat1.onrender.com/getStreak",
+          {
+            params: {
+              userID: userID,
+            },
+          }
+        );
+
+        if (streakResponse.status === 200) {
+          const streak = streakResponse.data.streakData.streak;
+          const lastInterviewedAt =
+            streakResponse.data.streakData.interviewedAt;
+          const loginDays = streakResponse.data.streakData.loginDays;
+          const userData = {
+            userId: userID,
+            email: email,
+            name: name,
+            streak: JSON.stringify(streak),
+            lastInterviewedAt: JSON.stringify(lastInterviewedAt),
+            loginDays: JSON.stringify(loginDays),
+            isAnonymous: true,
+          };
+          await AsyncStorage.setItem("userData", JSON.stringify(userData));
+        }
+        navigation.navigate("MainScreen", {
+          screen: "Main",
+        });
+      } else {
+        throw new Error("error has occurred");
+      }
+    } catch (error) {
+      alert("Błąd podczas logowania goscia: ", error);
+    }
   };
+
   return (
     <>
       {!shouldShowIntro ? (

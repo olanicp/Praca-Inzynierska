@@ -47,6 +47,7 @@ export default function LoginScreen() {
             streak: JSON.stringify(streak),
             lastInterviewedAt: JSON.stringify(lastInterviewedAt),
             loginDays: JSON.stringify(loginDays),
+            isAnonymous: false,
           };
           await AsyncStorage.setItem("userData", JSON.stringify(userData));
         }
