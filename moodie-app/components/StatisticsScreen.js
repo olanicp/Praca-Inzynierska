@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, ScrollView, FlatList } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BarChart, PieChart } from "react-native-gifted-charts";
 import Header from "./Header";
 import { styles } from "./MainAppStyles";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import EmotionBoxes from "./EmotionBoxes";
 
 const quadrantColors = {
   "high energy pleasant": "#83B2F1",
@@ -16,22 +16,47 @@ const quadrantColors = {
 };
 
 const exerciseCategories = {
-  intense: { range: [9, 10], color: "#83B2F1" },
-  moderate: { range: [5, 8], color: "#F5ABD0" },
-  low: { range: [1, 4], color: "#A9DCC7" },
-  none: { range: [0, 0], color: "#bfafe9" },
+  intense: { range: [9, 10] },
+  moderate: { range: [5, 8] },
+  low: { range: [1, 4] },
+  none: { range: [0, 0] },
 };
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+const initializeQuadrantCounts = () => ({
+  "high energy pleasant": 0,
+  "low energy pleasant": 0,
+  "high energy unpleasant": 0,
+  "low energy unpleasant": 0,
+});
+
+const getExerciseCategory = (hours) => {
+  const numericHours = parseFloat(hours);
+  console.log(hours);
+  if (
+    numericHours >= exerciseCategories.intense.range[0] &&
+    numericHours <= exerciseCategories.intense.range[1]
+  ) {
+    return "intense";
+  } else if (
+    numericHours >= exerciseCategories.moderate.range[0] &&
+    numericHours <= exerciseCategories.moderate.range[1]
+  ) {
+    return "moderate";
+  } else if (
+    numericHours >= exerciseCategories.low.range[0] &&
+    numericHours <= exerciseCategories.low.range[1]
+  ) {
+    return "low";
+  } else {
+    return "none";
+  }
+};
+
 function getQuadrantChartData(quadrants) {
   const total = quadrants.length;
-  const counts = {
-    "high energy pleasant": 0,
-    "low energy pleasant": 0,
-    "high energy unpleasant": 0,
-    "low energy unpleasant": 0,
-  };
+  const counts = initializeQuadrantCounts();
 
   quadrants.forEach((q) => {
     if (counts.hasOwnProperty(q)) {
@@ -48,73 +73,231 @@ function getQuadrantChartData(quadrants) {
   return data;
 }
 
-function getExerciseDataForDay(dayStats) {
+const getDailyQuadrantData = (dayStats) => {
   const total = dayStats.length;
-  const counts = {
-    intense: 0,
-    moderate: 0,
-    low: 0,
-    none: 0,
-  };
+  const counts = initializeQuadrantCounts();
 
   dayStats.forEach((stat) => {
-    const hrs = stat.exerciseHours;
-    if (
-      hrs >= exerciseCategories.intense.range[0] &&
-      hrs <= exerciseCategories.intense.range[1]
-    ) {
-      counts.intense += 1;
-    } else if (
-      hrs >= exerciseCategories.moderate.range[0] &&
-      hrs <= exerciseCategories.moderate.range[1]
-    ) {
-      counts.moderate += 1;
-    } else if (
-      hrs >= exerciseCategories.low.range[0] &&
-      hrs <= exerciseCategories.low.range[1]
-    ) {
-      counts.low += 1;
-    } else if (
-      hrs === exerciseCategories.none.range[0] &&
-      hrs === exerciseCategories.none.range[1]
-    ) {
-      counts.none += 1;
+    const q = stat.quadrant;
+    if (counts.hasOwnProperty(q)) {
+      counts[q] += 1;
     }
   });
 
-  const data = Object.entries(exerciseCategories).map(
-    ([category, { color }]) => {
-      const count = counts[category] || 0;
-      const value = total > 0 ? (count / total) * 100 : 0;
-      return { value, color };
+  return Object.entries(quadrantColors).map(([type, color]) => {
+    const count = counts[type] || 0;
+    const value = total > 0 ? (count / total) * 100 : 0;
+    return { value, color };
+  });
+};
+
+const getExerciseCategoryData = (stats) => {
+  const data = {
+    intense: { quadrants: {}, count: 0 },
+    moderate: { quadrants: {}, count: 0 },
+    low: { quadrants: {}, count: 0 },
+    none: { quadrants: {}, count: 0 },
+  };
+
+  stats.forEach((stat) => {
+    const category = getExerciseCategory(stat.exercise_hours);
+    data[category].count += 1;
+
+    if (!data[category].quadrants[stat.quadrant]) {
+      data[category].quadrants[stat.quadrant] = 0;
     }
-  );
+    data[category].quadrants[stat.quadrant] += 1;
+  });
 
   return data;
-}
+};
 
-export default function StatisticsScreen() {
+const getStackedExerciseChartData = (exerciseData) => {
+  return Object.entries(exerciseCategories).map(([category, { color }]) => {
+    const categoryData = exerciseData[category];
+    const total = categoryData.count;
+
+    const quadrantStacks = Object.entries(quadrantColors).map(
+      ([quadrant, quadrantColor]) => {
+        const count = categoryData.quadrants[quadrant] || 0;
+        const value = total > 0 ? (count / total) * 100 : 0;
+        return { value, color: quadrantColor };
+      }
+    );
+
+    return {
+      label: category,
+      stacks: quadrantStacks,
+    };
+  });
+};
+
+const getGroupedSleepDataWithQuadrants = (stats) => {
+  const data = {
+    "0-2": { quadrants: {}, count: 0 },
+    "3-5": { quadrants: {}, count: 0 },
+    "6-8": { quadrants: {}, count: 0 },
+    "9-10+": { quadrants: {}, count: 0 },
+  };
+
+  stats.forEach((stat) => {
+    const hours = stat.sleeping_hours;
+    let group = "";
+
+    if (hours >= 0 && hours <= 2) group = "0-2";
+    else if (hours >= 3 && hours <= 5) group = "3-5";
+    else if (hours >= 6 && hours <= 8) group = "6-8";
+    else if (hours >= 9) group = "9-10+";
+
+    if (group) {
+      data[group].count += 1;
+
+      if (!data[group].quadrants[stat.quadrant]) {
+        data[group].quadrants[stat.quadrant] = 0;
+      }
+      data[group].quadrants[stat.quadrant] += 1;
+    }
+  });
+
+  return data;
+};
+
+const getStackedSleepChartData = (groupedData) => {
+  return Object.entries(groupedData).map(([group, data]) => {
+    const total = data.count;
+
+    const stacks = Object.entries(quadrantColors).map(([quadrant, color]) => {
+      const count = data.quadrants[quadrant] || 0;
+      const value = total > 0 ? (count / total) * 100 : 0;
+      return { value, color };
+    });
+
+    return {
+      label: group,
+      stacks,
+    };
+  });
+};
+
+const getMealQuadrantStats = (stats) => {
+  const data = {
+    breakfast: { quadrants: {}, count: 0 },
+    lunch: { quadrants: {}, count: 0 },
+    brunch: { quadrants: {}, count: 0 },
+    dinner: { quadrants: {}, count: 0 },
+    snacks: { quadrants: {}, count: 0 },
+    dessert: { quadrants: {}, count: 0 },
+    alcohol: { quadrants: {}, count: 0 },
+  };
+
+  stats.forEach((stat) => {
+    const meals = stat.meals;
+    meals.forEach((meal) => {
+      if (data[meal]) {
+        data[meal].count += 1;
+
+        if (!data[meal].quadrants[stat.quadrant]) {
+          data[meal].quadrants[stat.quadrant] = 0;
+        }
+
+        data[meal].quadrants[stat.quadrant] += 1;
+      }
+    });
+  });
+
+  return data;
+};
+
+const getActivityQuadrantStats = (stats) => {
+  const data = {
+    work: { quadrants: {}, count: 0 },
+    rest: { quadrants: {}, count: 0 },
+    hobbies: { quadrants: {}, count: 0 },
+    school: { quadrants: {}, count: 0 },
+    TV: { quadrants: {}, count: 0 },
+    errands: { quadrants: {}, count: 0 },
+    "hanging out": { quadrants: {}, count: 0 },
+  };
+
+  stats.forEach((stat) => {
+    const activities = stat.activities;
+
+    activities.forEach((activity) => {
+      if (data[activity]) {
+        data[activity].count += 1;
+
+        if (!data[activity].quadrants[stat.quadrant]) {
+          data[activity].quadrants[stat.quadrant] = 0;
+        }
+
+        data[activity].quadrants[stat.quadrant] += 1;
+      }
+    });
+  });
+
+  return data;
+};
+
+const getMealChartData = (mealQuadrantStats) => {
+  return Object.entries(mealQuadrantStats).map(([meal, data]) => {
+    const total = data.count;
+
+    const stacks = Object.entries(quadrantColors).map(([quadrant, color]) => {
+      const count = data.quadrants[quadrant] || 0;
+      const value = total > 0 ? (count / total) * 100 : 0;
+      return { value, color };
+    });
+
+    return {
+      label: meal.charAt(0).toUpperCase() + meal.slice(1),
+      stacks,
+    };
+  });
+};
+
+const getActivityChartData = (activityQuadrantStats) => {
+  return Object.entries(activityQuadrantStats).map(([activity, data]) => {
+    const total = data.count;
+
+    const stacks = Object.entries(quadrantColors).map(([quadrant, color]) => {
+      const count = data.quadrants[quadrant] || 0;
+      const value = total > 0 ? (count / total) * 100 : 0;
+      return { value, color };
+    });
+
+    return {
+      label: activity.charAt(0).toUpperCase() + activity.slice(1),
+      stacks,
+    };
+  });
+};
+
+export default function StatisticsScreen({ navigation }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [stats, setStats] = useState([]);
-  const navigation = useNavigation();
+  const [topFiveEmotions, setTopFiveEmotions] = useState([]);
 
   useEffect(() => {
-    fetchStatsData();
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchStatsData();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const fetchStatsData = async () => {
     try {
       const userData = await AsyncStorage.getItem("userData");
       const userID = JSON.parse(userData).userId;
-      const statsResponse = await axios.get(
-        "https://backend-qat1.onrender.com/stats",
-        {
-          params: { userID },
-        }
-      );
+
+      const statsResponse = await axios.get("http://192.168.0.157:5000/stats", {
+        params: { userID },
+      });
 
       if (statsResponse.status === 200) {
+        console.log(statsResponse);
         setStats(statsResponse.data.stats);
+        setTopFiveEmotions(statsResponse.data.emotionQuadrants);
       }
     } catch (error) {
       console.error("Błąd żądania statystyk:", error);
@@ -144,19 +327,9 @@ export default function StatisticsScreen() {
     return { start, end };
   };
 
-  const getStartAndEndOfYear = (date) => {
-    const start = new Date(date.getFullYear(), 0, 1);
-    start.setHours(0, 0, 0, 0);
-    const end = new Date(date.getFullYear(), 11, 31);
-    end.setHours(23, 59, 59, 999);
-    return { start, end };
-  };
-
   const { start: startOfDay, end: endOfDay } = getStartAndEndOfDay(currentDate);
   const { start: startOfWeek, end: endOfWeek } =
     getStartAndEndOfWeek(currentDate);
-  const { start: startOfYear, end: endOfYear } =
-    getStartAndEndOfYear(currentDate);
 
   const todayStats = stats.filter((stat) => {
     const statDate = new Date(stat.date);
@@ -168,33 +341,8 @@ export default function StatisticsScreen() {
     return statDate >= startOfWeek && statDate <= endOfWeek;
   });
 
-  const yearStats = stats.filter((stat) => {
-    const statDate = new Date(stat.date);
-    return statDate >= startOfYear && statDate <= endOfYear;
-  });
-
-  const getDailyQuadrantData = (dayStats) => {
-    const total = dayStats.length;
-    const counts = {
-      "high energy pleasant": 0,
-      "low energy pleasant": 0,
-      "high energy unpleasant": 0,
-      "low energy unpleasant": 0,
-    };
-
-    dayStats.forEach((stat) => {
-      const q = stat.quadrant;
-      if (counts.hasOwnProperty(q)) {
-        counts[q] += 1;
-      }
-    });
-
-    return Object.entries(quadrantColors).map(([type, color]) => {
-      const count = counts[type] || 0;
-      const value = total > 0 ? (count / total) * 100 : 0;
-      return { value, color };
-    });
-  };
+  const todayQuadrants = todayStats.map((stat) => stat.quadrant);
+  const todayChartData = getQuadrantChartData(todayQuadrants);
 
   const weekStackData = daysOfWeek.map((dayLabel, index) => {
     const adjustedDayIndex = index === 6 ? 0 : index + 1;
@@ -211,23 +359,18 @@ export default function StatisticsScreen() {
     };
   });
 
-  const todayQuadrants = todayStats.map((stat) => stat.quadrant);
-  const todayChartData = getQuadrantChartData(todayQuadrants);
+  const exerciseCategoryData = getExerciseCategoryData(stats);
+  const exerciseChartData = getStackedExerciseChartData(exerciseCategoryData);
 
-  const weekExerciseStackData = daysOfWeek.map((dayLabel, index) => {
-    const adjustedDayIndex = index === 6 ? 0 : index + 1;
-    const dayStats = weekStats.filter((stat) => {
-      const statDate = new Date(stat.date);
-      return statDate.getDay() === adjustedDayIndex;
-    });
+  const groupedSleepData = getGroupedSleepDataWithQuadrants(stats);
+  console.log(groupedSleepData);
+  const sleepChartData = getStackedSleepChartData(groupedSleepData);
 
-    const stacks = getExerciseDataForDay(dayStats);
-
-    return {
-      label: dayLabel,
-      stacks,
-    };
-  });
+  const mealQuadrantStats = getMealQuadrantStats(stats);
+  console.log(mealQuadrantStats);
+  const mealChartData = getMealChartData(mealQuadrantStats);
+  const activityQuadrantStats = getActivityQuadrantStats(stats);
+  const activityChartData = getActivityChartData(activityQuadrantStats);
 
   return (
     <View style={styles.container}>
@@ -250,7 +393,7 @@ export default function StatisticsScreen() {
           <Text style={styles.questionText}>this week</Text>
           <View style={styles.barChart}>
             <BarChart
-              width={350}
+              width={300}
               stackData={weekStackData}
               hideRules
               hideYAxisText
@@ -268,22 +411,84 @@ export default function StatisticsScreen() {
           <Text style={styles.questionText}>physical activity</Text>
           <View style={styles.barChart}>
             <BarChart
-              width={250}
+              width={300}
+              stackData={exerciseChartData}
               hideRules
-              horizontal
-              barWidth={25}
-              spacing={15}
-              noOfSections={5}
               hideYAxisText
               yAxisThickness={0}
               xAxisThickness={0}
+              barWidth={25}
+              spacing={40}
+              noOfSections={5}
               barBorderRadius={6}
-              stackData={weekExerciseStackData}
             />
           </View>
         </View>
-        <View style={styles.bodyBubble}></View>
-        <View style={styles.bodyBubble}></View>
+        <View style={styles.bodyBubble}>
+          <Text style={styles.greetingText}>Your emotions and</Text>
+          <Text style={styles.questionText}>sleeping hours</Text>
+          <View style={styles.barChart}>
+            <BarChart
+              width={300}
+              stackData={sleepChartData}
+              hideRules
+              hideYAxisText
+              yAxisThickness={0}
+              xAxisThickness={0}
+              barWidth={25}
+              spacing={40}
+              noOfSections={5}
+              barBorderRadius={6}
+            />
+          </View>
+        </View>
+        <View style={styles.bodyBubble}>
+          <Text style={styles.greetingText}>Meals and emotions</Text>
+          <Text style={styles.questionText}>
+            See how meals affected your emotions
+          </Text>
+          <View style={styles.barChart}>
+            <BarChart
+              width={300}
+              stackData={mealChartData}
+              hideRules
+              hideYAxisText
+              yAxisThickness={0}
+              xAxisThickness={0}
+              barWidth={25}
+              spacing={15}
+              noOfSections={5}
+              barBorderRadius={6}
+            />
+          </View>
+        </View>
+        <View style={styles.bodyBubble}>
+          <Text style={styles.greetingText}>Activities and emotions</Text>
+          <Text style={styles.questionText}>
+            See how activities affected your emotions
+          </Text>
+          <View style={styles.barChart}>
+            <BarChart
+              width={300}
+              stackData={activityChartData}
+              hideRules
+              hideYAxisText
+              yAxisThickness={0}
+              xAxisThickness={0}
+              barWidth={25}
+              spacing={15}
+              noOfSections={5}
+              barBorderRadius={6}
+            />
+          </View>
+        </View>
+        <View style={styles.bodyBubble}>
+          <Text style={styles.greetingText}>Your emotions</Text>
+          <Text style={styles.questionText}>
+            See your most frequently selected emotions
+          </Text>
+          <EmotionBoxes props={topFiveEmotions} />
+        </View>
       </ScrollView>
     </View>
   );
