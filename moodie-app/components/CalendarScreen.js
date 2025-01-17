@@ -69,14 +69,14 @@ export default function CalendarScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <LinearGradient
         colors={["#F5ABD6", "#C4C1F2", "white"]}
         locations={[0, 0.22, 1]}
         style={styles.background}
       />
       <Header />
-      <View style={styles.body}>
+      <ScrollView style={styles.body}>
         <View style={styles.bodyBubble}>
           <Calendar
             markedDates={markedDates}
@@ -110,8 +110,8 @@ export default function CalendarScreen() {
               </Text>
             </View>
           ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 

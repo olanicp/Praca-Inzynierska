@@ -59,14 +59,14 @@ export default function MainScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <LinearGradient
         colors={["#F5ABD6", "#C4C1F2", "white"]}
         locations={[0, 0.22, 1]}
         style={styles.background}
       />
       <Header />
-      <View style={styles.body}>
+      <ScrollView style={styles.body}>
         {/* {userEmotions ? (
           <View style={[styles.bodyBubble, { height: 300 }]}>
             <Text style={styles.greetingText}>Today you are feeling</Text>
@@ -122,7 +122,7 @@ export default function MainScreen() {
             </TouchableOpacity>
           </View>
         )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }

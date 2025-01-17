@@ -48,14 +48,14 @@ export default function ProfileScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <LinearGradient
         colors={["#F5ABD6", "#C4C1F2", "white"]}
         locations={[0, 0.22, 1]}
         style={styles.background}
       />
       <Header />
-      <View style={styles.body}>
+      <ScrollView style={styles.body}>
         <View style={styles.bodyBubble}>
           <Text style={styles.questionText}>Account details</Text>
           <Text style={styles.detailText}>Name: {getName()}</Text>
@@ -139,7 +139,7 @@ export default function ProfileScreen() {
         >
           <GradientButton text={"log out"} />
         </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
