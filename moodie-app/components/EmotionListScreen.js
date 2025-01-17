@@ -24,6 +24,10 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
 
   const handleSelect = (item) => {
     const isSelected = selectedItems.includes(item.emotion);
+    if (!isSelected && selectedItems.length >= 3) {
+      alert("You can select up to 3 emotions.");
+      return;
+    }
     setSelectedItems((prev) =>
       isSelected
         ? prev.filter((elem) => elem !== item.emotion)

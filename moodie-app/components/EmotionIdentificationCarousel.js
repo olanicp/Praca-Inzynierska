@@ -87,6 +87,10 @@ export default function EmotionIdentificationCarousel() {
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
 
   const handleNextPress = async () => {
+    if (currentIndex === 3 && userEmotions.length === 0) {
+      alert("Please select at least one emotion before proceeding.");
+      return;
+    }
     let emotionsIDs = [];
     if (currentIndex === 1) {
       try {
