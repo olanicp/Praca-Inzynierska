@@ -58,12 +58,13 @@ export default function ProfileScreen() {
       <View style={styles.body}>
         <View style={styles.bodyBubble}>
           <Text style={styles.questionText}>Account details</Text>
+          <Text style={styles.detailText}>Name: {getName()}</Text>
+          <Text style={styles.detailText}>Email address: {getUserEmail()}</Text>
         </View>
         <View style={styles.bodyBubble}>
           <View style={styles.seeMoreButton}>
             <View style={{ paddingHorizontal: 15 }}>
-              <Text style={styles.titleText}>Name</Text>
-              <Text style={styles.detailText}>{getName()}</Text>
+              <Text style={styles.titleText}>Change name</Text>
             </View>
             <TouchableOpacity
               // onPress={() =>
@@ -79,8 +80,7 @@ export default function ProfileScreen() {
         <View style={styles.bodyBubble}>
           <View style={styles.seeMoreButton}>
             <View style={{ paddingHorizontal: 15 }}>
-              <Text style={styles.titleText}>Email Address</Text>
-              <Text style={styles.detailText}>{getUserEmail()}</Text>
+              <Text style={styles.titleText}>Change email</Text>
             </View>
             <TouchableOpacity
               // onPress={() =>
