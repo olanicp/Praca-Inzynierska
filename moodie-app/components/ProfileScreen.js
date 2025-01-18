@@ -19,10 +19,7 @@ export default function ProfileScreen() {
   const handleLogOut = async () => {
     try {
       const userData = await AsyncStorage.getItem("userData");
-      const parsedData = JSON.parse(userData);
-      const userID = parsedData.userId;
-      setName(parsedData.name);
-      setEmail(parsedData.email);
+      const userID = JSON.parse(userData).userId;
 
       const response = !isAnonymous
         ? await axios.post("https://backend-qat1.onrender.com/logout")
@@ -44,7 +41,11 @@ export default function ProfileScreen() {
   useEffect(() => {
     const fetchIsAnonymous = async () => {
       const userData = await AsyncStorage.getItem("userData");
-      setIsAnonymous(JSON.parse(userData).isAnonymous);
+      const parsedData = JSON.parse(userData);
+      const userID = parsedData.userId;
+      setName(parsedData.name);
+      setEmail(parsedData.email);
+      setIsAnonymous(parsedData.isAnonymous);
     };
 
     fetchIsAnonymous();
