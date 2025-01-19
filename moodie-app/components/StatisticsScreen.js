@@ -4,16 +4,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { BarChart, PieChart } from "react-native-gifted-charts";
 import Header from "./Header";
 import { styles } from "./MainAppStyles";
+import { quadrantColors } from "../constants/colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import EmotionBoxes from "./EmotionBoxes";
-
-const quadrantColors = {
-  "high energy pleasant": "#83B2F1",
-  "low energy pleasant": "#F5ABD0",
-  "high energy unpleasant": "#A9DCC7",
-  "low energy unpleasant": "#bfafe9",
-};
 
 const exerciseCategories = {
   intense: { range: [9, 10] },
@@ -442,10 +436,8 @@ export default function StatisticsScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.bodyBubble}>
-          <Text style={styles.greetingText}>Meals and emotions</Text>
-          <Text style={styles.questionText}>
-            See how meals affected your emotions
-          </Text>
+          <Text style={styles.greetingText}>Your emotions and</Text>
+          <Text style={styles.questionText}>eating habits</Text>
           <View style={styles.barChart}>
             <BarChart
               width={300}
@@ -462,10 +454,8 @@ export default function StatisticsScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.bodyBubble}>
-          <Text style={styles.greetingText}>Activities and emotions</Text>
-          <Text style={styles.questionText}>
-            See how activities affected your emotions
-          </Text>
+          <Text style={styles.greetingText}>Your emotions and</Text>
+          <Text style={styles.questionText}>activities</Text>
           <View style={styles.barChart}>
             <BarChart
               width={300}
@@ -482,9 +472,9 @@ export default function StatisticsScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.bodyBubble}>
-          <Text style={styles.greetingText}>Your emotions</Text>
+          <Text style={styles.greetingText}>Your top 5</Text>
           <Text style={styles.questionText}>
-            See your most frequently selected emotions
+            most frequently selected emotions
           </Text>
           <EmotionBoxes props={topFiveEmotions} />
         </View>

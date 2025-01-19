@@ -246,13 +246,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   progressDot: {
-    width: 20,
+    width: 35,
     height: 4,
     borderRadius: 2,
     marginHorizontal: 5,
   },
   activeDot: {
-    backgroundColor: "#6B6BD6",
+    backgroundColor: "#474146",
   },
   inactiveDot: {
     backgroundColor: "#D3D3D3",
@@ -267,5 +267,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 50,
     alignSelf: "center",
+    borderColor: "#474146",
+    borderRadius: 50,
+    borderWidth: 1,
   },
 });

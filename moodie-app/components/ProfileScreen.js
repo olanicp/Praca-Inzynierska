@@ -42,7 +42,6 @@ export default function ProfileScreen() {
     const fetchIsAnonymous = async () => {
       const userData = await AsyncStorage.getItem("userData");
       const parsedData = JSON.parse(userData);
-      const userID = parsedData.userId;
       setName(parsedData.name);
       setEmail(parsedData.email);
       setIsAnonymous(parsedData.isAnonymous);
@@ -130,7 +129,6 @@ export default function ProfileScreen() {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.bodyBubble}></View>
           <TouchableOpacity
             onPress={handleLogOut}
             style={{

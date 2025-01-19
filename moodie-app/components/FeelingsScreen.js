@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { styles } from "./MainAppStyles";
 
 export default function FeelingsScreen({ userEmotions, quadrant }) {
   const [colors, setColors] = useState(["#C1EBF2", "#ffffff", "#A9C7EF"]);
@@ -30,10 +31,9 @@ export default function FeelingsScreen({ userEmotions, quadrant }) {
       return (
         <Text
           style={[
-            styles.text,
+            styles.boldText,
             {
-              fontWeight: "bold",
-              fontSize: 40,
+              fontSize: 36,
               marginTop: 30,
               marginBottom: 30,
             },
@@ -44,20 +44,18 @@ export default function FeelingsScreen({ userEmotions, quadrant }) {
       );
     }
     if (userEmotions.length === 2) {
-      console.log(userEmotions);
       return (
         <Text
           style={[
-            styles.text,
+            styles.boldText,
             {
-              fontWeight: "bold",
-              fontSize: 40,
+              fontSize: 36,
               marginTop: 30,
               marginBottom: 30,
             },
           ]}
         >
-          {userEmotions[0]} <Text style={{ fontWeight: "normal" }}>and</Text>{" "}
+          {userEmotions[0]} <Text style={styles.regularText}>and</Text>{" "}
           {userEmotions[1]}
         </Text>
       );
@@ -65,12 +63,12 @@ export default function FeelingsScreen({ userEmotions, quadrant }) {
     return (
       <Text
         style={[
-          styles.text,
-          { fontWeight: "bold", fontSize: 40, marginTop: 30, marginBottom: 30 },
+          styles.boldText,
+          { fontSize: 36, marginTop: 30, marginBottom: 30 },
         ]}
       >
         {userEmotions[0]}, {userEmotions[1]}{" "}
-        <Text style={{ fontWeight: "normal" }}>and</Text> {userEmotions[2]}
+        <Text style={styles.regularText}>and</Text> {userEmotions[2]}
       </Text>
     );
   };
@@ -87,9 +85,9 @@ export default function FeelingsScreen({ userEmotions, quadrant }) {
         style={styles.background}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.text}>You are feeling</Text>
+        <Text style={styles.regularText}>You are feeling</Text>
         <View>{emotionsText}</View>
-        <Text style={styles.text}>
+        <Text style={styles.regularText}>
           let's now explore what made you feel this way...
         </Text>
       </View>
@@ -98,33 +96,3 @@ export default function FeelingsScreen({ userEmotions, quadrant }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f1ffff",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: 40,
-    paddingHorizontal: 20,
-  },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    height: "900",
-  },
-  textContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    paddingHorizontal: 5,
-    fontSize: 30,
-    textAlign: "center",
-  },
-});

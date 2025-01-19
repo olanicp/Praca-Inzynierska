@@ -15,8 +15,8 @@ export default function FrequencyScreen({ onValueChange }) {
       <View>
         <Text style={styles.title}>
           How would you describe the{" "}
-          <Text style={{ fontWeight: "bold" }}>pleasantness</Text> of your
-          current emotions?
+          <Text style={{ fontFamily: "Quicksand-Bold" }}>pleasantness</Text> of
+          your current emotions?
         </Text>
       </View>
       <View>

@@ -50,7 +50,38 @@ The app is intended to facilitate the identification of sources of stress and su
 \chapter{Wprowadzenie}
 W dzisiejszych czasach dbanie o własne zdrowie psychiczne jest niezwykle ważne. Ilość informacji, jakie na co dzień przetwarzamy, powoduje, że stajemy się przebodźcowani i często nie zdajemy sobie sprawy, jak intensywnie oddziałuje to na nasze samopoczucie. Zarówno życie zawodowe, jak i nawet prywatne często zmusza nas do ukrywania emocji, maskowania ich lub ignorowania na potrzeby zachowania pozorów. Z tego powodu postanowiłyśmy stworzyć narzędzie, które pomoże nam nie tylko zidentyfikować ukrywające się emocje, ale również znaleźć powiązania między nimi a czynnościami wykonanymi przez nas danego dnia.
 
-Nasza aplikacja ma służyć jako asystent do samorefleksji. Jej głównym zadaniem jest subtelne nakierowanie użytkownika do wyciągnięcia wniosków na temat swojego stanu psychicznego. Aby to osiągnąć, musimy przede wszystkim zachować równowagę pomiędzy zapewnieniem swobody w wyborze emocji a odpowiednim ograniczaniem pola wyboru na rzecz ułatwienia użytkownikowi procesu analizy.
+Naturalnym wyborem było zatem urzeczywistnienie takiego narzędzia w postaci aplikacji mobilnej. Ma ona służyć jako podręczny asystent do samorefleksji, a jej głównym zadaniem powinno być subtelne nakierowanie użytkownika do wyciągnięcia wniosków na temat swojego stanu psychicznego. Aby to osiągnąć, musimy przede wszystkim zachować równowagę pomiędzy zapewnieniem swobody w wyborze emocji a odpowiednim ograniczaniem pola wyboru na rzecz ułatwienia użytkownikowi procesu analizy. W tym celu skorzystałyśmy z potwierdzonych przez specjalistów technik psychologicznych opisanych w następnym rozdziale.
+
+\chapter{Opis i analiza zagadnienia}
+\section{Identyfikacja emocji}
+Najbardziej popularną metodą opisywania emocji w ogólnodostępnych aplikacjach zwanych \textit{mood trackerami} jest skala emotikonowa. Jest to zwykle pięć ikonek przedstawiających podstawowe wyrazy twarzy kojarzone z negatywnymi, neutralnymi lub pozytywnymi emocjami - płacz, smutek, brak emocji, lekki uśmiech, szeroki uśmiech. Taka skala jest wystarczająca dla osób, które nie odczuwają potrzeby głębszej analizy swojego samopoczucia. Osoby pragnące dowiedzieć się więcej o sobie oraz przeprowadzić bardziej szczegółową identyfikację własnych uczuć nie będą usatysfakcjonowane takim podejściem. 
+
+Z tego powodu postanowiłyśmy użyć bardziej precyzyjnego, dwuwymiarowego modelu emocji stworzonego przez Jamesa A. Russela \cite{russel}. \textit{The Valence-Arousal Model} to kołowy diagram składający się z dwóch osi: \textit{walencji} oraz \textit{pobudzenia}. Russel pokazał, że każdą emocję można opisać za pomocą tych dwóch zmiennych i odpowiednio umieścić ją na diagramie. Idea ta została później rozwinięta przez psychologa Marca A. Bracketta z Yale Center of Emotional Intelligence \cite{brackett}.
+
+
+Korzystając z wyżej wymienionych idei, listy emocji sporządzonej przez \textit{Berkeley Wellbeing Institute}\cite{berkeley} i listy uczuć, emocji i nastrojów autorstwa \textit{Jody Michael Associates}\cite{jma}, stworzyłyśmy bazę 256 emocji z przypisanymi krótkimi definicjami oraz współrzędnymi \textit{pleasantness} (przyjemność) i \textit{energy} (energia). Posługując się tą bazą, będziemy w stanie proponować emocje najbardziej zbliżone do położenia stanu emocjonalnego użytkownika na układzie \textit{Valence-Arousal}.
+
+\begin{figure}
+\includegraphics[width=1\textwidth]{Russells-Valence-Arousal-Model.png} 
+\caption{\textit{The Valence-Arousal Model} opracowany przez Jamesa A. Russela.\cite{2dmodel}}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\textwidth]{mood-meter.jpg} 
+\caption{\textit{The Mood Meter} opracowany przez Marca A. Bracketta.\cite{moodmeter}}
+\end{figure}
+
+
+
+\section{Prezentowanie statystyk}
+Oprócz narzędzia do identyfikacji emocji, jednym z kluczowych elementów naszej aplikacji jest również generowanie statystyk dotyczących nastroju oraz stylu życia użytkownika. Chciałyśmy uwzględnić nie tylko podgląd podsumowania emocji z minionego dnia lub tygodnia, ale również np. wpływ intensywności aktywności fizycznej na samopoczucie. Liczba emocji dostępnych w naszej bazie danych sprawiła, że pierwotnie generowane raporty były zbyt skomplikowane i nieczytelne.
+
+Zdecydowałyśmy się więc pogrupować emocje według ich przynależności do odpowiedniej ćwiartki układu współrzędnych i przypisać każdej z nich kolor. Pozwoliło nam to stworzyć przejrzyste wykresy przedstawiające proporcje emocji znajdujących się w poszczególnych ćwiartkach dla każdego przedziału (np. dla aktywności fizycznej: brak, niska intensywność, średnia intensywność, wysoka intensywność). 
+
+\section{Pobieranie informacji o czynnikach wpływających na nastrój}
+Na potrzeby wcześniej wymienionych statystyk musiałyśmy w procesie identyfikacji emocji uwzględnić ankietę na temat podstawowych czynności, w jakich użytkownik brał udział danego dnia. Ważne było to, aby ankieta nie była zbyt długa lub skomplikowana, co zniechęcałoby do jej wypełniania. Ograniczyłyśmy się zatem do czterech zapytań: pytanie o długość snu, spożyte posiłki, intensywność aktywności fizycznej oraz wykonane czynności (odpoczynek, praca, szkoła itp.). 
+
+Początkowo miałyśmy zamiar udostępnić też opcję dodawania własnych czynników, ale wiązało się to ze znacznym przekształcaniem sposobu generowania wykresów, na co nie wystarczyło nam czasu. Uważamy jednak, że te podstawowe opcje w zupełności wystarczą do przeprowadzenia adekwatnej analizy powiązania nawyków z odczuwanymi emocjami.
 
 \chapter{Przypadki użycia}
 
@@ -89,7 +120,7 @@ Każdy scenariusz rozpoczyna się uruchomieniem aplikacji przez użytkownika.
 	\item Użytkownik znajduje się na głównej stronie.
 	\item Użytkownik naciska na ikonę wykresu na pasku nawigacyjnym.
 	\item Aplikacja przekierowuje użytkownika do widoku statystyk.
-	\item Użytkownik przegląda wykresy przedstawiające rozkład jego emocji zapisanych w ostatnim tygodniu, miesiącu, oraz raporty analityczne przedstawiające powiązania między emocjami a parametrami takimi jak sen czy aktywność fizyczna.
+	\item Użytkownik przegląda wykresy przedstawiające rozkład jego emocji zapisanych w ostatnim tygodniu, miesiącu, oraz wykresy przedstawiające powiązania między emocjami a parametrami takimi jak sen czy aktywność fizyczna.
 \end{enumerate}
 
 \section{Dodawanie wpisu do dziennika}
@@ -105,44 +136,8 @@ Każdy scenariusz rozpoczyna się uruchomieniem aplikacji przez użytkownika.
 
 
 
-\chapter{Opis i analiza zagadnienia}
-\section{Identyfikacja emocji}
-Najbardziej popularną metodą opisywania emocji w ogólnodostępnych aplikacjach zwanych \textit{mood trackerami} jest skala emotikonowa. Jest to zwykle pięć ikonek przedstawiających podstawowe wyrazy twarzy kojarzone z negatywnymi, neutralnymi lub pozytywnymi emocjami - płacz, smutek, brak emocji, lekki uśmiech, szeroki uśmiech. Taka skala jest wystarczająca dla osób, które nie odczuwają potrzeby głębszej analizy swojego samopoczucia. Osoby pragnące dowiedzieć się więcej o sobie oraz przeprowadzić bardziej szczegółową identyfikację własnych uczuć nie będą usatysfakcjonowane takim podejściem. 
-
-Z tego powodu postanowiłyśmy użyć bardziej precyzyjnego, dwuwymiarowego modelu emocji stworzonego przez Jamesa A. Russela (1980). \textit{The Valence-Arousal Model} to kołowy diagram składający się z dwóch osi: walencji oraz pobudzenia. Russel pokazał, że każdą emocję można opisać za pomocą tych dwóch zmiennych i odpowiednio umieścić ją na diagramie. Idea ta została później rozwinięta przez psychologa Marca A. Bracketta z Yale Center of Emotional Intelligence i opisana w jego książce \textit{Permission To Feel}.
-
-
-Korzystając z wyżej wymienionych idei, listy emocji sporządzonej przez \textit{Berkeley Wellbeing Institute}\protect\footnotemark\footnotetext{https://www.berkeleywellbeing.com/list-of-emotions.html} i listy uczuć, emocji i nastrojów autorstwa \textit{Jody Michael Associates}\protect\footnotemark, stworzyłyśmy bazę 256 emocji z przypisanymi krótkimi definicjami oraz współrzędnymi \textit{pleasantness} (przyjemność) i \textit{energy} (energia). Korzystając z tej bazy, będziemy w stanie proponować emocje najbardziej zbliżone do położenia stanu emocjonalnego użytkownika na układzie \textit{Valence-Arousal}.
-
-
-\footnotetext{https://www.jodymichael.com/blog/jma-feelings-list/}
-
-\begin{figure}[!ht]
-\includegraphics[width=1\textwidth]{Russells-Valence-Arousal-Model.png} 
-\caption{\textit{The Valence-Arousal Model} opracowany przez Jamesa A. Russela.\protect\footnotemark}
-\end{figure}
-\footnotetext{https://www.researchgate.net/figure/Two-dimensional-model-of-valence-and-arousal-adapted-from-Russell-1980\_fig1\_278783929}
-
-
-\begin{figure}[!hb]
-\includegraphics[width=1\textwidth]{mood-meter.jpg} 
-\caption{\textit{The Mood Meter} opracowany przez Marca A. Bracketta.\protect\footnotemark}
-\end{figure}
-\footnotetext{https://www.accelerateco.com/blogs/news/ignite-your-leadership-potential-emotional-literacy-your-secret-weapon-for-high-performing-teams}
-
-
-\section{Generowanie wykresów i raportów analitycznych}
-Kolejnym kluczowym elementem naszej aplikacji jest generowanie statystyk dotyczących nastroju oraz stylu życia użytkownika. Chciałyśmy uwzględnić nie tylko podgląd podsumowania emocji z minionego dnia lub tygodnia, ale również np. wpływ intensywności aktywności fizycznej na samopoczucie. Liczba emocji dostępnych w naszej bazie danych sprawiła, że generowane raporty były zbyt skomplikowane i nieczytelne.
-
-Zdecydowałyśmy się więc pogrupować emocje według ich przynależności do odpowiedniej ćwiartki układu współrzędnych i przypisać każdej z nich kolor. Pozwoliło nam to stworzyć przejrzyste wykresy przedstawiające proporcje emocji znajdujących się w poszczególnych ćwiartkach dla każdego przedziału (dla aktywności fizycznej: brak, niska intensywność, średnia intensywność, wysoka intensywność). 
-
-\section{Pobieranie informacji o czynnikach wpływających na nastrój}
-Na potrzeby wcześniej wymienionych statystyk musiałyśmy w procesie identyfikacji emocji uwzględnić ankietę na temat podstawowych czynności, w jakich użytkownik brał udział danego dnia. Ważne było to, aby ankieta nie była zbyt długa lub skomplikowana, co zniechęcałoby do jej wypełniania. Ograniczyłyśmy się zatem do czterech zapytań: pytanie o długość snu, spożyte posiłki, intensywność aktywności fizycznej oraz wykonane czynności (odpoczynek, praca, szkoła itp.). 
-
-Początkowo miałyśmy zamiar udostępnić też opcję dodawania własnych czynników, ale wiązało się to ze znacznym przekształcaniem sposobu generowania wykresów, na co nie wystarczyło nam czasu. Uważamy jednak, że te podstawowe opcje w zupełności wystarczą do przeprowadzenia adekwatnej analizy powiązania nawyków z odczuwanymi emocjami.
-
 \chapter{Porównanie konkurencyjnych aplikacji}
-Aplikacje do zarządzania czy identyfikacji swojego samopoczucia (ang. \textit{mood trackers}) cieszą się coraz większą popularnością, zatem nie brakuje ich zarówno w Sklepie Google Play (Android), jak i w App Store (iOS). Z uwagi na ilość i różnorodność takich aplikacji przedstawimy cztery najpopularniejsze z nich: \textit{Daylio}, \textit{Moodpress}, \textit{DailyBean} oraz \textit{How We Feel}. Jeśli aplikacja oferuje wersję premium, pod uwagę będziemy brać tylko funkcje dostępne w wersji bezpłatnej.
+Aplikacje do zarządzania czy identyfikacji swojego samopoczucia (ang. \textit{mood trackers}) cieszą się coraz większą popularnością, zatem nie brakuje ich zarówno w Sklepie Google Play (Android), jak i w App Store (iOS). Z uwagi na ilość i różnorodność takich aplikacji przedstawimy cztery najpopularniejsze z nich: \textit{Daylio}\cite{daylio}, \textit{Moodpress}\cite{moodpress}, \textit{DailyBean}\cite{dailybean} oraz \textit{How We Feel}\cite{howwefeel}. Jeśli aplikacja oferuje wersję premium, pod uwagę będziemy brać tylko funkcje dostępne w wersji bezpłatnej.
 \section{Daylio}
 Metodą kategoryzowania samopoczucia w aplikacji \textit{Daylio} jest wspomniany przez nas wcześniej model emotikonowy składający się z pięciu stopni (Rys. 4.1). Nie pozwala to na głębszą analizę nastroju, lecz wydaje się być idealne dla młodszych użytkowników. 
 
@@ -209,35 +204,45 @@ Mimo tego, aplikacja wyróżnia się swoją bazą emocji, imponującym zestawem 
 Porównując dostępne na rynku aplikacje, miałyśmy okazję przyjrzeć się różnym pomysłom na narzędzia do analizy samopoczucia. Zmotywowało nas to do zwrócenia szczególnej uwagi na estetykę naszego interfejsu oraz skupieniu się na kilku dobrze dopracowanych funkcjonalnościach, aby zapewnić użytkownikowi płynne i przyjemne korzystanie z aplikacji.
 
 
-\chapter{Wykaz narzędzi}
+\chapter{Projekt i architektura aplikacji}
+
+\section{Model danych}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.9\textwidth]{modeldanych.jpg} 
+\caption{Struktura danych w naszej aplikacji.}
+\end{figure}
+
 \section{Projekt interfejsu}
 
-Do zaprojektowania interfejsu użyłyśmy platformy \textit{Figma}. Zaczęłyśmy od stworzenia prostego prototypu \textit{low fidelity}, aby mieć lepsze spojrzenie na układ widoków oraz strukturę aplikacji.
+Do zaprojektowania interfejsu użyłyśmy platformy \textit{Figma}\cite{figma}. Zaczęłyśmy od stworzenia prostego prototypu \textit{low fidelity}, aby mieć lepsze spojrzenie na układ widoków oraz strukturę aplikacji (Rys 5.2).
 
-\begin{figure}[!h]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.95\textwidth]{figma-ui-lofi.png} 
 \caption{Pierwszy prototyp interfejsu użytkownika.}
 \end{figure}
 
-Następnie na podstawie prototypu zaprojektowałyśmy faktyczny interfejs użytkownika gotowy do zaimplementowania. Naszym głównym celem było stworzenie spójnej gamy barw, kojarzącej się z wewnętrznym spokojem, przejrzystością i poczuciem równowagi.
+Następnie na podstawie prototypu zaprojektowałyśmy faktyczny interfejs użytkownika gotowy do zaimplementowania (Rys 5.3). Naszym głównym celem było stworzenie spójnej gamy barw, kojarzącej się z wewnętrznym spokojem, przejrzystością i poczuciem równowagi.
 
 
-\begin{figure}[!h]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{figma-ui.png} 
 \caption{Ostateczny projekt interfejsu użytkownika.}
 \end{figure}
 
 \section{Frontend}
-Frontend aplikacji napisałyśmy w \textit{Javascript} za pomocą frameworka \textit{React Native} oraz \textit{Expo}. Do tworzenia zapytań HTTP komunikujących się z serwerem użyłyśmy biblioteki \textit{Axios}.
+Ważne było dla nas, aby nasza aplikacja była dostępna zarówno dla użytkowników systemu operacyjnego \textit{Android}, jak i \textit{iOS}. Z tego powodu frontend aplikacji napisałyśmy w \textit{Javascript} za pomocą frameworka \textit{React Native}\cite{reactnative}, który umożliwia pisanie aplikacji na te dwie platformy, korzystając z jednej bazy kodu. Do sprawniejszego budowania projektu oraz dostępu do dodatkowych narzędzi użyłyśmy \textit{Expo}\cite{expo}, frameworka polecanego w oficjalnej dokumentacji \textit{React Native}, a w celu tworzenia zapytań HTTP komunikujących się z serwerem skorzystałyśmy z biblioteki \textit{Axios}\cite{axios}.
 
 \section{Backend}
-Serwer opracowałyśmy za pomocą \textit{Express.js}. Na początku trzymałyśmy go w tym samym repozytorium \textit{Git} co frontend, ale ostatecznie zdecydowałyśmy się na przeniesienie naszego backendu do osobnego repozytorium, aby ułatwić hostowanie go w chmurze. W celu wdrożenia kodu skorzystałyśmy z serwisu \textit{Render}.
-\section{Baza danych}
-Wybór odpowiedniego narzędzia do zarządzania bazą danych okazał się być dość problematycznym zagadnieniem. Początkowo założyłyśmy, że użyjemy \textit{SQLite} lub \textit{MongoDB} w zależności od tego, czy będzie nam potrzebna relacyjność bazy danych. Po większym rozeznaniu zdałyśmy sobie sprawę, że będziemy potrzebować serwisu, który bezpłatnie zaoferuje przetrzymywanie naszej bazy w chmurze. Jedną z najpopularniejszych takich platform jest \textit{Firebase}. Oferuje ona dodatkowo wiele gotowych narzędzi ułatwiających autentykację użytkownika czy analizę wydajności oprogramowania, jednak model danych opierający się na \textit{NoSQL} wydawał się niewystarczający na potrzeby naszej aplikacji. 
+Serwer opracowałyśmy za pomocą \textit{Node.js}\cite{nodejs} oraz \textit{Express.js}\cite{expressjs}. Na początku trzymałyśmy go w tym samym repozytorium \textit{Git} co frontend, ale ostatecznie zdecydowałyśmy się na przeniesienie naszego backendu do osobnego repozytorium, aby ułatwić hostowanie go w chmurze. Niestety większość serwisów oferujących takie usługi dysponowały tylko wersjami płatnymi. Po dłuższych poszukiwaniach udało nam się znaleźć platformę \textit{Render}\cite{render}, której bezpłatna wersja posiadała pewne ograniczenia, lecz była wystarczająca na potrzeby testowania naszego kodu. 
 
-Ostatecznie udało nam się znaleźć \textit{Supabase}, alternatywne narzędzie oferujące podobne funkcjonalności, korzystające z obiektowo-relatywnej bazy danych \textit{PostgreSQL}. Ten wybór pozwolił nam zaoszczędzić czas na implementacji własnej logiki uwierzytelniania czy resetowania hasła i skupić się na ciekawszych elementach aplikacji.
+\section{Baza danych}
+Wybór odpowiedniego narzędzia do zarządzania bazą danych okazał się być dość problematycznym zagadnieniem. Początkowo założyłyśmy, że użyjemy \textit{SQLite}\cite{sqlite} lub \textit{MongoDB}\cite{mongodb} w zależności od tego, czy będzie nam potrzebna relacyjność bazy danych. Po większym rozeznaniu zdałyśmy sobie sprawę, że będziemy potrzebować serwisu, który bezpłatnie zaoferuje przetrzymywanie naszej bazy w chmurze. Jedną z najpopularniejszych takich platform jest \textit{Firebase}\cite{firebase}. Oferuje ona dodatkowo wiele gotowych narzędzi ułatwiających autentykację użytkownika czy analizę wydajności oprogramowania, jednak model danych opierający się na \textit{NoSQL} wydawał się niewystarczający na potrzeby naszej aplikacji. 
+
+Ostatecznie udało nam się znaleźć \textit{Supabase}\cite{supabase}, alternatywne narzędzie oferujące podobne funkcjonalności, korzystające z obiektowo-relatywnej bazy danych \textit{PostgreSQL}\cite{postgresql}. Ten wybór pozwolił nam zaoszczędzić czas na implementacji własnej logiki uwierzytelniania czy resetowania hasła i skupić się na ciekawszych elementach aplikacji.
 \chapter{Podręcznik użytkownika}
 \section{Instalacja}
 \section{Przegląd aplikacji}
@@ -247,9 +252,9 @@ Ostatecznie udało nam się znaleźć \textit{Supabase}, alternatywne narzędzie
 \chapter{Podsumowanie}
 Proces tworzenia naszej aplikacji był niezwykłym wyzwaniem, ale też idealną okazją do rozwoju. Byłyśmy odpowiedzialne za każde zagadnienie związane z urzeczywistnianiem naszego początkowego pomysłu oraz udoskonalaniem go w trakcie, co pokazało nam, z jak wielu czynników składa się budowanie aplikacji mobilnej. 
 
-Niestety nie byłyśmy w stanie całkowicie sprostać naszym własnym oczekiwaniom. Miałyśmy w planach dodać o wiele więcej funkcjonalności, na które ostatecznie nie starczyło nam czasu lub zasobów. Jedną z nich było wyświetlanie personalizowanych wskazówek na podstawie emocji odczuwanych przez użytkownika danego dnia. Wskazówki te miały brać też pod uwagę kontekst dotyczący snu, aktywności fizycznej itp. i odpowiednio proponować pewne czynności (np. \textit{zadzwoń do kogoś bliskiego}, \textit{pojdź na spacer} czy \textit{posłuchaj swojej ulubionej piosenki}), ale zdałyśmy sobie sprawę, że do zbudowania na tyle zniuansowanej bazy potrzebowałybyśmy pomocy licencjonowanego specjalisty czy psychologa. 
+Niestety nie byłyśmy w stanie całkowicie sprostać naszym własnym oczekiwaniom. Miałyśmy w planach dodać o wiele więcej funkcjonalności, na które ostatecznie nie starczyło nam czasu lub zasobów. Jedną z nich było wyświetlanie personalizowanych wskazówek na podstawie emocji odczuwanych przez użytkownika danego dnia. Wskazówki te miały brać też pod uwagę kontekst dotyczący snu, aktywności fizycznej itp. i odpowiednio proponować pewne czynności (np. \textit{zadzwoń do kogoś bliskiego}, \textit{pojdź na spacer} czy \textit{posłuchaj swojej ulubionej piosenki}), ale zdałyśmy sobie sprawę, że do zbudowania na tyle zniuansowanego asystenta potrzebowałybyśmy pomocy licencjonowanego specjalisty czy psychologa. 
 
-Nie udało nam się też pokryć naszego kodu testami jednostkowymi i integracyjnymi. W przypadku dalszego rozwoju aplikacji, byłoby to jednym z ważniejszych zadań do nadrobienia. Dzięki temu znacznie usprawniłby się proces modyfikowania istniejących funkcji oraz znajdowania błędów w kodzie. W przyszłości chciałybyśmy też dodać możliwość zmiany języka aplikacji, aby rozszerzyć grono potencjalnych odbiorców.
+Nie udało nam się też pokryć naszego kodu testami jednostkowymi i integracyjnymi. W przypadku dalszego rozwoju aplikacji, byłoby to jednym z ważniejszych zadań do nadrobienia. Dzięki temu znacznie usprawniłby się proces modyfikowania istniejących funkcji oraz znajdowania błędów w kodzie. W przyszłości chciałybyśmy też dodać możliwość zmiany języka aplikacji, aby rozszerzyć grono potencjalnych odbiorców oraz umożliwić połączenie się z opaskami sportowymi lub smartwatchami w celu pobierania dokładniejszych danych do statystyk.
 
 Mimo wszystko, jesteśmy zadowolone z efektu końcowego naszej aplikacji. Udało nam się zaprojektować rozwiązanie, które ma potencjał istotnie przyczynić się do poprawy jakości życia użytkowników.
 
@@ -257,52 +262,93 @@ Mimo wszystko, jesteśmy zadowolone z efektu końcowego naszej aplikacji. Udało
 
 \begin{thebibliography}{1}
 
-\bibitem{} Marc Brackett, \textit{Permission To Feel}
+\bibitem{russel} James A. Russel, \textit{A Circumplex Model of Affect (1980)}
 
-Link: https://marcbrackett.com/permission-to-feel/
+https://www.researchgate.net/publication/235361517\_A\_Circumplex\_Model\_of\_Affect (data dostępu: 18.01.2025)
 
-\bibitem{} Jody Michael Associates, \textit{Feelings, Emotions and Moods: How to Say What You are Experiencing}
+\bibitem{brackett} Marc Brackett, \textit{Permission To Feel}
 
-Link: https://www.jodymichael.com/blog/jma-feelings-list/
+https://marcbrackett.com/permission-to-feel/ (data dostępu: 18.01.2025)
 
-\bibitem{} Berkeley Well-Being Institute, \textit{List of Emotions: 271 Emotion Words}
+\bibitem{berkeley} Berkeley Well-Being Institute, \textit{List of Emotions: 271 Emotion Words}
 
-Link: https://www.berkeleywellbeing.com/list-of-emotions.html
+https://www.berkeleywellbeing.com/list-of-emotions (data dostępu: 18.01.2025)
 
-\bibitem{} James A. Russel, \textit{A Circumplex Model of Affect (1980)}
+\bibitem{jma} Jody Michael Associates, \textit{Feelings, Emotions and Moods: How to Say What You are Experiencing}
 
-Link: https://www.researchgate.net/publication/235361517\_A\_Circumplex\_Model\_of\_Affect
+https://www.jodymichael.com/blog/jma-feelings-list (data dostępu: 18.01.2025)
 
-\bibitem{} How We Feel
+\bibitem{2dmodel} \textit{Two dimensional model of valence and arousal adapted from Russel}
 
-Link: https://howwefeel.org
+https://www.researchgate.net/figure/Two-dimensional-model-of-valence-and-arousal-adapted-from-Russell-1980\_fig1\_278783929 (data dostępu: 18.01.2025)
 
-\bibitem{} React Native
+\bibitem{moodmeter} \textit{What do you know about Marc Brackett’s Permission to Feel?}
 
-Link: https://reactnative.dev
-\bibitem{} Expo
+https://aboutplay.org/2023/03/07/what-do-you-know-about-marc-bracketts-permission-to-feel/ (data dostępu: 18.01.2025) 
 
-Link: https://expo.dev
+\bibitem{daylio} Daylio
 
-\bibitem{} Express.js
+https://daylio.net (data dostępu: 18.01.2025) 
 
-Link: https://expressjs.com
+\bibitem{moodpress} Moodpress
 
-\bibitem{} Supabase
+https://play.google.com/store/apps/details?id=com.selfcare.diary.mood.tracker.moodpress (data dostępu: 18.01.2025) 
 
-Link: https://supabase.com
+\bibitem{dailybean} DailyBean
 
-\bibitem{} Render 
+https://play.google.com/store/apps/details?id=com.bluesignum.bluediary (data dostępu: 18.01.2025) 
 
-Link: https://render.com
+\bibitem{howwefeel} How We Feel
 
-\bibitem{} PostgreSQL
+https://howwefeel.org (data dostępu: 18.01.2025)
 
-Link: https://www.postgresql.org.pl
+\bibitem{figma} Figma
 
-\bibitem{} Figma
+https://www.figma.com (data dostępu: 18.01.2025)
 
-Link: https://www.figma.com
+\bibitem{reactnative} React Native
+
+https://reactnative.dev (data dostępu: 18.01.2025)
+
+\bibitem{expo} Expo
+
+https://expo.dev (data dostępu: 18.01.2025)
+
+\bibitem{axios} Axios
+
+https://axios-http.com/docs/intro (data dostępu: 18.01.2025)
+
+\bibitem{nodejs} Node.js
+
+https://nodejs.org/en (data dostępu: 18.01.2025)
+
+\bibitem{expressjs} Express.js
+
+https://expressjs.com (data dostępu: 18.01.2025)
+
+\bibitem{render} Render 
+
+https://render.com (data dostępu: 18.01.2025)
+
+\bibitem{sqlite} SQLite 
+
+https://www.sqlite.org (data dostępu: 18.01.2025)
+
+\bibitem{mongodb} MongoDB 
+
+https://www.mongodb.com (data dostępu: 18.01.2025)
+
+\bibitem{firebase} Firebase
+
+https://firebase.google.com (data dostępu: 18.01.2025)
+
+\bibitem{supabase} Supabase
+
+https://supabase.com (data dostępu: 18.01.2025)
+
+\bibitem{postgresql} PostgreSQL
+
+https://www.postgresql.org.pl (data dostępu: 18.01.2025)
 
 \end{thebibliography}
 

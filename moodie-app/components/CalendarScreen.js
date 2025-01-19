@@ -5,6 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Calendar } from "react-native-calendars";
 import { styles } from "./MainAppStyles";
 import Header from "./Header";
+import { quadrantColors } from "../constants/colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -68,6 +69,19 @@ export default function CalendarScreen() {
     setDayDetails(response.data);
   };
 
+  const getExerciseCategory = (hours) => {
+    const numericHours = parseFloat(hours);
+    if (numericHours >= 9 && numericHours <= 10) {
+      return "intense";
+    } else if (numericHours >= 5 && numericHours <= 8) {
+      return "moderate";
+    } else if (numericHours >= 1 && numericHours <= 4) {
+      return "low";
+    } else {
+      return "none";
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -92,13 +106,25 @@ export default function CalendarScreen() {
           dayDetails &&
           dayDetails.map((item, index) => (
             <View style={styles.bodyBubble} key={index}>
-              <Text style={styles.heading}>Interview {index + 1}</Text>
-              <Text style={styles.titleText}>Date: {item.date}</Text>
+              <View
+                style={{
+                  backgroundColor: quadrantColors[item.quadrant],
+                  width: "100%",
+                  padding: 15,
+                  borderRadius: 33,
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.heading}>{item.date}</Text>
+                <Text style={styles.titleText}>
+                  Entry {dayDetails.length - index}
+                </Text>
+              </View>
               <Text style={styles.detailText}>
-                Sleeping Hours: {item.sleeping_hours}
+                Sleep: {item.sleeping_hours} hours
               </Text>
               <Text style={styles.detailText}>
-                Exercise Hours: {item.exercise_hours}
+                Exercise: {getExerciseCategory(item.exercise_hours)}
               </Text>
               <Text style={styles.detailText}>
                 Meals: {item.meals.join(", ")}
@@ -115,5 +141,3 @@ export default function CalendarScreen() {
     </View>
   );
 }
-
-// https://www.npmjs.com/package/react-native-calendars/v/1.1286.0

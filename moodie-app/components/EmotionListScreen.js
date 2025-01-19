@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import { styles } from "./MainAppStyles";
 
 export default function EmotionListScreen({ emotions, onValueChange }) {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -58,16 +59,26 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
         handleSelect(item);
       }}
     >
-      <Text style={styles.emotionText}>{item.emotion}</Text>
+      <Text style={styles.boxText}>{item.emotion}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
+    <View
+      style={[
+        styles.container,
+        {
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingTop: 60,
+          paddingBottom: 120,
+          paddingHorizontal: 20,
+        },
+      ]}
+    >
+      <Text style={[styles.regularText, { fontSize: 24 }]}>
         Based on your selection, these emotions are likely accurate:
       </Text>
-      <Text style={styles.subtitle}>select all that resonate with you</Text>
 
       <View style={styles.listWrapper}>
         <FlatList
@@ -91,57 +102,3 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff6fb",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 60,
-    paddingBottom: 120,
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    fontSize: 30,
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  subtitle: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    fontSize: 14,
-    marginBottom: 10,
-  },
-  listWrapper: {
-    flex: 1,
-    width: "70%",
-    position: "relative",
-  },
-  emotionBlock: {
-    borderWidth: 0,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginVertical: 10,
-    width: "100%",
-    alignItems: "center",
-  },
-  emotionBlockSelected: {
-    borderWidth: 1,
-  },
-  emotionText: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    fontSize: 20,
-  },
-  description: {
-    fontFamily: "Quicksand-Regular",
-    color: "#474146",
-    fontSize: 20,
-    textAlign: "center",
-    marginVertical: 30,
-  },
-});

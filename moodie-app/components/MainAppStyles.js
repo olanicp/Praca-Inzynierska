@@ -4,6 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    width: "100%",
   },
   background: {
     position: "absolute",
@@ -163,5 +164,64 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     alignItems: "center",
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  regularText: {
+    fontFamily: "Quicksand-Regular",
+    color: "#474146",
+    padding: 20,
+    fontSize: 28,
+    textAlign: "center",
+  },
+  boldText: {
+    fontFamily: "Quicksand-Bold",
+    color: "#474146",
+    paddingHorizontal: 10,
+    fontSize: 24,
+    textAlign: "center",
+  },
+  listWrapper: {
+    flex: 1,
+    width: "70%",
+    position: "relative",
+  },
+  emotionBlock: {
+    borderWidth: 0,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginVertical: 10,
+    width: "100%",
+    alignItems: "center",
+  },
+  emotionBlockSelected: {
+    borderWidth: 1,
+  },
+  boxText: {
+    fontFamily: "Quicksand-Regular",
+    color: "#474146",
+    fontSize: 20,
+  },
+  description: {
+    fontFamily: "Quicksand-Regular",
+    color: "#474146",
+    fontSize: 20,
+    textAlign: "center",
+    marginVertical: 30,
+  },
+  subtitle: {
+    fontFamily: "Quicksand-Regular",
+    color: "#474146",
+    fontSize: 14,
+    padding: 10,
+  },
+  boxContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 15,
   },
 });
