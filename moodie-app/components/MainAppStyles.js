@@ -224,4 +224,48 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
   },
+  streakNumber: {
+    fontFamily: "Quicksand-Bold",
+    fontSize: 90,
+    color: "#333",
+    marginBottom: 10,
+  },
+  streakText: {
+    fontFamily: "Quicksand-Bold",
+    fontSize: 40,
+    color: "#333",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  daysContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  dayWrapper: {
+    alignItems: "center",
+  },
+  circle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 5,
+    marginHorizontal: 5,
+  },
+  checkedCircle: {
+    backgroundColor: "#f5abd6",
+  },
+  uncheckedCircle: {
+    backgroundColor: "#fff6fb",
+  },
+  dayText: {
+    fontSize: 14,
+    fontFamily: "Quicksand-Regular",
+    color: "#474146",
+    marginVertical: 10,
+  },
 });

@@ -121,19 +121,26 @@ export default function CalendarScreen() {
                 </Text>
               </View>
               <Text style={styles.detailText}>
-                Sleep: {item.sleeping_hours} hours
+                <Text style={{ fontFamily: "Quicksand-Bold" }}>Sleep:</Text>{" "}
+                {item.sleeping_hours} hours
               </Text>
               <Text style={styles.detailText}>
-                Exercise: {getExerciseCategory(item.exercise_hours)}
+                <Text style={{ fontFamily: "Quicksand-Bold" }}>Exercise:</Text>{" "}
+                {getExerciseCategory(item.exercise_hours)}
               </Text>
               <Text style={styles.detailText}>
-                Meals: {item.meals.join(", ")}
+                <Text style={{ fontFamily: "Quicksand-Bold" }}>Meals:</Text>{" "}
+                {item.meals.join(", ")}
               </Text>
               <Text style={styles.detailText}>
-                Activities: {item.activities.join(", ")}
+                <Text style={{ fontFamily: "Quicksand-Bold" }}>
+                  Activities:
+                </Text>{" "}
+                {item.activities.join(", ")}
               </Text>
               <Text style={styles.detailText}>
-                Emotions: {item.emotions.join(", ")}
+                <Text style={{ fontFamily: "Quicksand-Bold" }}>Emotions:</Text>{" "}
+                {item.emotions.join(", ")}
               </Text>
             </View>
           ))}

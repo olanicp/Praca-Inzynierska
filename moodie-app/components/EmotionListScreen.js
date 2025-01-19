@@ -13,9 +13,9 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
   const [lastSelectedEmotion, setLastSelectedEmotion] = useState("");
   const emotionColor = (f, i) => {
     if (f < 0 && i < 0) {
-      return `hsl(${202 - 16 * f}, ${72 - 16 * i}%, ${88 + 24 * f}%)`;
+      return `hsl(${202 - 16 * f}, 80%, ${92 + 24 * f}%)`;
     } else if (f < 0 && i > 0) {
-      return `hsl(${8 + 24 * f}, ${84 + 16 * i}%, ${84 - 16 * i}%)`;
+      return `hsl(${8 + 24 * f}, ${84 + 16 * i}%, ${88 - 16 * i}%)`;
     } else if (f > 0 && i < 0) {
       return `hsl(${160 - 24 * f}, 62%, ${88 + 32 * i}%)`;
     } else {
@@ -79,6 +79,9 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
       <Text style={[styles.regularText, { fontSize: 24 }]}>
         Based on your selection, these emotions are likely accurate:
       </Text>
+      <Text style={[styles.smallDetailText, { paddingBottom: 15 }]}>
+        Select up to 3 to continue.
+      </Text>
 
       <View style={styles.listWrapper}>
         <FlatList
@@ -87,18 +90,17 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContainer}
           showsVerticalScrollIndicator={false}
+          getItemLayout={(data, index) => ({
+            length: 60,
+            offset: 60 * index,
+            index,
+          })}
         />
       </View>
 
       <Text style={styles.description}>
         {lastSelectedEmotion || "Select an emotion to see its description"}
       </Text>
-
-      {/* <View>
-        <TouchableOpacity onPress={handleNext}>
-          <GradientButton text={"next"} />
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 }
