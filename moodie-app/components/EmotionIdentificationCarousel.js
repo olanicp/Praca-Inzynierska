@@ -209,6 +209,7 @@ export default function EmotionIdentificationCarousel() {
         keyExtractor={(item) => item.key}
         onViewableItemsChanged={onViewRef.current}
         viewabilityConfig={viewConfigRef.current}
+        scrollEnabled={false}
       />
 
       <View style={styles.progressContainer}>

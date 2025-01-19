@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -31,7 +31,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
         if (route.name === "Statistics") {
           return (
-            <>
+            <Fragment key={route.key}>
               <LinearGradient
                 key={"AddEntry"}
                 colors={["#A9C7EF", "#C6DCF9", "#F5ABD6"]}
@@ -55,7 +55,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
               >
                 <AntDesign name={icons[route.name]} size={28} color="white" />
               </TouchableOpacity>
-            </>
+            </Fragment>
           );
         }
 
