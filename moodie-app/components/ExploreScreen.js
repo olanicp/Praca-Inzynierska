@@ -113,7 +113,7 @@ export default function FeelingsScreen({ onValueChange }) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff6fb",
+    backgroundColor: "#fff",
     alignItems: "center",
     paddingTop: 60,
     paddingBottom: 120,
