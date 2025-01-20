@@ -35,13 +35,17 @@ export default function Header() {
   const currentDate = new Date();
 
   useEffect(() => {
-    const fetchStreak = async () => {
-      const streakData = await getStreak();
-      setStreak(streakData);
-    };
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchStreak();
+    });
 
-    fetchStreak();
-  }, []);
+    return unsubscribe;
+  }, [navigation]);
+
+  const fetchStreak = async () => {
+    const streakData = await getStreak();
+    setStreak(streakData);
+  };
 
   return (
     <View style={styles.header}>
