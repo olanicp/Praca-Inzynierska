@@ -22,13 +22,20 @@ import EmotionIdentificationCarousel from "../components/EmotionIdentificationCa
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
 const Stack = createNativeStackNavigator();
 
 export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isInitialized, setIsInitialized] = useState(false);
+
+  SplashScreen.preventAutoHideAsync();
+
+  SplashScreen.setOptions({
+    duration: 1000,
+    fade: true,
+  });
 
   const [fontsLoaded] = useFonts({
     "PlayfairDisplay-Regular": require("../assets/fonts/PlayfairDisplay-Regular.ttf"),
@@ -36,30 +43,6 @@ export default function HomeScreen() {
     "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
   });
-
-  useEffect(() => {
-    if (!isInitialized) {
-      const initializeAppSettings = async () => {
-        try {
-          const defaultSettings = {
-            hasSeenIntro: false,
-            theme: "light",
-            language: "en",
-            // notificationsEnabled: true,
-          };
-          await AsyncStorage.setItem(
-            "appSettings",
-            JSON.stringify(defaultSettings)
-          );
-        } catch (error) {
-          console.error("Error initializing app settings:", error);
-        } finally {
-          setIsInitialized(true);
-        }
-      };
-      initializeAppSettings();
-    }
-  }, []);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -73,18 +56,35 @@ export default function HomeScreen() {
       } catch (error) {
         console.error("Error checking login status:", error);
       }
-      setIsLoading(false);
     };
 
+    const initializeAppSettings = async () => {
+      try {
+        const appSettings = await AsyncStorage.getItem("userData");
+        if (!appSettings) {
+          const defaultSettings = {
+            hasSeenIntro: false,
+            theme: "light",
+            language: "en",
+            // notificationsEnabled: true,
+          };
+          await AsyncStorage.setItem(
+            "appSettings",
+            JSON.stringify(defaultSettings)
+          );
+        }
+      } catch (error) {
+        console.error("Error initializing app settings:", error);
+      }
+    };
+    initializeAppSettings();
     checkLoginStatus();
+    SplashScreen.hide();
+    setIsLoading(false);
   }, []);
 
   if (isLoading || !fontsLoaded) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
+    return null;
   }
 
   return (
