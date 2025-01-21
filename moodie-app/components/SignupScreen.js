@@ -27,8 +27,7 @@ function passwordValidator(password) {
 
 function repeatPasswordValidator(repeatPassword, password) {
   if (!repeatPassword) return "Password can't be empty.";
-  if (!(repeatPassword === password)) return "Passwords are different.";
-  return "Password must be at least 5 characters long.";
+  if (repeatPassword !== password) return "Passwords are different.";
   return "";
 }
 
@@ -46,7 +45,10 @@ export default function SignupScreen() {
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-    const repeatPasswordError = repeatPasswordValidator(repeatPassword.value);
+    const repeatPasswordError = repeatPasswordValidator(
+      repeatPassword.value,
+      password.value
+    );
     if (emailError || passwordError || nameError || repeatPasswordError) {
       setName({ ...name, error: nameError });
       setEmail({ ...email, error: emailError });
@@ -57,9 +59,8 @@ export default function SignupScreen() {
 
     try {
       const response = await axios.post(
-        "https://backend-qat1.onrender.com/register",
+        "https://backend-qat1.onrender.com//register",
         {
-          //for testing purposes change to the local ip address of the emulator
           name: name.value,
           email: email.value,
           password: password.value,
