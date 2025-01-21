@@ -25,6 +25,7 @@ export default function CalendarScreen() {
   const navigation = useNavigation();
   const [selectedDate, setSelectedDate] = useState(null);
   const [dayDetails, setDayDetails] = useState(null);
+  const [journalEntry, setJournalEntry] = useState(null);
 
   const [moodData, setMoodData] = useState([]);
 
@@ -69,6 +70,18 @@ export default function CalendarScreen() {
     setDayDetails(response.data);
   };
 
+  const fetchJournalEntry = async (date) => {
+    const userData = await AsyncStorage.getItem("userData");
+    const userID = JSON.parse(userData).userId;
+    const response = await axios.get(
+      "https://backend-qat1.onrender.com/journal-entry/date",
+      {
+        params: { userID, date },
+      }
+    );
+    setJournalEntry(response.data);
+  };
+
   const getExerciseCategory = (hours) => {
     const numericHours = parseFloat(hours);
     if (numericHours >= 9 && numericHours <= 10) {
@@ -97,11 +110,22 @@ export default function CalendarScreen() {
             markingType="custom"
             onDayPress={(day) => {
               fetchDayData(day.dateString);
+              fetchJournalEntry(day.dateString);
             }}
             theme={styles.calendarTheme}
             style={styles.calendar}
           />
         </View>
+        {selectedDate && (
+          <View style={styles.bodyBubble}>
+            <Text style={styles.titleText}>{selectedDate}</Text>
+          </View>
+        )}
+        {selectedDate && journalEntry && (
+          <View style={styles.textInput}>
+            <Text style={styles.inputLabel}>{journalEntry.entry}</Text>
+          </View>
+        )}
         {selectedDate &&
           dayDetails &&
           dayDetails.map((item, index) => (
@@ -115,7 +139,6 @@ export default function CalendarScreen() {
                   alignItems: "center",
                 }}
               >
-                <Text style={styles.heading}>{item.date}</Text>
                 <Text style={styles.titleText}>
                   Entry {dayDetails.length - index}
                 </Text>
