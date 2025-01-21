@@ -16,24 +16,27 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const slides = [
   {
     key: "slide1",
-    text: "First Slide",
-    title: "First Slide Text",
-    image: require("../assets/images/favicon.png"),
-    backgroundColor: "#20d2bb",
+    image: require("../assets/images/slides/slide1.png"),
+    backgroundColor: "#fff",
+    width: "100%",
   },
   {
     key: "slide2",
-    text: "Second Slide",
-    title: "Second Slide Text",
-    image: require("../assets/images/favicon.png"),
-    backgroundColor: "#20d2bb",
+    image: require("../assets/images/slides/slide2.png"),
+    backgroundColor: "#fff",
+    width: "100%",
   },
   {
     key: "slide3",
-    text: "Third Slide",
-    title: "Third Slide Text",
-    image: require("../assets/images/favicon.png"),
-    backgroundColor: "#20d2bb",
+    image: require("../assets/images/slides/slide3.png"),
+    backgroundColor: "#fff",
+    width: "100%",
+  },
+  {
+    key: "slide4",
+    image: require("../assets/images/slides/slide4.png"),
+    backgroundColor: "#fff",
+    width: "100%",
   },
 ];
 
@@ -100,19 +103,10 @@ export default function WelcomeScreen() {
 
   const RenderItem = ({ item }) => {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: item.backgroundColor,
-          alignItems: "center",
-          justifyContent: "space-around",
-          paddingBottom: 100,
-        }}
-      >
-        <Text style={styles.introTitle}>{item.title}</Text>
-        <Image style={styles.introImage} source={item.image} />
-        <Text style={styles.introText}>{item.text}</Text>
-      </View>
+      <ImageBackground
+        style={{ flex: 1, resizeMode: "cover" }}
+        source={item.image}
+      ></ImageBackground>
     );
   };
 

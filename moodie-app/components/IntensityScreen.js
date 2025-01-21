@@ -42,7 +42,7 @@ export default function IntensityScreen({ onValueChange }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff6fb",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-between",
     paddingTop: 60,
