@@ -24,8 +24,8 @@ export default function LoginScreen() {
       );
 
       if (response.status === 200) {
-        const { userID, email, name } = response.data.user;
-
+        const { userID, email, name, accessToken, refreshToken } =
+          response.data.user;
         const streakResponse = await axios.get(
           "https://backend-qat1.onrender.com/getStreak",
           {
@@ -44,6 +44,8 @@ export default function LoginScreen() {
             userId: userID,
             email: email,
             name: name,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
             streak: JSON.stringify(streak),
             lastInterviewedAt: JSON.stringify(lastInterviewedAt),
             loginDays: JSON.stringify(loginDays),
