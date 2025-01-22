@@ -88,7 +88,7 @@ export default function EmotionListScreen({ emotions, onValueChange }) {
           data={emotions}
           renderItem={renderEmotion}
           keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.listContainer}
+          initialNumToRender={25}
           showsVerticalScrollIndicator={false}
           getItemLayout={(data, index) => ({
             length: 60,
