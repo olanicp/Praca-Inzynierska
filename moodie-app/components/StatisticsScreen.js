@@ -10,10 +10,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import EmotionBoxes from "./EmotionBoxes";
 
 const exerciseCategories = {
-  intense: { range: [9, 10] },
-  moderate: { range: [5, 8] },
-  low: { range: [1, 4] },
   none: { range: [0, 0] },
+  low: { range: [1, 4] },
+  moderate: { range: [5, 8] },
+  intense: { range: [9, 10] },
 };
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -86,10 +86,10 @@ const getDailyQuadrantData = (dayStats) => {
 
 const getExerciseCategoryData = (stats) => {
   const data = {
-    intense: { quadrants: {}, count: 0 },
-    moderate: { quadrants: {}, count: 0 },
-    low: { quadrants: {}, count: 0 },
     none: { quadrants: {}, count: 0 },
+    low: { quadrants: {}, count: 0 },
+    moderate: { quadrants: {}, count: 0 },
+    intense: { quadrants: {}, count: 0 },
   };
 
   stats.forEach((stat) => {
@@ -207,9 +207,9 @@ const getActivityQuadrantStats = (stats) => {
     rest: { quadrants: {}, count: 0 },
     hobbies: { quadrants: {}, count: 0 },
     school: { quadrants: {}, count: 0 },
+    "hanging out": { quadrants: {}, count: 0 },
     TV: { quadrants: {}, count: 0 },
     errands: { quadrants: {}, count: 0 },
-    "hanging out": { quadrants: {}, count: 0 },
   };
 
   stats.forEach((stat) => {
@@ -390,6 +390,12 @@ export default function StatisticsScreen({ navigation }) {
               stackData={weekStackData}
               hideRules
               hideYAxisText
+              rotateLabel
+              xAxisLabelTextStyle={{
+                fontFamily: "Quicksand-Regular",
+                paddingHorizontal: 15,
+                width: 150,
+              }}
               yAxisThickness={0}
               xAxisThickness={0}
               barWidth={25}
@@ -408,6 +414,13 @@ export default function StatisticsScreen({ navigation }) {
               stackData={exerciseChartData}
               hideRules
               hideYAxisText
+              rotateLabel
+              xAxisLabelTextStyle={{
+                fontFamily: "Quicksand-Regular",
+                paddingHorizontal: 15,
+                width: 150,
+              }}
+              labelsExtraHeight={20}
               yAxisThickness={0}
               xAxisThickness={0}
               barWidth={25}
@@ -426,6 +439,9 @@ export default function StatisticsScreen({ navigation }) {
               stackData={sleepChartData}
               hideRules
               hideYAxisText
+              xAxisLabelTextStyle={{
+                fontFamily: "Quicksand-Regular",
+              }}
               yAxisThickness={0}
               xAxisThickness={0}
               barWidth={25}
@@ -446,6 +462,13 @@ export default function StatisticsScreen({ navigation }) {
               hideYAxisText
               yAxisThickness={0}
               xAxisThickness={0}
+              rotateLabel
+              xAxisLabelTextStyle={{
+                fontFamily: "Quicksand-Regular",
+                paddingHorizontal: 15,
+                width: 150,
+              }}
+              labelsExtraHeight={30}
               barWidth={25}
               spacing={15}
               noOfSections={5}
@@ -464,6 +487,13 @@ export default function StatisticsScreen({ navigation }) {
               hideYAxisText
               yAxisThickness={0}
               xAxisThickness={0}
+              rotateLabel
+              xAxisLabelTextStyle={{
+                fontFamily: "Quicksand-Regular",
+                paddingHorizontal: 15,
+                width: 150,
+              }}
+              labelsExtraHeight={40}
               barWidth={25}
               spacing={15}
               noOfSections={5}

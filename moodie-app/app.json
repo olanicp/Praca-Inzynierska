@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "expo-splash-screen": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "ios": {

@@ -119,6 +119,7 @@ export const styles = StyleSheet.create({
     calendarBackground: "transparent",
     selectedDayBackgroundColor: "#00adf5",
     todayTextColor: "white",
+    todayBackgroundColor: "#FF8FD2",
     arrowColor: "#474146",
     monthTextColor: "#474146",
     textDayFontFamily: "Quicksand-Regular",
