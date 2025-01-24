@@ -71,10 +71,7 @@ export default function ProfileScreen() {
                 <Text style={styles.titleText}>Change name</Text>
               </View>
               <TouchableOpacity
-                // onPress={() =>
-                //   navigation.navigate("ChangeEmail", {
-                //   })
-                // }
+                onPress={() => navigation.navigate("ChangeNameScreen", {})}
                 style={{ paddingHorizontal: 20 }}
               >
                 <AntDesign name="rightcircle" size={48} color="#F5ABD6" />
@@ -87,10 +84,7 @@ export default function ProfileScreen() {
                 <Text style={styles.titleText}>Change email</Text>
               </View>
               <TouchableOpacity
-                // onPress={() =>
-                //   navigation.navigate("ChangeEmail", {
-                //   })
-                // }
+                onPress={() => navigation.navigate("ChangeEmailScreen", {})}
                 style={{ paddingHorizontal: 20 }}
               >
                 <AntDesign name="rightcircle" size={48} color="#F5ABD6" />

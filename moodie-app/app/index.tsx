@@ -19,6 +19,8 @@ import StreakScreen from "../components/StreakScreen";
 import JournalScreen from "../components/JournalScreen";
 import TabNavigator from "../components/TabNavigator";
 import EmotionIdentificationCarousel from "../components/EmotionIdentificationCarousel";
+import ChangeName from "../components/ChangeName";
+import ChangeEmail from "../components/ChangeEmail";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
@@ -122,6 +124,8 @@ export default function HomeScreen() {
         component={EmotionIdentificationCarousel}
       />
       <Stack.Screen name="JournalScreen" component={JournalScreen} />
+      <Stack.Screen name="ChangeNameScreen" component={ChangeName}/>
+      <Stack.Screen name="ChangeEmailScreen" component={ChangeEmail}/>
     </Stack.Navigator>
   );
 }
