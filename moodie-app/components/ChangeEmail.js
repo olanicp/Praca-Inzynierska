@@ -27,8 +27,16 @@ export default function ResetPasswordScreen() {
         }
       );
       if (response.status === 200) {
-        alert("Dane przesłane");
-        navigation.goBack();
+        alert("Email changed successfully");
+        const fetchedUserData = userData ? JSON.parse(userData) : {};
+        const updatedUserData = {
+          ...fetchedUserData,
+          email: newEmail.value,
+        };
+        await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
+        navigation.navigate("MainScreen", {
+          screen: "Profile",
+        });
       } else {
         throw new Error("error has occurred");
       }
