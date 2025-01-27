@@ -6,7 +6,7 @@ import GradientButton from "./GradientButton";
 import { styles } from "./CredentialScreenStyles";
 import axios from "axios";
 
-export default function ResetPasswordScreen() {
+export default function ResetPasswordSuccessScreen() {
   const navigation = useNavigation();
 
   return (

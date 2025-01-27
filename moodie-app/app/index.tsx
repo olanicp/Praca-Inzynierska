@@ -19,6 +19,7 @@ import TabNavigator from "../components/TabNavigator";
 import EmotionIdentificationCarousel from "../components/EmotionIdentificationCarousel";
 import ChangeName from "../components/ChangeName";
 import ChangeEmail from "../components/ChangeEmail";
+import DeleteAccount from "../components/DeleteAccountConfirmationScreen";
 import ResetPasswordWhenLoggedScreen from "../components/ResetPasswordWhenLoggedScreen";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -53,12 +54,12 @@ export default function HomeScreen() {
         const params = parseFragment(initialUrl);
         const token = params.access_token || "";
         try {
-          await AsyncStorage.setItem('resetToken', token);
+          await AsyncStorage.setItem("resetToken", token);
         } catch (error) {
           console.error("Error saving token to AsyncStorage:", error);
         }
       }
-    }
+    };
 
     getUrlAsync();
 
@@ -69,12 +70,10 @@ export default function HomeScreen() {
       try {
         await AsyncStorage.setItem("resetToken", token);
         await AsyncStorage.setItem("refToken", refreshToken);
-
       } catch (error) {
         console.error("Error saving token to AsyncStorage:", error);
       }
     };
-
 
     const subscription = Linking.addEventListener("url", handleUrl);
 
@@ -83,9 +82,8 @@ export default function HomeScreen() {
     };
   }, []);
 
-
   const parseFragment = (url: string) => {
-    const fragment = url.split('#')[1];
+    const fragment = url.split("#")[1];
     const params: { [key: string]: string } = {};
     if (fragment) {
       const regex = /([^&=]+)=([^&]*)/g;
@@ -134,7 +132,6 @@ export default function HomeScreen() {
     checkLoginStatus();
     SplashScreen.hide();
     setIsLoading(false);
-
   }, []);
 
   if (isLoading || !fontsLoaded) {
@@ -154,8 +151,11 @@ export default function HomeScreen() {
         name="ConfirmationCode"
         component={ConfirmationCodeScreen}
       />
-      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen}/>
-      <Stack.Screen name="ResetPasswordWhenLoggedScreen" component={ResetPasswordWhenLoggedScreen}/>
+      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+      <Stack.Screen
+        name="ResetPasswordWhenLoggedScreen"
+        component={ResetPasswordWhenLoggedScreen}
+      />
 
       <Stack.Screen
         name="ResetPasswordSuccess"
@@ -178,8 +178,9 @@ export default function HomeScreen() {
         component={EmotionIdentificationCarousel}
       />
       <Stack.Screen name="JournalScreen" component={JournalScreen} />
-      <Stack.Screen name="ChangeNameScreen" component={ChangeName}/>
-      <Stack.Screen name="ChangeEmailScreen" component={ChangeEmail}/>
+      <Stack.Screen name="ChangeNameScreen" component={ChangeName} />
+      <Stack.Screen name="ChangeEmailScreen" component={ChangeEmail} />
+      <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
     </Stack.Navigator>
   );
 }

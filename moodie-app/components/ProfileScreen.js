@@ -112,10 +112,7 @@ export default function ProfileScreen() {
                 <Text style={styles.titleText}>Delete account</Text>
               </View>
               <TouchableOpacity
-                // onPress={() =>
-                //   navigation.navigate("ChangeEmail", {
-                //   })
-                // }
+                onPress={() => navigation.navigate("DeleteAccount")}
                 style={{ paddingHorizontal: 20 }}
               >
                 <AntDesign name="rightcircle" size={48} color="#F5ABD6" />
@@ -157,13 +154,7 @@ export default function ProfileScreen() {
               <View style={{ paddingHorizontal: 15 }}>
                 <Text style={styles.titleText}>Link account</Text>
               </View>
-              <TouchableOpacity
-                // onPress={() =>
-                //   navigation.navigate("ChangeEmail", {
-                //   })
-                // }
-                style={{ paddingHorizontal: 20 }}
-              >
+              <TouchableOpacity style={{ paddingHorizontal: 20 }}>
                 <AntDesign name="rightcircle" size={48} color="#F5ABD6" />
               </TouchableOpacity>
             </View>

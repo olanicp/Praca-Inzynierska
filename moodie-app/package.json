@@ -25,7 +25,6 @@
     "axios": "^1.7.9",
     "expo": "~52.0.17",
     "expo-auth-session": "^6.0.2",
-    "expo-dev-client": "~5.0.9",
     "expo-font": "~13.0.1",
     "expo-linear-gradient": "~14.0.1",
     "expo-linking": "~7.0.3",
