@@ -10,7 +10,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function ResetPasswordScreen() {
   const navigation = useNavigation();
   const [name, setName] = useState({ value: "", error: "" });
-  const [email, setEmail] = useState({ value: "", error: "" });
 
   const onSubmitPressed = async (event) => {
     try {
@@ -24,13 +23,21 @@ export default function ResetPasswordScreen() {
         }
       );
       if (response.status === 200) {
-        alert("Dane przesłane");
-        navigation.goBack();
+        alert("Name changed successfully");
+        const fetchedUserData = userData ? JSON.parse(userData) : {};
+        const updatedUserData = {
+          ...fetchedUserData,
+          name: name.value,
+        };
+        await AsyncStorage.setItem("userData", JSON.stringify(updatedUserData));
+        navigation.navigate("MainScreen", {
+          screen: "Profile",
+        });
       } else {
         throw new Error("error has occurred");
       }
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data.error);
     }
   };
 
