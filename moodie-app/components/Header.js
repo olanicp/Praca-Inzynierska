@@ -5,22 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { useNavigation } from "@react-navigation/native";
 
-const getStreak = async () => {
-  try {
-    const userData = await AsyncStorage.getItem("userData");
-    const streak = JSON.parse(userData).streak;
-    if (streak) {
-      return streak;
-    }
-    return null;
-  } catch (error) {
-    console.error("Error retrieving streak:", error);
-    return null;
-  }
-};
-
 export default function Header() {
   const [streak, setStreak] = useState(0);
+  const [userName, setUsername] = useState("");
   const navigation = useNavigation();
 
   const formatDate = (date) => {
@@ -34,18 +21,55 @@ export default function Header() {
 
   const currentDate = new Date();
 
+  const getStreak = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("userData");
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        return parsedData.streak ?? 0;
+      }
+      return 0;
+    } catch (error) {
+      console.error("Error retrieving streak:", error);
+      return 0;
+    }
+  };
+
+  const getUserName = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("userData");
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        return parsedData.name.slice(0, 1) ?? "";
+      }
+      return "";
+    } catch (error) {
+      console.error("Error retrieving username:", error);
+      return "";
+    }
+  };
+
+  const fetchAndSetStreak = async () => {
+    const streakData = await getStreak();
+    setStreak(streakData);
+  };
+
+  const fetchAndSetUserName = async () => {
+    const username = await getUserName();
+    setUsername(username);
+  };
+
   useEffect(() => {
+    fetchAndSetStreak();
+    fetchAndSetUserName();
+
     const unsubscribe = navigation.addListener("focus", () => {
-      fetchStreak();
+      fetchAndSetStreak();
+      fetchAndSetUserName();
     });
 
     return unsubscribe;
   }, [navigation]);
-
-  const fetchStreak = async () => {
-    const streakData = await getStreak();
-    setStreak(streakData);
-  };
 
   return (
     <View style={styles.header}>
@@ -54,7 +78,7 @@ export default function Header() {
         onPress={() => navigation.navigate("Profile")}
       >
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>E</Text>
+          <Text style={styles.avatarText}>{userName}</Text>
         </View>
       </TouchableOpacity>
       <View style={styles.dateAndStreak}>
@@ -76,7 +100,8 @@ export default function Header() {
               paddingHorizontal: 5,
             }}
           >
-            {streak}
+            {streak !== null ? streak : "Loading..."}{" "}
+            {/* Wyświetlanie 'Loading...' podczas ładowania */}
           </Text>
         </View>
       </View>
