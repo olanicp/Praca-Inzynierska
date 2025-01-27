@@ -1,16 +1,23 @@
-# Praca-Inzynierska
-Potrzebne:
-- java 17
-- nodejs
-- android studio
-- uruchamiane na emulatorze pixel 3a
+# Instrukcja uruchomienia projektu
 
-Instalacja: 
+## Wymagania wstępne
+
+Aby uruchomić projekt, upewnij się, że masz zainstalowane następujące narzędzia:
+
+1. **Node.js** 
+
+2. **npm** lub **Yarn**  
+
+## Instalacja: 
 W folderze **moodie-app**:
-- npm install
-W głównym folderze:
-- npm install express
-- npm install body-parser
+- npm install / yarn install
+- npm install --global expo-cli
+- npx expo start
 
-Uruchomienie: 
-Aby uruchomić emulator z terminala należy przejść do folderu **moodie-app** i wywołać polecenie npm run android. Aby uruchomić serwer nodejs należy w głównym folderze uruchomić polecenie **node server.js**.
+## Uruchomienie: 
+### Urządzenie fizyczne:
+* Otwórz aplikację Expo Go na telefonie.
+* Zeskanuj kod QR, który pojawi się w przeglądarce lub terminalu.
+### Emulator:
+- Android: Uruchom emulator Androida w Android Studio i wciśnij `a` w terminalu.
+- iOS: Uruchom symulator iOS w Xcode i wciśnij `i` w terminalu (tylko macOS).
