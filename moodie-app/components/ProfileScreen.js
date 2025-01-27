@@ -97,10 +97,9 @@ export default function ProfileScreen() {
                 <Text style={styles.titleText}>Change password</Text>
               </View>
               <TouchableOpacity
-                // onPress={() =>
-                //   navigation.navigate("ChangeEmail", {
-                //   })
-                // }
+                onPress={() =>
+                  navigation.navigate("ResetPasswordWhenLoggedScreen", {})
+                }
                 style={{ paddingHorizontal: 20 }}
               >
                 <AntDesign name="rightcircle" size={48} color="#F5ABD6" />

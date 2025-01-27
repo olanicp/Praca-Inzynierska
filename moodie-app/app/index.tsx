@@ -19,6 +19,7 @@ import TabNavigator from "../components/TabNavigator";
 import EmotionIdentificationCarousel from "../components/EmotionIdentificationCarousel";
 import ChangeName from "../components/ChangeName";
 import ChangeEmail from "../components/ChangeEmail";
+import ResetPasswordWhenLoggedScreen from "../components/ResetPasswordWhenLoggedScreen";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState, useRef } from "react";
@@ -154,6 +155,8 @@ export default function HomeScreen() {
         component={ConfirmationCodeScreen}
       />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen}/>
+      <Stack.Screen name="ResetPasswordWhenLoggedScreen" component={ResetPasswordWhenLoggedScreen}/>
+
       <Stack.Screen
         name="ResetPasswordSuccess"
         component={ResetPasswordSuccessScreen}
