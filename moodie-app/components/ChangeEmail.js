@@ -17,7 +17,7 @@ export default function ResetPasswordScreen() {
       const accessToken = JSON.parse(userData).accessToken;
       const refreshToken = JSON.parse(userData).refreshToken;
       const response = await axios.post(
-        "http://192.168.0.157:5000/update-email",
+        "https://backend-qat1.onrender.com/update-email",
         { newEmail: newEmail.value, refreshToken: refreshToken },
         {
           headers: {
