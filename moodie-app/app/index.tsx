@@ -1,12 +1,10 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, ActivityIndicator } from "react-native";
 import LoginScreen from "../components/LoginScreen";
 import WelcomeScreen from "../components/WelcomeScreen";
 import SignupScreen from "../components/SignupScreen";
 import ForgotPasswordScreen from "../components/ForgotPasswordScreen";
 import ConfirmationCodeScreen from "../components/ConfirmationCodeScreen";
-import ResetPasswordScreen from "../components/ResetPasswordScreen";
+import ResetPasswordScreen from "./reset-password";
 import ResetPasswordSuccessScreen from "../components/ResetPasswordSuccessScreen";
 import CalendarScreen from "../components/CalendarScreen";
 import FrequencyScreen from "../components/FrequencyScreen";
@@ -23,8 +21,9 @@ import ChangeName from "../components/ChangeName";
 import ChangeEmail from "../components/ChangeEmail";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import * as Linking from "expo-linking";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +44,57 @@ export default function HomeScreen() {
     "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
     "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
   });
+
+  useEffect(() => {
+    const getUrlAsync = async () => {
+      const initialUrl = await Linking.getInitialURL();
+      if (initialUrl) {
+        const params = parseFragment(initialUrl);
+        const token = params.access_token || "";
+        try {
+          await AsyncStorage.setItem('resetToken', token);
+        } catch (error) {
+          console.error("Error saving token to AsyncStorage:", error);
+        }
+      }
+    }
+
+    getUrlAsync();
+
+    const handleUrl = async (event: { url: string }) => {
+      const params = parseFragment(event.url);
+      const token = params.access_token || "";
+      const refreshToken = params.refresh_token || "";
+      try {
+        await AsyncStorage.setItem("resetToken", token);
+        await AsyncStorage.setItem("refToken", refreshToken);
+
+      } catch (error) {
+        console.error("Error saving token to AsyncStorage:", error);
+      }
+    };
+
+
+    const subscription = Linking.addEventListener("url", handleUrl);
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+
+  const parseFragment = (url: string) => {
+    const fragment = url.split('#')[1];
+    const params: { [key: string]: string } = {};
+    if (fragment) {
+      const regex = /([^&=]+)=([^&]*)/g;
+      let match;
+      while ((match = regex.exec(fragment)) !== null) {
+        params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+      }
+    }
+    return params;
+  };
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -83,6 +133,7 @@ export default function HomeScreen() {
     checkLoginStatus();
     SplashScreen.hide();
     setIsLoading(false);
+
   }, []);
 
   if (isLoading || !fontsLoaded) {
@@ -102,7 +153,7 @@ export default function HomeScreen() {
         name="ConfirmationCode"
         component={ConfirmationCodeScreen}
       />
-      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen}/>
       <Stack.Screen
         name="ResetPasswordSuccess"
         component={ResetPasswordSuccessScreen}

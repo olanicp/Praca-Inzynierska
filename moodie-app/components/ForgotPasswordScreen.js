@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import GradientButton from "./GradientButton";
+import * as Linking from "expo-linking";
 import { styles } from "./CredentialScreenStyles";
 import axios from "axios";
 
@@ -57,7 +58,7 @@ export default function ForgotPasswordScreen() {
 
       <View style={{ paddingBottom: 75 }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("ConfirmationCode")}
+          onPress={onSubmitPressed}
           style={{
             borderColor: "#474146",
             borderRadius: 50,
