@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import GradientSlider from "./GradientSlider";
 
 export default function FrequencyScreen({ onValueChange }) {
-  const [frequency, setFrequency] = useState(0);
+  const [frequency, setFrequency] = useState(8);
 
   const handleFrequencyChange = (newFrequency) => {
     setFrequency(newFrequency);

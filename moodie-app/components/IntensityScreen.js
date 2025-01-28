@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import GradientSlider from "./GradientSlider";
 
 export default function IntensityScreen({ onValueChange }) {
-  const [intensity, setIntensity] = useState(0);
+  const [intensity, setIntensity] = useState(8);
 
   const handleIntensityChange = (newIntensity) => {
     setIntensity(newIntensity);

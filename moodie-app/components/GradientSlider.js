@@ -18,7 +18,7 @@ const GradientSlider = ({
   isNumbers = true,
   onValueChange,
 }) => {
-  const [value, setValue] = useState(8);
+  const [value, setValue] = useState(stepCount / 2);
   const [textWidth, setTextWidth] = useState(0);
   const marks = Array.from({ length: stepCount + 1 }, (_, i) => i);
   const isVertical = orientation === "vertical";
