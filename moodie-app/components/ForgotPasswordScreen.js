@@ -21,13 +21,12 @@ export default function ForgotPasswordScreen() {
       );
 
       if (response.status === 200) {
-        alert("Dane przesłane");
-        navigation.navigate("ConfirmationCode");
+        alert("We sent you an email. Please check your mail.");
       } else {
-        throw new Error("error has occurred");
+        throw new Error("Error has occurred");
       }
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data.error);
     }
   };
 

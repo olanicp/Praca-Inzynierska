@@ -118,11 +118,11 @@ export default function EmotionIdentificationCarousel() {
           );
           setEmotions(emotionsWithDesc);
         } else {
-          throw new Error("Błąd podczas pobierania emocji");
+          throw new Error("Error while fetching emotions. Try again later");
         }
       } catch (error) {
-        console.error("Błąd żądania emocji:", error);
-        alert("Nie udało się pobrać emocji. Spróbuj ponownie.");
+        console.error("Error while fetching emotions. Try again later", error);
+        alert(error.response.data.error);
       }
     }
 

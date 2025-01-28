@@ -68,13 +68,13 @@ export default function SignupScreen() {
       );
 
       if (response.status === 200) {
-        alert("Dane przesłane");
+        alert("Signup successfull");
         navigation.navigate("Login");
       } else {
         throw new Error("error has occurred");
       }
     } catch (error) {
-      alert("Błąd podczas zakładania konta: ", error);
+      alert(error.response.data.error);
     }
   };
 

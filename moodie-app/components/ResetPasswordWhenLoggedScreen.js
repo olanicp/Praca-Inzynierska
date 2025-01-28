@@ -41,11 +41,11 @@ const ResetPasswordWhenLoggedScreen = () => {
         alert("Password has been reset successfully.");
         navigation.goBack();
       } else {
-        alert("Error: ", response.data.error);
+        alert(response.data.error);
       }
     } catch (error) {
       console.error(error);
-      alert("Error: ", error.response?.data?.error);
+      alert(error.response?.data?.error);
     }
   };
 

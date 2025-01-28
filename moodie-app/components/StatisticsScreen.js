@@ -295,8 +295,8 @@ export default function StatisticsScreen({ navigation }) {
         setTopFiveEmotions(statsResponse.data.emotionQuadrants);
       }
     } catch (error) {
-      console.error("Błąd żądania statystyk:", error);
-      alert("Nie udało się pobrać statystyk. Spróbuj ponownie");
+      console.error("Error while fetching statistics", error);
+      alert(error.response.data.error);
     }
   };
 

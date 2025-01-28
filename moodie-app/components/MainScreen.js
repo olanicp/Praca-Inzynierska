@@ -35,8 +35,8 @@ export default function MainScreen() {
           setEntry(response.data.entry);
         }
       } catch (error) {
-        console.error("Błąd pobierania wpisu:", error);
-        alert("Nie udało się pobrać wpisu. Spróbuj ponownie");
+        console.error("Error while fetching entry", error);
+        alert(error.response.data.error);
       }
     };
 

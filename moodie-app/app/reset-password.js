@@ -23,16 +23,10 @@ const ResetPasswordScreen = () => {
         if (storedToken && storedRefToken) {
           setToken(storedToken);
           setRefreshToken(storedRefToken);
-          console.log("Token loaded from AsyncStorage:", storedToken);
-          console.log(
-            "Refresh Token loaded from AsyncStorage:",
-            storedRefToken
-          );
         } else {
           alert("No token found for password reset.");
         }
       } catch (error) {
-        console.error("Error fetching token from AsyncStorage:", error);
         alert("An error occurred while fetching the token.");
       }
     };

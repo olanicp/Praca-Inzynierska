@@ -159,7 +159,7 @@ export default function WelcomeScreen() {
         throw new Error("error has occurred");
       }
     } catch (error) {
-      alert("Błąd podczas logowania goscia: ", error);
+      alert(error.response.data.error);
     }
   };
 

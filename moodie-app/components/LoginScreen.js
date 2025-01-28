@@ -57,10 +57,10 @@ export default function LoginScreen() {
           screen: "Main",
         });
       } else {
-        throw new Error("error has occurred");
+        throw new Error("Error has occurred");
       }
     } catch (error) {
-      alert("Błąd podczas logowania: ", error);
+      alert(error.response.data.error);
     }
   };
 
