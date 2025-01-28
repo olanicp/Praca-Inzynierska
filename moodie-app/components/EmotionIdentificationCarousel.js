@@ -24,12 +24,17 @@ export default function EmotionIdentificationCarousel() {
   const navigation = useNavigation();
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [frequencyValue, setFrequencyValue] = useState(0);
-  const [intensityValue, setIntensityValue] = useState(0);
+  const [frequencyValue, setFrequencyValue] = useState(8);
+  const [intensityValue, setIntensityValue] = useState(8);
   const [emotions, setEmotions] = useState();
   const [userEmotions, setUserEmotions] = useState([]);
   const [quadrant, setQuadrant] = useState("");
-  const [activities, setActivities] = useState({});
+  const [activities, setActivities] = useState({
+    sleepingHours: 5,
+    meals: [],
+    exerciseHours: 5,
+    activities: [],
+  });
   const [streak, setStreak] = useState(0);
   const [loginDays, setLoginDays] = useState([]);
 

@@ -14,9 +14,9 @@ const width = Dimensions.get("window").width;
 export default function FeelingsScreen({ onValueChange }) {
   const [interviewValues, setInterviewValues] = useState({
     sleepingHours: 5,
-    meals: "",
+    meals: [],
     exerciseHours: 5,
-    activities: "",
+    activities: [],
   });
 
   const handleSleepingHoursChange = (sleepingHours) => {
