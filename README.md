@@ -21,3 +21,6 @@ W folderze **moodie-app**:
 ### Emulator:
 - Android: Uruchom emulator Androida w Android Studio i wciśnij `a` w terminalu.
 - iOS: Uruchom symulator iOS w Xcode i wciśnij `i` w terminalu (tylko macOS).
+
+## Backend:
+Kod znajdujący się na backendzie aplikacji można znaleźć tutaj: [https://github.com/olanicp/backend]
